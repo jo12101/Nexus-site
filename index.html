@@ -4,367 +4,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS | Movie Hub</title>
+<title>NEXUS — Movie Hub</title>
+<meta name="theme-color" content="#09090f">
 <style>
+:root{--bg:#09090f;--panel:#151520;--red:#ff304f;--muted:#aaaabd}
 *{box-sizing:border-box}
-body{margin:0;background:#090a10;color:#fff;font-family:Arial,sans-serif}
-header{padding:24px 5%;background:#12131d;border-bottom:1px solid #292a3a}
-h1{color:#a78bfa;letter-spacing:4px;font-size:35px;margin:0}
-header p{color:#aaa}
-main{padding:24px 5%}
-input,select{width:100%;padding:14px;margin-bottom:12px;border-radius:9px;border:1px solid #36374a;background:#171824;color:white;font-size:16px}
-#count{color:#aaa;font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px}
-.card{background:#151621;border:1px solid #292a3a;border-radius:12px;overflow:hidden}
-.poster{height:145px;display:grid;place-items:center;background:linear-gradient(135deg,#462460,#151725);font-size:43px}
-.info{padding:13px}
-h3{font-size:15px;line-height:1.4;min-height:38px;margin:0 0 8px}
-.tag{font-size:12px;color:#c4b5fd;margin-bottom:12px}
-a{display:block;background:#7c3aed;color:white;text-decoration:none;text-align:center;padding:11px;border-radius:7px;font-size:13px;font-weight:bold}
-a:hover{background:#6d28d9}
-.note{color:#aaa;font-size:12px;line-height:1.6;margin-top:25px}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+header{padding:22px 5%;background:linear-gradient(100deg,#17101f,#09090f);border-bottom:1px solid #292938;position:sticky;top:0;z-index:5}
+.brand{font-size:30px;font-weight:900;letter-spacing:3px;color:var(--red)}
+.brand span{color:white}
+.tagline{color:var(--muted);font-size:13px;margin-top:5px}
+main{max-width:1300px;margin:auto;padding:24px 5% 50px}
+.hero{padding:30px 24px;border-radius:18px;background:linear-gradient(110deg,#321329,#18182c 65%,#101019);margin-bottom:28px}
+.hero h1{font-size:clamp(30px,6vw,52px);margin:0 0 10px}
+.hero p{color:#ddd;line-height:1.6;max-width:650px}
+.pill{display:inline-block;border:1px solid #554052;border-radius:99px;padding:7px 12px;font-size:12px;margin:4px 4px 0 0}
+h2{font-size:23px;margin:28px 0 14px}
+.tools{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+input,select{width:100%;padding:14px;border-radius:10px;border:1px solid #363647;background:#151520;color:#fff;font-size:16px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
+.filters button,.action{border:1px solid #383849;background:#191923;color:white;border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14px}
+.filters button.active,.primary{background:var(--red);border-color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px}
+.movie{min-width:0;background:var(--panel);border:1px solid #292938;border-radius:12px;overflow:hidden}
+.poster{height:145px;background:linear-gradient(145deg,#43203b,#202039 55%,#101018);display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
+.poster:after{content:"NEXUS";position:absolute;bottom:8px;left:10px;font-size:10px;font-weight:bold;letter-spacing:3px;color:#ffffffa8}
+.moviebody{padding:12px}
+.movie h3{font-size:15px;line-height:1.35;margin:0 0 7px}
+.genre{font-size:12px;color:var(--muted);min-height:30px}
+.movie .action{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;padding:10px 6px}
+.note{color:var(--muted);font-size:13px;line-height:1.6}
+.playerbox{background:#11111b;border:1px solid #303044;border-radius:14px;padding:14px;margin:16px 0 25px}
+#player{width:100%;aspect-ratio:16/9;background:#000;border:0;border-radius:10px;display:block}
+.playlist{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.playlist button{background:#252535;color:white;border:1px solid #45455b;border-radius:9px;padding:10px;cursor:pointer}
+footer{padding:28px 5%;border-top:1px solid #292938;color:var(--muted);font-size:12px;line-height:1.7}
+.empty{color:var(--muted);padding:20px 0}
+a{color:#ff8496}
+@media(min-width:650px){.tools{grid-template-columns:2fr 1fr}.poster{height:190px}.grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}
 </style>
 </head>
 <body>
 <header>
-<h1>NEXUS</h1>
-<p>Your next movie night starts here 🍿</p>
+  <div class="brand">NEXUS<span>.</span></div>
+  <div class="tagline">YOUR MOVIE UNIVERSE · DISCOVER YOUR NEXT WATCH</div>
 </header>
+
 <main>
-<h2>Explore Movies</h2>
-<input id="search" placeholder="Search Marvel, comedy, Sonic..." autocomplete="off">
-<select id="genre">
-<option value="All">All categories</option>
-<option>Marvel & Superheroes</option>
-<option>Comedy</option>
-<option>Action & Sci-Fi</option>
-<option>Animation</option>
-<option>Gaming & Adventure</option>
-</select>
-<p id="count"></p>
-<div class="grid" id="grid"></div>
-<p class="note">NEXUS helps you find movies and legitimate viewing options. Availability varies by country and subscription. These links do not guarantee that a movie is free.</p>
+  <section class="hero">
+    <span class="pill">🎬 MOVIE HUB</span>
+    <span class="pill">▶ FREE PLAYER</span>
+    <h1>What are we watching?</h1>
+    <p>Explore free films you can play here, or discover where to watch your favorite blockbusters.</p>
+    <span class="pill">Marvel</span><span class="pill">Spider-Man</span>
+    <span class="pill">Action</span><span class="pill">Comedy</span>
+    <span class="pill">Gaming Movies</span><span class="pill">Animation</span>
+  </section>
+
+  <h2>▶ Play Free Movies</h2>
+  <p class="note">These openly licensed animated films are available through YouTube's embedded player. Tap a title, then press play. Internet access is required.</p>
+  <div class="playerbox">
+    <iframe id="player" src="https://www.youtube-nocookie.com/embed/YE7VzlLtp-4" title="Free movie player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <div class="playlist">
+      <button onclick="playFree('YE7VzlLtp-4','Big Buck Bunny')">🐰 Big Buck Bunny</button>
+      <button onclick="playFree('eRsGyueVLvQ','Sintel')">🐉 Sintel</button>
+      <button onclick="playFree('R6MlUcmOul8','Tears of Steel')">🤖 Tears of Steel</button>
+    </div>
+    <p id="playing" class="note">Now selected: Big Buck Bunny</p>
+    <p class="note">Films by the Blender Foundation, made available under open licenses. <a href="https://www.blender.org/about/projects/" target="_blank" rel="noopener">Learn about the films</a>.</p>
+  </div>
+
+  <h2>🎬 Explore Popular Movies</h2>
+  <p class="note">Search titles or choose a category. Select “Find where to watch” to look up legal viewing options. Availability and prices vary by movie.</p>
+  <div class="tools">
+    <input id="search" type="search" placeholder="🔎 Search movies..." aria-label="Search movies">
+    <select id="category" aria-label="Filter by category">
+      <option value="All">All categories</option>
+      <option>Marvel</option>
+      <option>Action</option>
+      <option>Comedy</option>
+      <option>Sci-Fi</option>
+      <option>Animation</option>
+      <option>Gaming</option>
+      <option>Adventure</option>
+    </select>
+  </div>
+  <div class="filters" id="filters">
+    <button class="active" data-filter="All">All</button>
+    <button data-filter="Marvel">Marvel</button>
+    <button data-filter="Action">Action</button>
+    <button data-filter="Comedy">Comedy</button>
+    <button data-filter="Sci-Fi">Sci-Fi</button>
+    <button data-filter="Animation">Animation</button>
+    <button data-filter="Gaming">Gaming</button>
+    <button data-filter="Adventure">Adventure</button>
+  </div>
+  <div id="count" class="note"></div>
+  <div id="movies" class="grid"></div>
+  <p id="empty" class="empty" hidden>No movies found. Try another search or category.</p>
 </main>
+
+<footer>
+  <strong>NEXUS</strong> is an independent movie discovery website, not a streaming service.<br>
+  Popular-movie buttons search for viewing options; they do not mean a movie is free or included in a subscription. NEXUS does not host copyrighted movie files.<br>
+  Free-film player videos are provided by YouTube. Their availability may vary by region or over time.
+</footer>
+
 <script>
-const movies=[
-["The Avengers","Marvel & Superheroes","🦸"],
-["Avengers: Age of Ultron","Marvel & Superheroes","🤖"],
-["Avengers: Infinity War","Marvel & Superheroes","💥"],
-["Avengers: Endgame","Marvel & Superheroes","⚡"],
-["Iron Man","Marvel & Superheroes","🤖"],
-["Iron Man 2","Marvel & Superheroes","🚀"],
-["Iron Man 3","Marvel & Superheroes","🔥"],
-["Captain America: The First Avenger","Marvel & Superheroes","🛡️"],
-["Captain America: The Winter Soldier","Marvel & Superheroes","🦅"],
-["Captain America: Civil War","Marvel & Superheroes","⚔️"],
-["Thor","Marvel & Superheroes","⚡"],
-["Thor: The Dark World","Marvel & Superheroes","🌩️"],
-["Thor: Ragnarok","Marvel & Superheroes","😂"],
-["Black Panther","Marvel & Superheroes","🐾"],
-["Black Panther: Wakanda Forever","Marvel & Superheroes","👑"],
-["Doctor Strange","Marvel & Superheroes","🔮"],
-["Doctor Strange in the Multiverse of Madness","Marvel & Superheroes","🌀"],
-["Ant-Man","Marvel & Superheroes","🐜"],
-["Ant-Man and the Wasp","Marvel & Superheroes","🐝"],
-["Guardians of the Galaxy","Marvel & Superheroes","🌌"],
-["Guardians of the Galaxy Vol. 2","Marvel & Superheroes","🚀"],
-["Guardians of the Galaxy Vol. 3","Marvel & Superheroes","🌠"],
-["Shang-Chi and the Legend of the Ten Rings","Marvel & Superheroes","🐉"],
-["The Marvels","Marvel & Superheroes","✨"],
-["Spider-Man: Homecoming","Marvel & Superheroes","🕸️"],
-["Spider-Man: Far From Home","Marvel & Superheroes","🕷️"],
-["Spider-Man: No Way Home","Marvel & Superheroes","🕸️"],
-["Spider-Man: Into the Spider-Verse","Animation","🕷️"],
-["Spider-Man: Across the Spider-Verse","Animation","🌈"],
-["Venom","Marvel & Superheroes","👾"],
-["Deadpool","Marvel & Superheroes","😎"],
-["Shazam!","Marvel & Superheroes","⚡"],
-["Blue Beetle","Marvel & Superheroes","🪲"],
-["The Batman","Marvel & Superheroes","🦇"],
-["The LEGO Batman Movie","Animation","🦇"],
-["Superman","Marvel & Superheroes","🦸"],
-["Jumanji: Welcome to the Jungle","Comedy","🌴"],
-["Jumanji: The Next Level","Comedy","🐘"],
-["Night at the Museum","Comedy","🦖"],
-["Night at the Museum: Battle of the Smithsonian","Comedy","🏛️"],
-["Free Guy","Comedy","🎮"],
-["Rush Hour","Comedy","😂"],
-["Rush Hour 2","Comedy","🥋"],
-["Rush Hour 3","Comedy","🚔"],
-["The Mask","Comedy","🎭"],
-["Grown Ups","Comedy","🤣"],
-["Grown Ups 2","Comedy","🏖️"],
-["Home Alone","Comedy","🏠"],
-["Home Alone 2: Lost in New York","Comedy","🗽"],
-["The Parent Trap","Comedy","👯"],
-["Daddy Day Care","Comedy","🧸"],
-["Big Daddy","Comedy","😂"],
-["Central Intelligence","Comedy","💪"],
-["The LEGO Movie","Animation","🧱"],
-["The LEGO Movie 2","Animation","🧱"],
-["The Mitchells vs. the Machines","Animation","🤖"],
-["Big Hero 6","Animation","🤖"],
-["The Incredibles","Animation","🦸"],
-["Incredibles 2","Animation","💥"],
-["Kung Fu Panda","Animation","🐼"],
-["Kung Fu Panda 2","Animation","🥋"],
-["Kung Fu Panda 3","Animation","🐼"],
-["Kung Fu Panda 4","Animation","🐉"],
-["Puss in Boots: The Last Wish","Animation","🐱"],
-["The Super Mario Bros. Movie","Gaming & Adventure","🍄"],
-["Sonic the Hedgehog","Gaming & Adventure","💨"],
-["Sonic the Hedgehog 2","Gaming & Adventure","💙"],
-["Sonic the Hedgehog 3","Gaming & Adventure","🦔"],
-["Detective Pikachu","Gaming & Adventure","⚡"],
-["Pokémon: The First Movie","Gaming & Adventure","⚡"],
-["Transformers","Action & Sci-Fi","🤖"],
-["Transformers: Revenge of the Fallen","Action & Sci-Fi","💥"],
-["Transformers: Dark of the Moon","Action & Sci-Fi","🌙"],
-["Transformers: Age of Extinction","Action & Sci-Fi","🦖"],
-["Transformers: The Last Knight","Action & Sci-Fi","⚔️"],
-["Bumblebee","Action & Sci-Fi","🐝"],
-["Transformers: Rise of the Beasts","Action & Sci-Fi","🦍"],
-["Pacific Rim","Action & Sci-Fi","🤖"],
-["Real Steel","Action & Sci-Fi","🥊"],
-["Ready Player One","Action & Sci-Fi","🎮"],
-["Tron: Legacy","Action & Sci-Fi","💡"],
-["Godzilla vs. Kong","Action & Sci-Fi","🦍"],
-["Godzilla x Kong: The New Empire","Action & Sci-Fi","🦖"],
-["Jurassic Park","Action & Sci-Fi","🦕"],
-["The Lost World: Jurassic Park","Action & Sci-Fi","🦖"],
-["Jurassic World","Action & Sci-Fi","🦕"],
-["Jurassic World: Fallen Kingdom","Action & Sci-Fi","🌋"],
-["Jurassic World Dominion","Action & Sci-Fi","🦖"],
-["The Karate Kid","Action & Sci-Fi","🥋"],
-["The Karate Kid (2010)","Action & Sci-Fi","🥋"],
-["Top Gun: Maverick","Action & Sci-Fi","✈️"],
-["The Adam Project","Action & Sci-Fi","🚀"],
-["Dungeons & Dragons: Honor Among Thieves","Gaming & Adventure","🐉"],
-["Jumanji","Gaming & Adventure","🎲"],
-["Wreck-It Ralph","Gaming & Adventure","🎮"],
-["Ralph Breaks the Internet","Gaming & Adventure","🌐"],
-["Teenage Mutant Ninja Turtles: Mutant Mayhem","Animation","🐢"],
-["The Bad Guys","Animation","🐺"],
-["The Bad Guys 2","Animation","🦈"],
-["Despicable Me","Animation","🍌"],
-["Despicable Me 2","Animation","🍌"],
-["Despicable Me 3","Animation","🍌"],
-["Despicable Me 4","Animation","🍌"],
-["Minions","Animation","🍌"],
-["Minions: The Rise of Gru","Animation","😎"],
-["The SpongeBob SquarePants Movie","Animation","🧽"],
-["The SpongeBob Movie: Sponge Out of Water","Animation","🌊"],
-["Sponge on the Run","Animation","🧽"],
-["Finding Nemo","Animation","🐠"],
-["Finding Dory","Animation","🐙"],
-["Toy Story","Animation","🤠"],
-["Toy Story 2","Animation","🚀"],
-["Toy Story 3","Animation","🧸"],
-["Toy Story 4","Animation","🐴"],
-["Cars","Animation","🏎️"],
-["Cars 2","Animation","🏁"],
-["Cars 3","Animation","🏎️"],
-["Monsters, Inc.","Animation","👾"],
-["Monsters University","Animation","🎓"],
-["Inside Out","Animation","🧠"],
-["Inside Out 2","Animation","🌈"],
-["Zootopia","Animation","🦊"],
-["Moana","Animation","🌊"],
-["Moana 2","Animation","⛵"],
-["Frozen","Animation","❄️"],
-["Frozen II","Animation","☃️"],
-["Coco","Animation","🎸"],
-["The Incredibles 2","Animation","💥"],
-["Ratatouille","Animation","🐀"],
-["WALL-E","Animation","🤖"],
-["Up","Animation","🎈"],
-["Onward","Animation","🧙"],
-["Elemental","Animation","🔥"],
-["The Wild Robot","Animation","🤖"],
-["The Croods","Animation","🦴"],
-["The Croods: A New Age","Animation","🦣"],
-["Madagascar","Animation","🦁"],
-["Madagascar: Escape 2 Africa","Animation","🦒"],
-["Madagascar 3: Europe's Most Wanted","Animation","🎪"],
-["Ice Age","Animation","🦣"],
-["Ice Age: The Meltdown","Animation","❄️"],
-["Ice Age: Dawn of the Dinosaurs","Animation","🦖"],
-["Rio","Animation","🦜"],
-["Rio 2","Animation","🌴"],
-["The Angry Birds Movie","Animation","🐦"],
-["The Angry Birds Movie 2","Animation","🐷"],
-["The Peanuts Movie","Animation","🐶"],
-["The Garfield Movie","Animation","🐱"],
-["Sonic the Hedgehog 3","Gaming & Adventure","💨"],
-["The Minecraft Movie","Gaming & Adventure","⛏️"],
-["Tomb Raider","Gaming & Adventure","🗺️"],
-["Uncharted","Gaming & Adventure","💎"],
-["Prince of Persia: The Sands of Time","Gaming & Adventure","⏳"],
-["The Angry Birds Movie","Gaming & Adventure","🐦"],
-["Free Guy","Gaming & Adventure","🎮"],
-["Pixels","Gaming & Adventure","👾"],
-["Wreck-It Ralph","Gaming & Adventure","🕹️"],
-["Tron","Gaming & Adventure","💡"],
-["The Wizard","Gaming & Adventure","🎮"],
-["Space Jam","Comedy","🏀"],
-["Space Jam: A New Legacy","Comedy","🏀"],
-["The Sandlot","Comedy","⚾"],
-["Cool Runnings","Comedy","🛷"],
-["Mr. Bean's Holiday","Comedy","😂"],
-["Johnny English","Comedy","🕵️"],
-["Johnny English Reborn","Comedy","🕵️"],
-["The Spy Who Dumped Me","Comedy","🕶️"],
-["Spy Kids","Comedy","🕵️"],
-["Spy Kids 2: The Island of Lost Dreams","Comedy","🏝️"],
-["Spy Kids 3-D: Game Over","Comedy","🎮"],
-["The Pacifier","Comedy","🍼"],
-["Cheaper by the Dozen","Comedy","👨‍👩‍👧"],
-["Cheaper by the Dozen 2","Comedy","🏡"],
-["The Game Plan","Comedy","🏈"],
-["Freaky Friday","Comedy","🔄"],
-["Freakier Friday","Comedy","😂"],
-["The Princess Diaries","Comedy","👑"],
-["The Princess Diaries 2","Comedy","👑"],
-["School of Rock","Comedy","🎸"],
-["Diary of a Wimpy Kid","Comedy","📓"],
-["Rodrick Rules","Comedy","🥁"],
-["Dog Days","Comedy","🐶"],
-["The Long Haul","Comedy","🚐"],
-["Alexander and the Terrible, Horrible, No Good, Very Bad Day","Comedy","😅"],
-["The Haunted Mansion","Comedy","👻"],
-["Goosebumps","Comedy","👹"],
-["Goosebumps 2: Haunted Halloween","Comedy","🎃"],
-["Jungle Cruise","Adventure","🚢"],
-["Pirates of the Caribbean: The Curse of the Black Pearl","Adventure","🏴‍☠️"],
-["Pirates of the Caribbean: Dead Man's Chest","Adventure","☠️"],
-["Pirates of the Caribbean: At World's End","Adventure","🏴‍☠️"],
-["Pirates of the Caribbean: On Stranger Tides","Adventure","🌊"],
-["Pirates of the Caribbean: Dead Men Tell No Tales","Adventure","⚓"],
-["The Mummy","Adventure","🏺"],
-["The Mummy Returns","Adventure","🐫"],
-["Journey to the Center of the Earth","Adventure","🌋"],
-["Journey 2: The Mysterious Island","Adventure","🏝️"],
-["National Treasure","Adventure","🗺️"],
-["National Treasure: Book of Secrets","Adventure","🔐"],
-["The Adventures of Tintin","Adventure","🧭"],
-["The Goonies","Adventure","🏴‍☠️"],
-["The Princess Bride","Adventure","⚔️"],
-["The Jungle Book","Adventure","🐅"],
-["The Jungle Book (2016)","Adventure","🐻"],
-["The Lion King","Adventure","🦁"],
-["The Lion King (2019)","Adventure","👑"],
-["Aladdin","Adventure","🧞"],
-["Aladdin (2019)","Adventure","✨"],
-["Mulan","Adventure","🐉"],
-["Mulan (2020)","Adventure","⚔️"],
-["How to Train Your Dragon","Adventure","🐉"],
-["How to Train Your Dragon 2","Adventure","🔥"],
-["How to Train Your Dragon: The Hidden World","Adventure","🐲"],
-["The Lego Batman Movie","Animation","🦇"],
-["Megamind","Animation","🧠"],
-["Megamind vs. the Doom Syndicate","Animation","🦸"],
-["Teen Titans Go! To the Movies","Animation","🦸"],
-["Batman: The LEGO Movie","Animation","🦇"],
-["The Peacemaker","Action & Sci-Fi","💥"],
-["The Flash","Action & Sci-Fi","⚡"],
-["Aquaman","Action & Sci-Fi","🌊"],
-["Aquaman and the Lost Kingdom","Action & Sci-Fi","🐠"],
-["Wonder Woman","Action & Sci-Fi","🛡️"],
-["Wonder Woman 1984","Action & Sci-Fi","✨"],
-["Justice League","Action & Sci-Fi","🦸"],
-["Zack Snyder's Justice League","Action & Sci-Fi","⚡"],
-["The Suicide Squad","Action & Sci-Fi","💥"],
-["Teenage Mutant Ninja Turtles","Action & Sci-Fi","🐢"],
-["Teenage Mutant Ninja Turtles: Out of the Shadows","Action & Sci-Fi","🐢"],
-["Power Rangers","Action & Sci-Fi","⚡"],
-["Mighty Morphin Power Rangers: The Movie","Action & Sci-Fi","🦖"],
-["The Super Mario Bros. Movie","Gaming & Adventure","🍄"],
-["Pokémon Detective Pikachu","Gaming & Adventure","⚡"],
-["Five Nights at Freddy's","Gaming & Adventure","🐻"],
-["Sonic the Hedgehog","Gaming & Adventure","💨"],
-["The Angry Birds Movie 2","Gaming & Adventure","🐦"],
-["Tetris","Gaming & Adventure","🧩"],
-["Gran Turismo","Action & Sci-Fi","🏎️"],
-["The Super Mario Bros. Movie","Animation","🍄"],
-["The SpongeBob SquarePants Movie","Comedy","🧽"],
-["The Lego Ninjago Movie","Animation","🥷"],
-["The Lego Batman Movie","Animation","🦇"],
-["The Lego Movie","Animation","🧱"],
-["The Lego Movie 2","Animation","🧱"],
-["The Emoji Movie","Animation","😀"],
-["The Secret Life of Pets","Animation","🐶"],
-["The Secret Life of Pets 2","Animation","🐱"],
-["Sing","Animation","🎤"],
-["Sing 2","Animation","🎶"],
-["Trolls","Animation","🌈"],
-["Trolls Band Together","Animation","🎸"],
-["The Boss Baby","Animation","👶"],
-["The Boss Baby: Family Business","Animation","👔"],
-["Hotel Transylvania","Animation","🧛"],
-["Hotel Transylvania 2","Animation","🧟"],
-["Hotel Transylvania 3: Summer Vacation","Animation","🏖️"],
-["Hotel Transylvania: Transformania","Animation","🦇"],
-["Cloudy with a Chance of Meatballs","Animation","🍔"],
-["Cloudy with a Chance of Meatballs 2","Animation","🍕"],
-["Open Season","Animation","🐻"],
-["Open Season 2","Animation","🦌"],
-["The Smurfs","Animation","🔵"],
-["The Smurfs 2","Animation","🔵"],
-["The Smurfs: The Lost Village","Animation","🍄"],
-["The Addams Family","Animation","🖤"],
-["The Addams Family 2","Animation","🕸️"],
-["Puss in Boots","Animation","🐱"],
-["Shrek","Animation","🧅"],
-["Shrek 2","Animation","🐉"],
-["Shrek the Third","Animation","👑"],
-["Shrek Forever After","Animation","🧅"],
-["The SpongeBob Movie: Search for SquarePants","Animation","🧽"],
-["The Bad Guys","Animation","🐺"],
-["The Bad Guys 2","Animation","🦈"],
-["The Wild Robot","Animation","🤖"],
-["Migration","Animation","🦆"],
-["Ruby Gillman, Teenage Kraken","Animation","🦑"],
-["Teenage Mutant Ninja Turtles: Mutant Mayhem","Animation","🐢"],
-["The Super Mario Bros. Movie","Animation","🍄"],
-["The Garfield Movie","Animation","🐱"],
-["The Lorax","Animation","🌳"],
-["Despicable Me","Animation","🍌"],
-["Minions","Animation","🍌"],
-["Minions: The Rise of Gru","Animation","😎"],
-["The Lego Ninjago Movie","Gaming & Adventure","🥷"],
-["The Lego Movie","Gaming & Adventure","🧱"],
-["Wreck-It Ralph","Gaming & Adventure","🎮"],
-["Ralph Breaks the Internet","Gaming & Adventure","🌐"],
-["Jumanji: Welcome to the Jungle","Gaming & Adventure","🎲"],
-["Jumanji: The Next Level","Gaming & Adventure","🌴"],
-["Sonic the Hedgehog 2","Gaming & Adventure","💙"],
-["Sonic the Hedgehog 3","Gaming & Adventure","🦔"]
+const movieList = [
+["The Avengers","Marvel"],["Avengers: Age of Ultron","Marvel"],["Avengers: Infinity War","Marvel"],["Avengers: Endgame","Marvel"],
+["Iron Man","Marvel"],["Iron Man 2","Marvel"],["Iron Man 3","Marvel"],["Captain America: The First Avenger","Marvel"],
+["Captain America: The Winter Soldier","Marvel"],["Captain America: Civil War","Marvel"],["Black Panther","Marvel"],["Black Panther: Wakanda Forever","Marvel"],
+["Thor","Marvel"],["Thor: Ragnarok","Marvel"],["Doctor Strange","Marvel"],["Guardians of the Galaxy","Marvel"],
+["Guardians of the Galaxy Vol. 2","Marvel"],["Guardians of the Galaxy Vol. 3","Marvel"],["Ant-Man","Marvel"],["Shang-Chi","Marvel"],
+["Spider-Man","Action"],["Spider-Man 2","Action"],["Spider-Man 3","Action"],["The Amazing Spider-Man","Action"],
+["The Amazing Spider-Man 2","Action"],["Spider-Man: Homecoming","Marvel"],["Spider-Man: Far From Home","Marvel"],["Spider-Man: No Way Home","Marvel"],
+["Spider-Man: Into the Spider-Verse","Animation"],["Spider-Man: Across the Spider-Verse","Animation"],
+["Deadpool","Marvel"],["Deadpool 2","Marvel"],["X-Men: Days of Future Past","Marvel"],["Fantastic Four","Marvel"],
+["Transformers","Action"],["Transformers: Revenge of the Fallen","Action"],["Bumblebee","Action"],["Transformers: Rise of the Beasts","Action"],
+["Sonic the Hedgehog","Gaming"],["Sonic the Hedgehog 2","Gaming"],["Sonic the Hedgehog 3","Gaming"],
+["The Super Mario Bros. Movie","Gaming"],["A Minecraft Movie","Gaming"],["Pokémon Detective Pikachu","Gaming"],["The Angry Birds Movie","Gaming"],
+["Jumanji","Adventure"],["Jumanji: Welcome to the Jungle","Adventure"],["Uncharted","Adventure"],["Free Guy","Comedy"],
+["The LEGO Movie","Animation"],["The LEGO Batman Movie","Animation"],["Shrek","Animation"],["Shrek 2","Animation"],
+["Kung Fu Panda","Animation"],["Kung Fu Panda 2","Animation"],["Puss in Boots: The Last Wish","Animation"],["The Incredibles","Animation"],
+["The Incredibles 2","Animation"],["Toy Story","Animation"],["Toy Story 2","Animation"],["Toy Story 3","Animation"],
+["Finding Nemo","Animation"],["Finding Dory","Animation"],["Cars","Animation"],["Cars 2","Animation"],["Ratatouille","Animation"],
+["Despicable Me","Animation"],["Despicable Me 2","Animation"],["Minions","Animation"],["The Super Mario Bros. Movie","Animation"],
+["The Batman","Action"],["The Dark Knight","Action"],["Man of Steel","Action"],["Aquaman","Action"],
+["Fast & Furious","Action"],["Fast Five","Action"],["Furious 7","Action"],["Top Gun: Maverick","Action"],
+["Mission: Impossible — Fallout","Action"],["John Wick","Action"],["The Karate Kid","Action"],["Creed","Action"],
+["Jurassic Park","Adventure"],["Jurassic World","Adventure"],["Godzilla","Sci-Fi"],["Godzilla vs. Kong","Sci-Fi"],
+["Pacific Rim","Sci-Fi"],["Avatar","Sci-Fi"],["Avatar: The Way of Water","Sci-Fi"],["Interstellar","Sci-Fi"],
+["Ready Player One","Sci-Fi"],["The Matrix","Sci-Fi"],["Back to the Future","Sci-Fi"],["Men in Black","Sci-Fi"],
+["Ghostbusters","Comedy"],["Rush Hour","Comedy"],["Rush Hour 2","Comedy"],["The Mask","Comedy"],
+["Home Alone","Comedy"],["Home Alone 2: Lost in New York","Comedy"],["Night at the Museum","Comedy"],
+["The Adam Project","Sci-Fi"],["The Mitchells vs. the Machines","Animation"],["Wreck-It Ralph","Animation"]
 ];
 
-function render(){
- const q=document.getElementById("search").value.toLowerCase();
- const g=document.getElementById("genre").value;
- const list=movies.filter(m=>
-  m[0].toLowerCase().includes(q)&&(g==="All"||m[1]===g)
- );
- document.getElementById("count").textContent=
-  `${list.length} movies shown · ${movies.length} listings`;
- document.getElementById("grid").innerHTML=list.map(m=>`
- <article class="card">
-  <div class="poster">${m[2]}</div>
-  <div class="info">
-   <h3>${m[0]}</h3>
-   <div class="tag">${m[1]}</div>
-   <a target="_blank" rel="noopener noreferrer"
-      href="https://www.justwatch.com/us/search?q=${encodeURIComponent(m[0])}">
-      Find legal viewing options ↗
-   </a>
-  </div>
- </article>`).join("")||"<p>No movies found. Try another search.</p>";
+const icons = {
+ Marvel:"🦸",Action:"💥",Comedy:"😂","Sci-Fi":"🚀",Animation:"🎨",Gaming:"🎮",Adventure:"🌎"
+};
+const uniqueMovies = [...new Map(movieList.map(m=>[m[0],m])).values()];
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const grid = document.getElementById("movies");
+const count = document.getElementById("count");
+const empty = document.getElementById("empty");
+
+function renderMovies(){
+  const q = search.value.trim().toLowerCase();
+  const cat = category.value;
+  const found = uniqueMovies.filter(([title,genre]) =>
+    title.toLowerCase().includes(q) && (cat==="All" || genre===cat)
+  );
+  grid.innerHTML = found.map(([title,genre]) => `
+    <article class="movie">
+      <div class="poster" aria-hidden="true">${icons[genre] || "🎬"}</div>
+      <div class="moviebody">
+        <h3>${title}</h3>
+        <div class="genre">${genre}</div>
+        <a class="action primary" href="https://www.justwatch.com/us/search?q=${encodeURIComponent(title)}" target="_blank" rel="noopener">Find where to watch ↗</a>
+      </div>
+    </article>`).join("");
+  count.textContent = `${found.length} movies`;
+  empty.hidden = found.length !== 0;
 }
-document.getElementById("search").addEventListener("input",render);
-document.getElementById("genre").addEventListener("change",render);
-render();
+function playFree(id,title){
+  document.getElementById("player").src =
+    "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(id)+"?autoplay=1";
+  document.getElementById("playing").textContent = "Now selected: "+title;
+}
+search.addEventListener("input",renderMovies);
+category.addEventListener("change",()=>{
+  document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b.dataset.filter===category.value));
+  renderMovies();
+});
+document.querySelectorAll("#filters button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    category.value=button.dataset.filter;
+    document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b===button));
+    renderMovies();
+  });
+});
+renderMovies();
 </script>
 </body>
 </html>
