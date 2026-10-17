@@ -4,86 +4,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEXUS | Movie Hub</title>
+<title>NEXUS Movie Hub</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#090910;color:white;font-family:Arial,sans-serif}
 header{padding:22px 5%;background:#151520;border-bottom:2px solid #ff3150}
 .logo{font-size:32px;font-weight:900;letter-spacing:3px;color:#ff3150}
-.logo span{color:white}
-main{max-width:1200px;margin:auto;padding:22px 5%}
-.hero{padding:25px;border-radius:16px;background:linear-gradient(120deg,#45152c,#19192e)}
-h1{font-size:clamp(30px,6vw,48px);margin:10px 0}
-p{color:#c4c4d2;line-height:1.6}
-input,select{background:#191923;color:white;border:1px solid #444459;padding:13px;border-radius:9px;font-size:16px;width:100%;margin:7px 0}
-.player{background:#151520;padding:14px;border-radius:14px;margin:18px 0}
-iframe{width:100%;aspect-ratio:16/9;border:0;background:#000;border-radius:8px}
-.buttons{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-button{cursor:pointer;background:#ff3150;color:white;border:0;padding:12px;border-radius:8px;font-weight:bold}
-button.secondary{background:#29293a;color:white;border:1px solid #48485a}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
-.card{background:#171722;border:1px solid #2b2b3b;border-radius:12px;padding:15px;min-height:125px}
-.emoji{font-size:30px}
-.card h3{font-size:15px;line-height:1.4}
-.tag{color:#aaaabd;font-size:12px}
-.small{font-size:12px;color:#aaaabd}
-footer{padding:25px 5%;color:#aaaabd;border-top:1px solid #303040}
+main{max-width:1200px;margin:auto;padding:24px 5%}
+.hero{padding:25px;background:linear-gradient(120deg,#40142c,#19192e);border-radius:15px}
+h1{font-size:38px}
+input,select{width:100%;padding:13px;margin:8px 0;background:#191923;color:white;border:1px solid #444459;border-radius:9px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px}
+.card{background:#171722;border:1px solid #303044;border-radius:12px;padding:14px}
+.icon{font-size:32px}
+.card h3{font-size:15px;min-height:38px}
+.category{font-size:12px;color:#aaaabd;margin-bottom:12px}
+button{background:#ff3150;color:white;border:0;border-radius:8px;padding:12px 8px;width:100%;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+#player{display:none;margin:20px 0;background:#171722;padding:14px;border-radius:12px}
+iframe{width:100%;aspect-ratio:16/9;border:0;background:black}
+.note{color:#aaaabd;font-size:13px;line-height:1.6}
 </style>
 </head>
 <body>
-<header>
- <div class="logo">NEXUS<span>.</span></div>
- <div class="small">YOUR MOVIE UNIVERSE</div>
-</header>
+<header><div class="logo">NEXUS.</div><div>YOUR MOVIE UNIVERSE</div></header>
 <main>
- <section class="hero">
-  <div>🎬 NEXUS MOVIE HUB</div>
-  <h1>Press Play.</h1>
-  <p>Play free films, explore blockbusters, and find your next favorite movie.</p>
-  <div>🦸 Marvel · 🕷️ Spider-Man · 💙 Sonic · 😂 Comedy · 🚀 Sci-Fi</div>
- </section>
+<section class="hero">
+<h1>PRESS PLAY.</h1>
+<p>Marvel · Spider-Man · Sonic · Transformers · Comedy · Action · Gaming · Animation</p>
+</section>
 
- <h2>▶ Play Free Films</h2>
- <p>Choose a film below to load its embedded video. Playback depends on the video provider and your internet connection.</p>
- <section class="player">
-  <iframe id="video"
-   src="https://www.youtube-nocookie.com/embed/YE7VzlLtp-4"
-   title="Free animated film player"
-   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-   allowfullscreen></iframe>
-  <h3 id="now">🐰 Big Buck Bunny</h3>
-  <div class="buttons">
-   <button onclick="play('YE7VzlLtp-4','🐰 Big Buck Bunny')">Play Big Buck Bunny</button>
-   <button class="secondary" onclick="play('eRsGyueVLvQ','🐉 Sintel')">Play Sintel</button>
-   <button class="secondary" onclick="play('R6MlUcmOul8','🤖 Tears of Steel')">Play Tears of Steel</button>
-  </div>
-  <p class="small">These are open-film projects from the Blender Foundation. If a video is unavailable or embedding is disabled, that provider will need to be checked for an alternative official player.</p>
- </section>
+<h2>Movie Collection</h2>
+<input id="search" placeholder="Search movies..." oninput="render()">
+<select id="filter" onchange="render()">
+<option>All</option><option>Marvel</option><option>Action</option>
+<option>Comedy</option><option>Sci-Fi</option><option>Animation</option>
+<option>Gaming</option><option>Adventure</option>
+</select>
 
- <h2>🎬 Popular Movies</h2>
- <p>Browse the movies you like. These cards are a catalog, not a claim that each blockbuster has a free full-movie stream.</p>
- <input id="search" placeholder="🔎 Search movies..." oninput="render()">
- <select id="genre" onchange="render()">
-  <option>All</option><option>Marvel</option><option>Action</option>
-  <option>Comedy</option><option>Sci-Fi</option><option>Animation</option>
-  <option>Gaming</option><option>Adventure</option>
- </select>
- <div class="grid" id="catalog"></div>
+<div id="player">
+<h2 id="playing"></h2>
+<iframe id="video" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+</div>
+<div id="movies" class="grid"></div>
+<p class="note">Only movies with verified, authorized full-film video sources can play here. A title alone does not provide a video stream.</p>
 </main>
-<footer>
- NEXUS is an independent movie catalog. It does not host copyrighted movie files. Only videos with permission or appropriate licenses can be offered as free full-movie streams.
-</footer>
+
 <script>
-const movies=[
+const titles = [
 ["The Avengers","Marvel","🦸"],["Avengers: Age of Ultron","Marvel","🦸"],
 ["Avengers: Infinity War","Marvel","🦸"],["Avengers: Endgame","Marvel","🦸"],
-["Iron Man","Marvel","🤖"],["Black Panther","Marvel","🐾"],
-["Thor: Ragnarok","Marvel","⚡"],["Guardians of the Galaxy","Marvel","🚀"],
+["Iron Man","Marvel","🤖"],["Iron Man 2","Marvel","🤖"],["Iron Man 3","Marvel","🤖"],
+["Black Panther","Marvel","🐾"],["Thor: Ragnarok","Marvel","⚡"],
+["Guardians of the Galaxy","Marvel","🚀"],["Doctor Strange","Marvel","✨"],
 ["Spider-Man","Action","🕷️"],["Spider-Man 2","Action","🕷️"],
-["The Amazing Spider-Man","Action","🕸️"],["Spider-Man: Homecoming","Marvel","🕷️"],
-["Spider-Man: No Way Home","Marvel","🕷️"],
-["Into the Spider-Verse","Animation","🕸️"],
-["Across the Spider-Verse","Animation","🕸️"],
+["Spider-Man 3","Action","🕷️"],["The Amazing Spider-Man","Action","🕸️"],
+["Spider-Man: Homecoming","Marvel","🕷️"],["Spider-Man: No Way Home","Marvel","🕷️"],
+["Into the Spider-Verse","Animation","🕸️"],["Across the Spider-Verse","Animation","🕸️"],
 ["Transformers","Action","🤖"],["Bumblebee","Action","🚗"],
 ["Transformers: Rise of the Beasts","Action","🤖"],
 ["Sonic the Hedgehog","Gaming","💙"],["Sonic the Hedgehog 2","Gaming","💙"],
@@ -107,17 +84,36 @@ const movies=[
 ["Rush Hour","Comedy","😂"],["Home Alone","Comedy","🏠"],
 ["Night at the Museum","Comedy","🦕"],["The Mask","Comedy","🎭"]
 ];
+
+// Add a movie's authorized, embeddable full-film URL here
+// only after verifying the source permits full-film playback.
+const playableSources = {};
+
 function render(){
- const q=document.getElementById('search').value.toLowerCase();
- const g=document.getElementById('genre').value;
- const list=movies.filter(m=>m[0].toLowerCase().includes(q)&&(g==='All'||m[1]===g));
- document.getElementById('catalog').innerHTML=list.map(m=>
- `<article class="card"><div class="emoji">${m[2]}</div><h3>${m[0]}</h3><div class="tag">${m[1]}</div><p class="small">Catalog listing · Full movie playback requires an authorized stream.</p></article>`
- ).join('');
+ const q=document.getElementById("search").value.toLowerCase();
+ const f=document.getElementById("filter").value;
+ const list=titles.filter(m=>
+   m[0].toLowerCase().includes(q)&&(f==="All"||m[1]===f)
+ );
+ document.getElementById("movies").innerHTML=list.map(m=>{
+   const url=playableSources[m[0]];
+   return `<article class="card">
+    <div class="icon">${m[2]}</div>
+    <h3>${m[0]}</h3>
+    <div class="category">${m[1]}</div>
+    <button ${url?'':'disabled'} onclick="playMovie('${encodeURIComponent(m[0])}')">PRESS PLAY — WATCH NOW</button>
+   </article>`;
+ }).join("");
 }
-function play(id,title){
- document.getElementById('video').src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';
- document.getElementById('now').textContent=title;
+
+function playMovie(encodedTitle){
+ const title=decodeURIComponent(encodedTitle);
+ const url=playableSources[title];
+ if(!url)return;
+ document.getElementById("playing").textContent=title;
+ document.getElementById("video").src=url;
+ document.getElementById("player").style.display="block";
+ document.getElementById("player").scrollIntoView({behavior:"smooth"});
 }
 render();
 </script>
