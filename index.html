@@ -4,90 +4,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS | Games & Movies</title>
-<meta name="theme-color" content="#09090f">
+<meta name="theme-color" content="#090910">
+<title>NEXUS — Play & Discover</title>
 <style>
-:root {
-  --bg:#09090f; --panel:#151520; --red:#e50914;
-  --text:#f5f5fa; --muted:#a4a4b5; --line:#292938;
-}
+:root{color-scheme:dark;--bg:#090910;--panel:#171722;--red:#e50925;--muted:#aaaabc}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,Helvetica,sans-serif}
-header{position:sticky;top:0;z-index:5;background:#09090ff2;
-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
-padding:16px 5%;display:flex;align-items:center;gap:20px;
-justify-content:space-between;flex-wrap:wrap}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 5%;background:#090910f5;border-bottom:1px solid #292938}
 .logo{font-size:27px;font-weight:900;letter-spacing:3px;color:var(--red)}
-nav{display:flex;gap:18px;flex-wrap:wrap}
-a{color:inherit}
-nav a{text-decoration:none;color:#ddd;font-size:14px}
-nav a:hover{color:var(--red)}
-.hero{padding:65px 6% 55px;background:
-radial-gradient(ellipse at 80% 25%,#4b101e 0,transparent 45%),
-linear-gradient(110deg,#151522,#09090f 75%)}
-.eyebrow{color:#ff515b;text-transform:uppercase;letter-spacing:3px;
-font-size:12px;font-weight:bold}
-h1{font-size:clamp(40px,8vw,76px);margin:14px 0;line-height:1}
-.hero p{max-width:540px;color:#c3c3d0;line-height:1.7}
-.btn{border:0;border-radius:7px;padding:12px 17px;font-weight:bold;
-cursor:pointer;background:var(--red);color:white;text-decoration:none;
-display:inline-block}
-.btn:hover{filter:brightness(1.15)}
-.btn.secondary{background:#292938}
+nav{display:flex;gap:18px}
+nav a{color:white;text-decoration:none;font-size:14px}
+.hero{padding:55px 6%;background:radial-gradient(ellipse at 80% 30%,#4c1226,transparent 55%),linear-gradient(120deg,#191929,#090910)}
+.hero small{color:#ff687b;letter-spacing:3px}
+h1{font-size:clamp(42px,8vw,72px);margin:14px 0}
+.hero p{max-width:530px;color:#c4c4d1;line-height:1.7}
 .controls{padding:22px 5%;display:flex;gap:10px;flex-wrap:wrap}
-input,select{background:var(--panel);color:white;border:1px solid var(--line);
-border-radius:8px;padding:13px;font-size:15px;min-width:0}
-input{flex:1;min-width:170px}
-select{max-width:100%;width:auto}
-main{padding:0 5% 55px}
-.section-title{display:flex;justify-content:space-between;
-align-items:center;gap:10px;flex-wrap:wrap;margin:25px 0 18px}
+input,select{background:var(--panel);color:white;border:1px solid #353547;border-radius:8px;padding:13px;font-size:15px}
+input{flex:1;min-width:180px}
+main{padding:0 5% 45px}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:26px 0 16px}
 h2{font-size:23px;margin:0}
-.count{font-size:12px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
-gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);
-border-radius:12px;overflow:hidden;transition:.2s;min-width:0}
-.card:hover{transform:translateY(-4px);border-color:#55556b}
-.art{height:120px;display:flex;align-items:center;justify-content:center;
-font-size:48px;background:linear-gradient(135deg,#25253b,#151520)}
-.card-content{padding:13px}
-.card h3{font-size:16px;margin:0 0 8px}
-.card p{font-size:12px;color:var(--muted);line-height:1.5;min-height:34px}
-.tag{font-size:10px;text-transform:uppercase;letter-spacing:1px;
-color:#ff6c75}
-.card .btn{font-size:12px;padding:10px 12px;width:100%;text-align:center}
-.empty{display:none;color:var(--muted);padding:30px 0}
-.notice{color:var(--muted);font-size:12px;line-height:1.6;margin:18px 0}
-footer{padding:30px 5%;border-top:1px solid var(--line);
-color:var(--muted);font-size:12px;line-height:1.8}
-.modal{display:none;position:fixed;inset:0;z-index:10;background:#000d;
-padding:15px;align-items:center;justify-content:center}
-.modal.open{display:flex}
-.modal-box{background:#151520;border:1px solid #39394b;border-radius:15px;
-padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}
-.modal-head{display:flex;justify-content:space-between;align-items:center}
-.close{background:#333344;color:white;border:0;border-radius:6px;
-padding:9px 13px;cursor:pointer}
-#gameArea{text-align:center;padding:18px 0}
-.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-max-width:300px;margin:18px auto}
-.cell{aspect-ratio:1;background:#242438;border:1px solid #414158;
-border-radius:8px;color:white;font-size:36px;cursor:pointer}
-#snakeCanvas{background:#080810;max-width:100%;border-radius:8px;
-touch-action:none}
-.arrows{display:grid;grid-template-columns:repeat(3,50px);
-gap:6px;justify-content:center;margin-top:12px}
-.arrows button{padding:12px 5px;background:#333344;color:white;
-border:0;border-radius:7px;font-size:18px}
-#reactionBox{padding:35px 10px;border-radius:10px;background:#292938;
-font-size:20px;cursor:pointer}
-@media(max-width:480px){
- header{gap:12px}nav{gap:12px}.hero{padding-top:45px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .art{height:100px}.card-content{padding:10px}
-}
+.count{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid #292939;border-radius:10px;overflow:hidden;min-width:0}
+.card:hover{border-color:#77778b;transform:translateY(-2px)}
+.poster{height:125px;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#292941,#171722);overflow:hidden;font-size:42px}
+.poster img{width:100%;height:100%;object-fit:cover}
+.info{padding:12px}
+.info h3{font-size:15px;margin:0 0 8px;overflow-wrap:anywhere}
+.info p{color:var(--muted);font-size:12px;line-height:1.5;min-height:30px}
+.tag{color:#ff7585;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.btn{display:block;width:100%;border:0;border-radius:6px;background:var(--red);color:white;padding:11px;text-align:center;text-decoration:none;font-weight:bold;font-size:12px;cursor:pointer}
+.btn:hover{filter:brightness(1.15)}
+.status{color:var(--muted);font-size:13px;line-height:1.6;margin:15px 0}
+footer{padding:25px 5%;border-top:1px solid #292939;color:var(--muted);font-size:12px;line-height:1.8}
+@media(max-width:450px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.poster{height:100px}.info{padding:9px}}
 </style>
 </head>
 <body>
@@ -101,370 +52,237 @@ font-size:20px;cursor:pointer}
 </header>
 
 <section class="hero" id="home">
-  <div class="eyebrow">Your entertainment hub</div>
+  <small>YOUR ENTERTAINMENT HUB</small>
   <h1>PLAY MORE.<br>WATCH MORE.</h1>
-  <p>Discover games, challenge yourself, and explore classic cinema.
-     All in one dark, gaming-inspired destination.</p>
-  <a class="btn" href="#games">▶ Explore Games</a>
-  <a class="btn secondary" href="#movies">Browse Movies</a>
+  <p>Discover browser games and explore classic films in one place.</p>
+  <a class="btn" href="#games" style="display:inline-block;width:auto">EXPLORE GAMES</a>
 </section>
 
 <div class="controls">
-  <input id="search" type="search" placeholder="Search games and movies..."
-         aria-label="Search games and movies">
-  <select id="category" aria-label="Filter category">
-    <option value="all">All categories</option>
+  <input id="search" type="search" placeholder="Search titles..." aria-label="Search titles">
+  <select id="kind" aria-label="Catalog">
+    <option value="all">Everything</option>
     <option value="games">Games</option>
     <option value="movies">Movies</option>
+  </select>
+  <select id="genre" aria-label="Genre">
+    <option value="all">All categories</option>
   </select>
 </div>
 
 <main>
   <section id="games">
-    <div class="section-title">
-      <h2>🎮 Play Now</h2>
-      <span class="count" id="gameCount"></span>
-    </div>
-    <div class="grid" id="gameGrid"></div>
+    <div class="heading"><h2>🎮 Games</h2><span class="count" id="gc">Loading...</span></div>
+    <p class="status" id="gs">Loading available browser games...</p>
+    <div class="grid" id="gg"></div>
   </section>
 
   <section id="movies">
-    <div class="section-title">
-      <h2>🎬 Classic Movie Library</h2>
-      <span class="count" id="movieCount"></span>
-    </div>
-    <div class="grid" id="movieGrid"></div>
-    <p class="notice">
-      Movie buttons take you to the Library of Congress's official
-      free-film collection. Availability and viewing permissions vary
-      by individual film.
-    </p>
+    <div class="heading"><h2>🎬 Movies & Film Records</h2><span class="count" id="mc">Loading...</span></div>
+    <p class="status" id="ms">Loading film records from the Library of Congress...</p>
+    <div class="grid" id="mg"></div>
   </section>
-  <p class="empty" id="empty">No results found. Try another search.</p>
+
+  <p class="status" id="empty" hidden>No matching titles. Try a different search.</p>
 </main>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true"
-     aria-labelledby="gameTitle">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2 id="gameTitle">Game</h2>
-      <button class="close" id="close" aria-label="Close game">✕</button>
-    </div>
-    <div id="gameArea"></div>
-  </div>
-</div>
-
 <footer>
-  <strong style="color:white">NEXUS</strong> — Games & Movies<br>
-  Games in this demo run directly in your browser. Classic film listings
-  link to the Library of Congress. NEXUS is an independent fan project
-  and is not affiliated with Netflix or the Library of Congress.
+  <strong style="color:white">NEXUS</strong><br>
+  Independent games and film discovery project.<br>
+  Game availability, embedding permissions and external links depend on their providers.
+  Movie catalog records are not a guarantee that a full film is available to watch.
 </footer>
 
 <script>
-const filmSource =
- "https://www.loc.gov/free-to-use/public-domain-films-from-the-national-film-registry/";
+const $ = id => document.getElementById(id);
+const allItems = [];
+const seen = new Set();
 
-const games = [
- {title:"Snake",cat:"Arcade",emoji:"🐍",
-  desc:"Eat, grow, and avoid your tail.",id:"snake"},
- {title:"Tic-Tac-Toe",cat:"Strategy",emoji:"⭕",
-  desc:"Play X and O on the same device.",id:"ttt"},
- {title:"Reaction Test",cat:"Challenge",emoji:"⚡",
-  desc:"Test how quickly you can react.",id:"reaction"},
- {title:"Memory Match",cat:"Puzzle",emoji:"🧠",
-  desc:"Find every matching pair.",id:"memory"},
- {title:"Number Guess",cat:"Puzzle",emoji:"🔢",
-  desc:"Guess the secret number from 1 to 100.",id:"guess"}
-];
-
-const movies = [
- {title:"The Great Train Robbery",year:"1903",emoji:"🚂"},
- {title:"Within Our Gates",year:"1920",emoji:"🎞️"},
- {title:"The Flying Ace",year:"1926",emoji:"✈️"},
- {title:"Popeye Meets Sindbad",year:"1936",emoji:"⚓"},
- {title:"The Memphis Belle",year:"1944",emoji:"🛩️"},
- {title:"The House I Live In",year:"1945",emoji:"🎙️"},
- {title:"The Hitch-Hiker",year:"1953",emoji:"🚗"},
- {title:"Modesta",year:"1956",emoji:"🎭"},
- {title:"A Trip Down Market Street",year:"1906",emoji:"🏙️"},
- {title:"A Bronx Morning",year:"1931",emoji:"🌆"},
- {title:"Master Hands",year:"1936",emoji:"⚙️"},
- {title:"St. Louis Blues",year:"1929",emoji:"🎺"}
-];
-
-const gameGrid = document.getElementById("gameGrid");
-const movieGrid = document.getElementById("movieGrid");
-const search = document.getElementById("search");
-const category = document.getElementById("category");
-const modal = document.getElementById("modal");
-const area = document.getElementById("gameArea");
-const title = document.getElementById("gameTitle");
-let cleanup = () => {};
-
-function card(item, type) {
- const el = document.createElement("article");
- el.className = "card";
- el.dataset.type = type;
- const art = document.createElement("div");
- art.className = "art";
- art.textContent = item.emoji;
- const content = document.createElement("div");
- content.className = "card-content";
- const tag = document.createElement("div");
- tag.className = "tag";
- tag.textContent = type === "games" ? item.cat : item.year;
- const h = document.createElement("h3");
- h.textContent = item.title;
- const p = document.createElement("p");
- p.textContent = type === "games" ? item.desc :
-   "Classic film • Explore official viewing options.";
- const button = document.createElement(type === "games" ? "button" : "a");
- button.className = "btn";
- button.textContent = type === "games" ? "▶ PLAY NOW" : "▶ FIND FILM";
- if (type === "games") {
-   button.addEventListener("click", () => openGame(item.id));
- } else {
-   button.href = filmSource;
-   button.target = "_blank";
-   button.rel = "noopener noreferrer";
-   button.setAttribute("aria-label", "Find " + item.title +
-     " in the official film collection");
- }
- content.append(tag, h, p, button);
- el.append(art, content);
- return el;
+function addItem(item) {
+  const key = item.type + ":" + item.title.toLowerCase();
+  if (seen.has(key) || !item.title || !item.url) return;
+  seen.add(key);
+  allItems.push(item);
 }
 
-games.forEach(g => gameGrid.append(card(g, "games")));
-movies.forEach(m => movieGrid.append(card(m, "movies")));
-document.getElementById("gameCount").textContent =
- games.length + " playable games";
-document.getElementById("movieCount").textContent =
- movies.length + " classic film listings";
+function makeCard(item) {
+  const article = document.createElement("article");
+  article.className = "card";
+  article.dataset.type = item.type;
+  article.dataset.genre = item.genre || "Other";
 
-function filterCards() {
- const q = search.value.toLowerCase().trim();
- let shownGames = 0, shownMovies = 0;
- document.querySelectorAll(".card").forEach(el => {
-   const visible = el.textContent.toLowerCase().includes(q) &&
-     (category.value === "all" || category.value === el.dataset.type);
-   el.style.display = visible ? "" : "none";
-   if (visible && el.dataset.type === "games") shownGames++;
-   if (visible && el.dataset.type === "movies") shownMovies++;
- });
- document.getElementById("gameCount").textContent =
-   shownGames + " games";
- document.getElementById("movieCount").textContent =
-   shownMovies + " movies";
- document.getElementById("empty").style.display =
-   shownGames + shownMovies ? "none" : "block";
-}
-search.addEventListener("input", filterCards);
-category.addEventListener("change", filterCards);
+  const poster = document.createElement("div");
+  poster.className = "poster";
+  poster.textContent = item.type === "games" ? "🎮" : "🎬";
 
-function openGame(id) {
- cleanup();
- cleanup = () => {};
- area.replaceChildren();
- modal.classList.add("open");
- const g = games.find(x => x.id === id);
- title.textContent = g ? g.title : "Game";
- if (id === "ttt") ticTacToe();
- if (id === "snake") snake();
- if (id === "reaction") reaction();
- if (id === "memory") memory();
- if (id === "guess") guess();
+  if (item.image) {
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.title;
+    img.loading = "lazy";
+    img.onerror = () => { img.remove(); };
+    poster.replaceChildren(img);
+  }
+
+  const info = document.createElement("div");
+  info.className = "info";
+
+  const tag = document.createElement("div");
+  tag.className = "tag";
+  tag.textContent = item.genre || (item.type === "games" ? "Browser game" : "Film record");
+
+  const h = document.createElement("h3");
+  h.textContent = item.title;
+
+  const p = document.createElement("p");
+  p.textContent = item.description || (item.type === "games"
+    ? "Open the game provider to play."
+    : "Explore the film's official catalog record.");
+
+  const a = document.createElement("a");
+  a.className = "btn";
+  a.textContent = item.type === "games" ? "OPEN GAME" : "VIEW FILM RECORD";
+  a.href = item.url;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+
+  info.append(tag, h, p, a);
+  article.append(poster, info);
+  return article;
 }
-function addText(text) {
- const p = document.createElement("p");
- p.textContent = text;
- area.append(p);
- return p;
+
+function render() {
+  const q = $("search").value.toLowerCase().trim();
+  const kind = $("kind").value;
+  const genre = $("genre").value;
+  $("gg").replaceChildren();
+  $("mg").replaceChildren();
+
+  let ng = 0, nm = 0;
+  for (const item of allItems) {
+    if (kind !== "all" && item.type !== kind) continue;
+    if (genre !== "all" && item.genre !== genre) continue;
+    if (!(item.title + " " + (item.genre || "") + " " +
+      (item.description || "")).toLowerCase().includes(q)) continue;
+
+    const card = makeCard(item);
+    if (item.type === "games") {
+      $("gg").append(card);
+      ng++;
+    } else {
+      $("mg").append(card);
+      nm++;
+    }
+  }
+  $("gc").textContent = ng + " shown";
+  $("mc").textContent = nm + " shown";
+  $("empty").hidden = ng + nm > 0;
 }
-function addButton(text, fn) {
- const b = document.createElement("button");
- b.className = "btn";
- b.textContent = text;
- b.addEventListener("click", fn);
- area.append(b);
- return b;
+
+function updateGenres() {
+  const select = $("genre");
+  const old = select.value;
+  const genres = [...new Set(allItems.map(x => x.genre).filter(Boolean))].sort();
+  select.replaceChildren(new Option("All categories", "all"));
+  genres.forEach(g => select.add(new Option(g, g)));
+  if (genres.includes(old)) select.value = old;
 }
-function ticTacToe() {
- let board = Array(9).fill(""), turn = "X", done = false;
- const status = addText("Player X's turn");
- const grid = document.createElement("div");
- grid.className = "game-grid";
- const buttons = [];
- function draw() {
-   buttons.forEach((b,i) => b.textContent = board[i]);
- }
- function winner() {
-   const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],
-     [1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-   return lines.some(line => line.every(i => board[i] &&
-     board[i] === board[line[0]]));
- }
- for (let i=0;i<9;i++) {
-   const b = document.createElement("button");
-   b.className = "cell";
-   b.addEventListener("click", () => {
-     if (done || board[i]) return;
-     board[i] = turn;
-     draw();
-     if (winner()) {status.textContent = "Player " + turn + " wins!";done=true;}
-     else if (board.every(Boolean)) {status.textContent="It's a draw!";done=true;}
-     else {turn = turn === "X" ? "O" : "X";status.textContent="Player "+turn+"'s turn";}
-   });
-   buttons.push(b);grid.append(b);
- }
- area.append(grid);
- addButton("Restart", () => openGame("ttt"));
+
+async function loadGames() {
+  try {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/sausi-7/games/main/games/registry.json"
+    );
+    if (!response.ok) throw new Error("Game catalog unavailable");
+    const data = await response.json();
+    const list = Array.isArray(data) ? data :
+      (data.games || data.items || data.results || []);
+
+    for (const g of list.slice(0, 250)) {
+      const slug = g.slug || g.id;
+      const path = g.path;
+      const url = slug
+        ? "https://sausi-7.github.io/games/#play=" + encodeURIComponent(slug)
+        : (path ? "https://github.com/sausi-7/games/tree/main/" + path : "");
+      if (!url) continue;
+      addItem({
+        type: "games",
+        title: g.name || g.title || slug,
+        genre: g.category || "Browser game",
+        description: g.description || "Open the browser game.",
+        image: g.image || g.thumbnail || "",
+        url
+      });
+    }
+    $("gs").textContent = allItems.filter(x => x.type === "games").length
+      + " game entries loaded from the external catalog. Some destinations may not support embedding.";
+  } catch (e) {
+    $("gs").textContent =
+      "The external game catalog could not load. Try again later or open the game collection directly.";
+    const fallback = [{
+      title:"Snake",genre:"Arcade",url:"https://opengames-dev.github.io/source.html",
+      description:"Explore open-source browser games."
+    },{
+      title:"OpenGames Collection",genre:"Collection",
+      url:"https://opengames-dev.github.io/source.html",
+      description:"Browse free, open-source browser games."
+    },{
+      title:"Libre Arcade",genre:"Arcade",
+      url:"https://github.com/linkingtechnologies/libre-arcade",
+      description:"Explore restored browser-playable games."
+    }];
+    fallback.forEach(g => addItem({...g,type:"games"}));
+  }
+  updateGenres();
+  render();
 }
-function snake() {
- const canvas = document.createElement("canvas");
- canvas.id = "snakeCanvas";
- canvas.width = 300; canvas.height = 300;
- canvas.setAttribute("aria-label", "Snake game board");
- area.append(canvas);
- const ctx = canvas.getContext("2d");
- addText("Use arrow keys or the buttons below.");
- let body, dir, food, score, running, timer;
- function reset() {
-   clearInterval(timer);
-   body = [{x:7,y:7},{x:6,y:7},{x:5,y:7}];
-   dir = {x:1,y:0}; food = {x:12,y:7}; score = 0; running = true;
-   timer = setInterval(step, 130); draw();
- }
- function draw() {
-   ctx.fillStyle="#080810";ctx.fillRect(0,0,300,300);
-   ctx.fillStyle="#44ed93";
-   body.forEach(p=>ctx.fillRect(p.x*15+1,p.y*15+1,13,13));
-   ctx.fillStyle="#ff4e63";
-   ctx.fillRect(food.x*15+2,food.y*15+2,11,11);
- }
- function step() {
-   if (!running) return;
-   const head={x:body[0].x+dir.x,y:body[0].y+dir.y};
-   if(head.x<0||head.y<0||head.x>=20||head.y>=20||
-      body.some(p=>p.x===head.x&&p.y===head.y)){
-     running=false;clearInterval(timer);
-     statusText.textContent="Game over! Score: "+score;
-     return;
-   }
-   body.unshift(head);
-   if(head.x===food.x&&head.y===food.y){
-     score++;
-     food={x:Math.floor(Math.random()*20),y:Math.floor(Math.random()*20)};
-     statusText.textContent="Score: "+score;
-   } else body.pop();
-   draw();
- }
- function setDir(x,y) {
-   if(x!==-dir.x || y!==-dir.y) dir={x,y};
- }
- const statusText=addText("Score: 0");
- const arrows=document.createElement("div");
- arrows.className="arrows";
- [["","", ""],["⬆",0,-1],["","", ""],
-  ["⬅",-1,0],["⬇",0,1],["➡",1,0]].forEach(([label,x,y])=>{
-   const b=document.createElement("button");
-   b.textContent=label||" ";
-   if(label)b.addEventListener("click",()=>setDir(x,y));
-   arrows.append(b);
- });
- area.append(arrows);
- function key(e){
-   const dirs={ArrowUp:[0,-1],ArrowDown:[0,1],
-     ArrowLeft:[-1,0],ArrowRight:[1,0]};
-   if(dirs[e.key]){e.preventDefault();setDir(...dirs[e.key]);}
- }
- document.addEventListener("keydown",key);
- addButton("Restart Snake",reset);
- cleanup=()=>{clearInterval(timer);document.removeEventListener("keydown",key);};
- reset();
+
+async function loadMovies() {
+  let loaded = 0;
+  const base = "https://www.loc.gov/film-and-videos/?fo=json&c=100&sp=";
+  for (let page = 1; page <= 3 && loaded < 250; page++) {
+    try {
+      const response = await fetch(base + page);
+      if (!response.ok) throw new Error("Film catalog unavailable");
+      const data = await response.json();
+      const results = data.results || [];
+      if (!results.length) break;
+
+      for (const m of results) {
+        if (loaded >= 250) break;
+        const title = m.title;
+        const url = m.url;
+        if (!title || !url) continue;
+        addItem({
+          type: "movies",
+          title,
+          genre: "Film archive",
+          description: m.date || "Library of Congress film catalog record",
+          image: m.image || "",
+          url: url.startsWith("http") ? url : "https://www.loc.gov" + url
+        });
+        loaded++;
+      }
+      $("ms").textContent = loaded + " film records loaded so far...";
+    } catch (e) {
+      $("ms").textContent =
+        "The film catalog could not be reached. Check your internet connection and try again.";
+      break;
+    }
+  }
+  $("ms").textContent = loaded
+    ? loaded + " film catalog records loaded. These are records, not necessarily full movies to stream."
+    : "No film records loaded. The catalog may be temporarily unavailable.";
+  updateGenres();
+  render();
 }
-function reaction() {
- const box=document.createElement("div");
- box.id="reactionBox";box.textContent="Tap Start to play";
- area.append(box);
- const status=addText("Wait for green, then tap as quickly as possible.");
- let start=0, timeout, state="idle";
- function begin(){
-   clearTimeout(timeout);state="waiting";box.style.background="#8b2937";
-   box.textContent="Wait for green...";
-   timeout=setTimeout(()=>{
-     if(state!=="waiting")return;
-     state="ready";start=performance.now();
-     box.style.background="#087c49";box.textContent="TAP NOW!";
-   },1000+Math.random()*3000);
- }
- box.addEventListener("click",()=>{
-   if(state==="ready"){
-     status.textContent="Your reaction: "+Math.round(performance.now()-start)+" ms";
-     state="done";box.textContent="Nice! Try again.";
-   }else if(state==="waiting"){
-     clearTimeout(timeout);state="done";box.textContent="Too early! Try again.";
-   }
- });
- addButton("Start",begin);
- cleanup=()=>clearTimeout(timeout);
-}
-function memory() {
- const symbols=["🍕","🚀","🎮","🐸","⭐","⚽"];
- let cards=[...symbols,...symbols].sort(()=>Math.random()-.5);
- let first=null, lock=false, pairs=0;
- const status=addText("Find all 6 matching pairs.");
- const grid=document.createElement("div");
- grid.className="game-grid";
- grid.style.gridTemplateColumns="repeat(4,1fr)";
- cards.forEach((symbol,i)=>{
-   const b=document.createElement("button");
-   b.className="cell";b.style.fontSize="25px";b.textContent="❔";
-   b.addEventListener("click",()=>{
-     if(lock||b.dataset.found||b===first||b.textContent===symbol)return;
-     b.textContent=symbol;
-     if(first===null){first=b;return;}
-     if(first.dataset.symbol===symbol){
-       first.dataset.found="1";b.dataset.found="1";
-       first=null;pairs++;status.textContent="Pairs: "+pairs+"/6";
-       if(pairs===6)status.textContent="You won! 🎉";
-     }else{
-       lock=true;const old=first;first=null;
-       setTimeout(()=>{old.textContent="❔";b.textContent="❔";lock=false;},650);
-     }
-     b.dataset.symbol=symbol;
-   });
-   b.dataset.symbol=symbol;
-   grid.append(b);
- });
- area.append(grid);
- addButton("Restart",()=>openGame("memory"));
-}
-function guess() {
- const number=Math.floor(Math.random()*100)+1;
- let attempts=0;
- addText("I'm thinking of a number from 1 to 100.");
- const input=document.createElement("input");
- input.type="number";input.min="1";input.max="100";
- input.placeholder="Enter your guess";input.style.width="100%";
- area.append(input);
- const status=addText("");
- addButton("Guess",()=>{
-   const n=Number(input.value);
-   if(!input.value||n<1||n>100){status.textContent="Enter a number from 1 to 100.";return;}
-   attempts++;
-   if(n===number){status.textContent="Correct! Guesses: "+attempts+". 🎉";}
-   else status.textContent=n<number?"Too low! Try higher.":"Too high! Try lower.";
- });
- addButton("Play Again",()=>openGame("guess"));
-}
-function closeGame(){
- modal.classList.remove("open");cleanup();cleanup=()=>{};
-}
-document.getElementById("close").addEventListener("click",closeGame);
-modal.addEventListener("click",e=>{if(e.target===modal)closeGame();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGame();});
+
+$("search").addEventListener("input", render);
+$("kind").addEventListener("change", render);
+$("genre").addEventListener("change", render);
+
+loadGames();
+loadMovies();
 </script>
 </body>
 </html>
