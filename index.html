@@ -1,184 +1,470 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090914">
-  <title>NEXUS — Play & Watch</title>
-  <style>
-    :root { color-scheme: dark; --bg:#090914; --panel:#141426; --line:#292947; --purple:#9b6bff; --blue:#5de1ff; --text:#f5f3ff; --muted:#aaa8c5; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,sans-serif; color:var(--text); background:radial-gradient(ellipse at top,#21143f 0%,var(--bg) 48%); min-height:100vh; }
-    header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px clamp(16px,5vw,64px); border-bottom:1px solid #ffffff12; position:sticky; top:0; background:#090914eF; backdrop-filter:blur(14px); z-index:2; }
-    .logo { font-weight:900; letter-spacing:2px; font-size:1.35rem; } .logo span { color:var(--blue); }
-    nav { display:flex; gap:8px; flex-wrap:wrap; }
-    button, input { font:inherit; }
-    button { cursor:pointer; color:var(--text); background:#211c39; border:1px solid #514077; border-radius:12px; padding:10px 14px; transition:.2s; }
-    button:hover { transform:translateY(-1px); border-color:var(--blue); box-shadow:0 0 20px #5de1ff22; }
-    .active, .primary { background:linear-gradient(110deg,#7447db,#3a70d9); border-color:transparent; }
-    main { width:min(1120px,92%); margin:0 auto; padding:30px 0 60px; }
-    .hero { padding:clamp(26px,6vw,60px); border:1px solid #ffffff18; border-radius:28px; background:linear-gradient(115deg,#241440ed,#101a36ed); box-shadow:0 22px 70px #0005; overflow:hidden; position:relative; }
-    .hero:after { content:""; position:absolute; width:250px; height:250px; right:-65px; top:-70px; border-radius:50%; background:#8b5cf633; filter:blur(4px); }
-    .eyebrow { color:var(--blue); text-transform:uppercase; letter-spacing:3px; font-size:.78rem; font-weight:800; }
-    h1 { font-size:clamp(2.3rem,7vw,4.8rem); line-height:1.02; margin:12px 0; letter-spacing:-2px; }
-    .gradient { background:linear-gradient(90deg,#fff,#9ddcff,#b99aff); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    p { color:var(--muted); line-height:1.6; }
-    .hero p { max-width:560px; font-size:1.05rem; }
-    .search-wrap { display:flex; gap:10px; margin:24px 0 30px; }
-    input { width:100%; background:#111120; border:1px solid var(--line); color:var(--text); border-radius:12px; padding:13px 15px; outline:none; }
-    input:focus { border-color:var(--purple); box-shadow:0 0 0 3px #9b6bff22; }
-    .section-head { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:34px 0 14px; }
-    h2 { margin:0; font-size:1.5rem; } .section-head p { margin:4px 0 0; font-size:.9rem; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:15px; }
-    .card { border:1px solid var(--line); background:linear-gradient(145deg,#17172b,#10101d); border-radius:18px; padding:18px; min-height:190px; display:flex; flex-direction:column; align-items:flex-start; }
-    .art { display:grid; place-items:center; width:100%; height:90px; border-radius:12px; margin-bottom:14px; font-size:2.7rem; background:linear-gradient(135deg,#38215d,#172d4b); }
-    .art.movie { background:linear-gradient(135deg,#54274b,#202d58); }
-    h3 { margin:0 0 5px; } .card p { margin:0 0 15px; font-size:.92rem; }
-    .card button { margin-top:auto; }
-    .status { margin-top:24px; border:1px solid #ffffff18; background:#111120; padding:15px 17px; border-radius:14px; color:#d7d2f0; }
-    .hidden { display:none !important; }
-    footer { text-align:center; padding:22px; border-top:1px solid #ffffff12; color:#77758f; font-size:.85rem; }
-    @media(max-width:600px) { header { align-items:flex-start; flex-direction:column; } nav { width:100%; } nav button { flex:1; } .search-wrap { flex-direction:column; } .hero { border-radius:20px; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS | Games & Movies</title>
+<meta name="theme-color" content="#09090f">
+<style>
+:root {
+  --bg:#09090f; --panel:#151520; --red:#e50914;
+  --text:#f5f5fa; --muted:#a4a4b5; --line:#292938;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#09090ff2;
+backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+padding:16px 5%;display:flex;align-items:center;gap:20px;
+justify-content:space-between;flex-wrap:wrap}
+.logo{font-size:27px;font-weight:900;letter-spacing:3px;color:var(--red)}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+a{color:inherit}
+nav a{text-decoration:none;color:#ddd;font-size:14px}
+nav a:hover{color:var(--red)}
+.hero{padding:65px 6% 55px;background:
+radial-gradient(ellipse at 80% 25%,#4b101e 0,transparent 45%),
+linear-gradient(110deg,#151522,#09090f 75%)}
+.eyebrow{color:#ff515b;text-transform:uppercase;letter-spacing:3px;
+font-size:12px;font-weight:bold}
+h1{font-size:clamp(40px,8vw,76px);margin:14px 0;line-height:1}
+.hero p{max-width:540px;color:#c3c3d0;line-height:1.7}
+.btn{border:0;border-radius:7px;padding:12px 17px;font-weight:bold;
+cursor:pointer;background:var(--red);color:white;text-decoration:none;
+display:inline-block}
+.btn:hover{filter:brightness(1.15)}
+.btn.secondary{background:#292938}
+.controls{padding:22px 5%;display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:var(--panel);color:white;border:1px solid var(--line);
+border-radius:8px;padding:13px;font-size:15px;min-width:0}
+input{flex:1;min-width:170px}
+select{max-width:100%;width:auto}
+main{padding:0 5% 55px}
+.section-title{display:flex;justify-content:space-between;
+align-items:center;gap:10px;flex-wrap:wrap;margin:25px 0 18px}
+h2{font-size:23px;margin:0}
+.count{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);
+border-radius:12px;overflow:hidden;transition:.2s;min-width:0}
+.card:hover{transform:translateY(-4px);border-color:#55556b}
+.art{height:120px;display:flex;align-items:center;justify-content:center;
+font-size:48px;background:linear-gradient(135deg,#25253b,#151520)}
+.card-content{padding:13px}
+.card h3{font-size:16px;margin:0 0 8px}
+.card p{font-size:12px;color:var(--muted);line-height:1.5;min-height:34px}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:1px;
+color:#ff6c75}
+.card .btn{font-size:12px;padding:10px 12px;width:100%;text-align:center}
+.empty{display:none;color:var(--muted);padding:30px 0}
+.notice{color:var(--muted);font-size:12px;line-height:1.6;margin:18px 0}
+footer{padding:30px 5%;border-top:1px solid var(--line);
+color:var(--muted);font-size:12px;line-height:1.8}
+.modal{display:none;position:fixed;inset:0;z-index:10;background:#000d;
+padding:15px;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.modal-box{background:#151520;border:1px solid #39394b;border-radius:15px;
+padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.close{background:#333344;color:white;border:0;border-radius:6px;
+padding:9px 13px;cursor:pointer}
+#gameArea{text-align:center;padding:18px 0}
+.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+max-width:300px;margin:18px auto}
+.cell{aspect-ratio:1;background:#242438;border:1px solid #414158;
+border-radius:8px;color:white;font-size:36px;cursor:pointer}
+#snakeCanvas{background:#080810;max-width:100%;border-radius:8px;
+touch-action:none}
+.arrows{display:grid;grid-template-columns:repeat(3,50px);
+gap:6px;justify-content:center;margin-top:12px}
+.arrows button{padding:12px 5px;background:#333344;color:white;
+border:0;border-radius:7px;font-size:18px}
+#reactionBox{padding:35px 10px;border-radius:10px;background:#292938;
+font-size:20px;cursor:pointer}
+@media(max-width:480px){
+ header{gap:12px}nav{gap:12px}.hero{padding-top:45px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .art{height:100px}.card-content{padding:10px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">⚡ NEXUS<span>.</span></div>
-    <nav aria-label="Main navigation">
-      <button class="active" data-filter="all">Home</button>
-      <button data-filter="game">🎮 Games</button>
-      <button data-filter="movie">🎬 Movies</button>
-    </nav>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="eyebrow">Your entertainment hub</div>
-      <h1>WATCH. <span class="gradient">PLAY.</span><br>REPEAT.</h1>
-      <p>One place for browser games, movie trailers, and videos. Welcome to your NEXUS.</p>
-      <button class="primary" id="explore">Explore the library ↓</button>
-    </section>
+<header>
+  <div class="logo">NEXUS</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#movies">Movies</a>
+  </nav>
+</header>
 
-    <div class="search-wrap">
-      <input id="search" type="search" placeholder="Search games and movies..." aria-label="Search games and movies">
-      <button id="clear">Clear search</button>
+<section class="hero" id="home">
+  <div class="eyebrow">Your entertainment hub</div>
+  <h1>PLAY MORE.<br>WATCH MORE.</h1>
+  <p>Discover games, challenge yourself, and explore classic cinema.
+     All in one dark, gaming-inspired destination.</p>
+  <a class="btn" href="#games">▶ Explore Games</a>
+  <a class="btn secondary" href="#movies">Browse Movies</a>
+</section>
+
+<div class="controls">
+  <input id="search" type="search" placeholder="Search games and movies..."
+         aria-label="Search games and movies">
+  <select id="category" aria-label="Filter category">
+    <option value="all">All categories</option>
+    <option value="games">Games</option>
+    <option value="movies">Movies</option>
+  </select>
+</div>
+
+<main>
+  <section id="games">
+    <div class="section-title">
+      <h2>🎮 Play Now</h2>
+      <span class="count" id="gameCount"></span>
     </div>
+    <div class="grid" id="gameGrid"></div>
+  </section>
 
-    <section id="library">
-      <div class="section-head">
-        <div><h2>🎮 Games</h2><p>Play a little game right here.</p></div>
-      </div>
-      <div class="grid">
-        <article class="card searchable" data-type="game" data-name="neon tap reflex">
-          <div class="art">⚡</div><h3>Neon Tap</h3>
-          <p>Tap the button as many times as you can in 10 seconds.</p>
-          <button class="primary" id="play-neon">Play game</button>
-        </article>
-        <article class="card searchable" data-type="game" data-name="number guess puzzle">
-          <div class="art">🔢</div><h3>Number Guess</h3>
-          <p>Try to guess a number between 1 and 10.</p>
-          <button id="play-guess">Play game</button>
-        </article>
-      </div>
+  <section id="movies">
+    <div class="section-title">
+      <h2>🎬 Classic Movie Library</h2>
+      <span class="count" id="movieCount"></span>
+    </div>
+    <div class="grid" id="movieGrid"></div>
+    <p class="notice">
+      Movie buttons take you to the Library of Congress's official
+      free-film collection. Availability and viewing permissions vary
+      by individual film.
+    </p>
+  </section>
+  <p class="empty" id="empty">No results found. Try another search.</p>
+</main>
 
-      <div class="section-head">
-        <div><h2>🎬 Movies & videos</h2><p>Explore trailers and videos you’re allowed to watch.</p></div>
-      </div>
-      <div class="grid">
-        <article class="card searchable" data-type="movie" data-name="movie trailers">
-          <div class="art movie">🍿</div><h3>Movie trailers</h3>
-          <p>Find official trailers from studios and creators.</p>
-          <button class="primary" data-message="Add links to official movie trailers here as you build your library.">Explore trailers</button>
-        </article>
-        <article class="card searchable" data-type="movie" data-name="video library">
-          <div class="art movie">▶️</div><h3>Video library</h3>
-          <p>A spot for videos you own or have permission to share.</p>
-          <button data-message="Your video library section is ready for permitted video links.">Open library</button>
-        </article>
-      </div>
-    </section>
+<div class="modal" id="modal" role="dialog" aria-modal="true"
+     aria-labelledby="gameTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="gameTitle">Game</h2>
+      <button class="close" id="close" aria-label="Close game">✕</button>
+    </div>
+    <div id="gameArea"></div>
+  </div>
+</div>
 
-    <section id="game-panel" class="status hidden" aria-live="polite">
-      <h3 id="game-title">Game</h3>
-      <p id="game-description"></p>
-      <div id="game-controls"></div>
-      <button id="close-game">Close game</button>
-    </section>
-    <div id="status" class="status" role="status">Welcome to NEXUS. Choose a section or search the library.</div>
-  </main>
-  <footer>© NEXUS • A personal project made while learning to code</footer>
+<footer>
+  <strong style="color:white">NEXUS</strong> — Games & Movies<br>
+  Games in this demo run directly in your browser. Classic film listings
+  link to the Library of Congress. NEXUS is an independent fan project
+  and is not affiliated with Netflix or the Library of Congress.
+</footer>
 
-  <script>
-    const statusBox = document.getElementById('status');
-    const cards = [...document.querySelectorAll('.searchable')];
-    const search = document.getElementById('search');
-    const gamePanel = document.getElementById('game-panel');
-    const gameTitle = document.getElementById('game-title');
-    const gameDescription = document.getElementById('game-description');
-    const gameControls = document.getElementById('game-controls');
-    let timer = null;
+<script>
+const filmSource =
+ "https://www.loc.gov/free-to-use/public-domain-films-from-the-national-film-registry/";
 
-    function showStatus(message) { statusBox.textContent = message; }
-    function showGame(title, description) {
-      clearInterval(timer);
-      gamePanel.classList.remove('hidden');
-      gameTitle.textContent = title;
-      gameDescription.textContent = description;
-      gameControls.replaceChildren();
-      gamePanel.scrollIntoView({behavior:'smooth', block:'center'});
-    }
-    document.querySelectorAll('[data-filter]').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
-        button.classList.add('active');
-        const filter = button.dataset.filter;
-        cards.forEach(card => card.classList.toggle('hidden', filter !== 'all' && card.dataset.type !== filter));
-        showStatus(filter === 'all' ? 'Showing the full NEXUS library.' : `Showing ${filter === 'game' ? 'games' : 'movies and videos'}.`);
-      });
-    });
-    function runSearch() {
-      const term = search.value.toLowerCase().trim();
-      cards.forEach(card => card.classList.toggle('hidden', !`${card.dataset.name} ${card.textContent}`.toLowerCase().includes(term)));
-      showStatus(term ? `Search results for “${term}”.` : 'Showing the full NEXUS library.');
-    }
-    search.addEventListener('input', runSearch);
-    document.getElementById('clear').addEventListener('click', () => { search.value = ''; runSearch(); });
-    document.getElementById('explore').addEventListener('click', () => document.getElementById('library').scrollIntoView({behavior:'smooth'}));
-    document.querySelectorAll('[data-message]').forEach(button => button.addEventListener('click', () => showStatus(button.dataset.message)));
+const games = [
+ {title:"Snake",cat:"Arcade",emoji:"🐍",
+  desc:"Eat, grow, and avoid your tail.",id:"snake"},
+ {title:"Tic-Tac-Toe",cat:"Strategy",emoji:"⭕",
+  desc:"Play X and O on the same device.",id:"ttt"},
+ {title:"Reaction Test",cat:"Challenge",emoji:"⚡",
+  desc:"Test how quickly you can react.",id:"reaction"},
+ {title:"Memory Match",cat:"Puzzle",emoji:"🧠",
+  desc:"Find every matching pair.",id:"memory"},
+ {title:"Number Guess",cat:"Puzzle",emoji:"🔢",
+  desc:"Guess the secret number from 1 to 100.",id:"guess"}
+];
 
-    document.getElementById('play-neon').addEventListener('click', () => {
-      showGame('⚡ Neon Tap', 'Tap as fast as you can before the 10-second timer ends.');
-      let count = 0, seconds = 10;
-      const score = document.createElement('h2');
-      score.textContent = 'Taps: 0';
-      const clock = document.createElement('p');
-      clock.textContent = 'Time left: 10s';
-      const tap = document.createElement('button');
-      tap.className = 'primary'; tap.textContent = 'TAP!';
-      tap.addEventListener('click', () => { if (seconds > 0) { count++; score.textContent = `Taps: ${count}`; } });
-      gameControls.append(score, clock, tap);
-      timer = setInterval(() => {
-        seconds--; clock.textContent = `Time left: ${seconds}s`;
-        if (seconds <= 0) { clearInterval(timer); tap.disabled = true; tap.textContent = 'Time’s up!'; gameDescription.textContent = `Final score: ${count} taps. Try again to beat your score!`; }
-      }, 1000);
-    });
+const movies = [
+ {title:"The Great Train Robbery",year:"1903",emoji:"🚂"},
+ {title:"Within Our Gates",year:"1920",emoji:"🎞️"},
+ {title:"The Flying Ace",year:"1926",emoji:"✈️"},
+ {title:"Popeye Meets Sindbad",year:"1936",emoji:"⚓"},
+ {title:"The Memphis Belle",year:"1944",emoji:"🛩️"},
+ {title:"The House I Live In",year:"1945",emoji:"🎙️"},
+ {title:"The Hitch-Hiker",year:"1953",emoji:"🚗"},
+ {title:"Modesta",year:"1956",emoji:"🎭"},
+ {title:"A Trip Down Market Street",year:"1906",emoji:"🏙️"},
+ {title:"A Bronx Morning",year:"1931",emoji:"🌆"},
+ {title:"Master Hands",year:"1936",emoji:"⚙️"},
+ {title:"St. Louis Blues",year:"1929",emoji:"🎺"}
+];
 
-    document.getElementById('play-guess').addEventListener('click', () => {
-      showGame('🔢 Number Guess', 'I picked a number from 1 to 10. Can you find it?');
-      const target = Math.floor(Math.random() * 10) + 1;
-      const input = document.createElement('input');
-      input.type = 'number'; input.min = '1'; input.max = '10'; input.placeholder = 'Enter 1–10';
-      input.setAttribute('aria-label','Guess a number from 1 to 10');
-      const guessButton = document.createElement('button'); guessButton.className = 'primary'; guessButton.textContent = 'Guess';
-      const result = document.createElement('p');
-      guessButton.addEventListener('click', () => {
-        const n = Number(input.value);
-        if (!Number.isInteger(n) || n < 1 || n > 10) result.textContent = 'Enter a whole number from 1 to 10.';
-        else if (n === target) { result.textContent = 'Correct! You got it! Press Play game again for a new number.'; guessButton.disabled = true; }
-        else result.textContent = n < target ? 'Too low — try again!' : 'Too high — try again!';
-      });
-      gameControls.append(input, guessButton, result);
-    });
-    document.getElementById('close-game').addEventListener('click', () => { clearInterval(timer); gamePanel.classList.add('hidden'); });
-  </script>
+const gameGrid = document.getElementById("gameGrid");
+const movieGrid = document.getElementById("movieGrid");
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+const modal = document.getElementById("modal");
+const area = document.getElementById("gameArea");
+const title = document.getElementById("gameTitle");
+let cleanup = () => {};
+
+function card(item, type) {
+ const el = document.createElement("article");
+ el.className = "card";
+ el.dataset.type = type;
+ const art = document.createElement("div");
+ art.className = "art";
+ art.textContent = item.emoji;
+ const content = document.createElement("div");
+ content.className = "card-content";
+ const tag = document.createElement("div");
+ tag.className = "tag";
+ tag.textContent = type === "games" ? item.cat : item.year;
+ const h = document.createElement("h3");
+ h.textContent = item.title;
+ const p = document.createElement("p");
+ p.textContent = type === "games" ? item.desc :
+   "Classic film • Explore official viewing options.";
+ const button = document.createElement(type === "games" ? "button" : "a");
+ button.className = "btn";
+ button.textContent = type === "games" ? "▶ PLAY NOW" : "▶ FIND FILM";
+ if (type === "games") {
+   button.addEventListener("click", () => openGame(item.id));
+ } else {
+   button.href = filmSource;
+   button.target = "_blank";
+   button.rel = "noopener noreferrer";
+   button.setAttribute("aria-label", "Find " + item.title +
+     " in the official film collection");
+ }
+ content.append(tag, h, p, button);
+ el.append(art, content);
+ return el;
+}
+
+games.forEach(g => gameGrid.append(card(g, "games")));
+movies.forEach(m => movieGrid.append(card(m, "movies")));
+document.getElementById("gameCount").textContent =
+ games.length + " playable games";
+document.getElementById("movieCount").textContent =
+ movies.length + " classic film listings";
+
+function filterCards() {
+ const q = search.value.toLowerCase().trim();
+ let shownGames = 0, shownMovies = 0;
+ document.querySelectorAll(".card").forEach(el => {
+   const visible = el.textContent.toLowerCase().includes(q) &&
+     (category.value === "all" || category.value === el.dataset.type);
+   el.style.display = visible ? "" : "none";
+   if (visible && el.dataset.type === "games") shownGames++;
+   if (visible && el.dataset.type === "movies") shownMovies++;
+ });
+ document.getElementById("gameCount").textContent =
+   shownGames + " games";
+ document.getElementById("movieCount").textContent =
+   shownMovies + " movies";
+ document.getElementById("empty").style.display =
+   shownGames + shownMovies ? "none" : "block";
+}
+search.addEventListener("input", filterCards);
+category.addEventListener("change", filterCards);
+
+function openGame(id) {
+ cleanup();
+ cleanup = () => {};
+ area.replaceChildren();
+ modal.classList.add("open");
+ const g = games.find(x => x.id === id);
+ title.textContent = g ? g.title : "Game";
+ if (id === "ttt") ticTacToe();
+ if (id === "snake") snake();
+ if (id === "reaction") reaction();
+ if (id === "memory") memory();
+ if (id === "guess") guess();
+}
+function addText(text) {
+ const p = document.createElement("p");
+ p.textContent = text;
+ area.append(p);
+ return p;
+}
+function addButton(text, fn) {
+ const b = document.createElement("button");
+ b.className = "btn";
+ b.textContent = text;
+ b.addEventListener("click", fn);
+ area.append(b);
+ return b;
+}
+function ticTacToe() {
+ let board = Array(9).fill(""), turn = "X", done = false;
+ const status = addText("Player X's turn");
+ const grid = document.createElement("div");
+ grid.className = "game-grid";
+ const buttons = [];
+ function draw() {
+   buttons.forEach((b,i) => b.textContent = board[i]);
+ }
+ function winner() {
+   const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],
+     [1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+   return lines.some(line => line.every(i => board[i] &&
+     board[i] === board[line[0]]));
+ }
+ for (let i=0;i<9;i++) {
+   const b = document.createElement("button");
+   b.className = "cell";
+   b.addEventListener("click", () => {
+     if (done || board[i]) return;
+     board[i] = turn;
+     draw();
+     if (winner()) {status.textContent = "Player " + turn + " wins!";done=true;}
+     else if (board.every(Boolean)) {status.textContent="It's a draw!";done=true;}
+     else {turn = turn === "X" ? "O" : "X";status.textContent="Player "+turn+"'s turn";}
+   });
+   buttons.push(b);grid.append(b);
+ }
+ area.append(grid);
+ addButton("Restart", () => openGame("ttt"));
+}
+function snake() {
+ const canvas = document.createElement("canvas");
+ canvas.id = "snakeCanvas";
+ canvas.width = 300; canvas.height = 300;
+ canvas.setAttribute("aria-label", "Snake game board");
+ area.append(canvas);
+ const ctx = canvas.getContext("2d");
+ addText("Use arrow keys or the buttons below.");
+ let body, dir, food, score, running, timer;
+ function reset() {
+   clearInterval(timer);
+   body = [{x:7,y:7},{x:6,y:7},{x:5,y:7}];
+   dir = {x:1,y:0}; food = {x:12,y:7}; score = 0; running = true;
+   timer = setInterval(step, 130); draw();
+ }
+ function draw() {
+   ctx.fillStyle="#080810";ctx.fillRect(0,0,300,300);
+   ctx.fillStyle="#44ed93";
+   body.forEach(p=>ctx.fillRect(p.x*15+1,p.y*15+1,13,13));
+   ctx.fillStyle="#ff4e63";
+   ctx.fillRect(food.x*15+2,food.y*15+2,11,11);
+ }
+ function step() {
+   if (!running) return;
+   const head={x:body[0].x+dir.x,y:body[0].y+dir.y};
+   if(head.x<0||head.y<0||head.x>=20||head.y>=20||
+      body.some(p=>p.x===head.x&&p.y===head.y)){
+     running=false;clearInterval(timer);
+     statusText.textContent="Game over! Score: "+score;
+     return;
+   }
+   body.unshift(head);
+   if(head.x===food.x&&head.y===food.y){
+     score++;
+     food={x:Math.floor(Math.random()*20),y:Math.floor(Math.random()*20)};
+     statusText.textContent="Score: "+score;
+   } else body.pop();
+   draw();
+ }
+ function setDir(x,y) {
+   if(x!==-dir.x || y!==-dir.y) dir={x,y};
+ }
+ const statusText=addText("Score: 0");
+ const arrows=document.createElement("div");
+ arrows.className="arrows";
+ [["","", ""],["⬆",0,-1],["","", ""],
+  ["⬅",-1,0],["⬇",0,1],["➡",1,0]].forEach(([label,x,y])=>{
+   const b=document.createElement("button");
+   b.textContent=label||" ";
+   if(label)b.addEventListener("click",()=>setDir(x,y));
+   arrows.append(b);
+ });
+ area.append(arrows);
+ function key(e){
+   const dirs={ArrowUp:[0,-1],ArrowDown:[0,1],
+     ArrowLeft:[-1,0],ArrowRight:[1,0]};
+   if(dirs[e.key]){e.preventDefault();setDir(...dirs[e.key]);}
+ }
+ document.addEventListener("keydown",key);
+ addButton("Restart Snake",reset);
+ cleanup=()=>{clearInterval(timer);document.removeEventListener("keydown",key);};
+ reset();
+}
+function reaction() {
+ const box=document.createElement("div");
+ box.id="reactionBox";box.textContent="Tap Start to play";
+ area.append(box);
+ const status=addText("Wait for green, then tap as quickly as possible.");
+ let start=0, timeout, state="idle";
+ function begin(){
+   clearTimeout(timeout);state="waiting";box.style.background="#8b2937";
+   box.textContent="Wait for green...";
+   timeout=setTimeout(()=>{
+     if(state!=="waiting")return;
+     state="ready";start=performance.now();
+     box.style.background="#087c49";box.textContent="TAP NOW!";
+   },1000+Math.random()*3000);
+ }
+ box.addEventListener("click",()=>{
+   if(state==="ready"){
+     status.textContent="Your reaction: "+Math.round(performance.now()-start)+" ms";
+     state="done";box.textContent="Nice! Try again.";
+   }else if(state==="waiting"){
+     clearTimeout(timeout);state="done";box.textContent="Too early! Try again.";
+   }
+ });
+ addButton("Start",begin);
+ cleanup=()=>clearTimeout(timeout);
+}
+function memory() {
+ const symbols=["🍕","🚀","🎮","🐸","⭐","⚽"];
+ let cards=[...symbols,...symbols].sort(()=>Math.random()-.5);
+ let first=null, lock=false, pairs=0;
+ const status=addText("Find all 6 matching pairs.");
+ const grid=document.createElement("div");
+ grid.className="game-grid";
+ grid.style.gridTemplateColumns="repeat(4,1fr)";
+ cards.forEach((symbol,i)=>{
+   const b=document.createElement("button");
+   b.className="cell";b.style.fontSize="25px";b.textContent="❔";
+   b.addEventListener("click",()=>{
+     if(lock||b.dataset.found||b===first||b.textContent===symbol)return;
+     b.textContent=symbol;
+     if(first===null){first=b;return;}
+     if(first.dataset.symbol===symbol){
+       first.dataset.found="1";b.dataset.found="1";
+       first=null;pairs++;status.textContent="Pairs: "+pairs+"/6";
+       if(pairs===6)status.textContent="You won! 🎉";
+     }else{
+       lock=true;const old=first;first=null;
+       setTimeout(()=>{old.textContent="❔";b.textContent="❔";lock=false;},650);
+     }
+     b.dataset.symbol=symbol;
+   });
+   b.dataset.symbol=symbol;
+   grid.append(b);
+ });
+ area.append(grid);
+ addButton("Restart",()=>openGame("memory"));
+}
+function guess() {
+ const number=Math.floor(Math.random()*100)+1;
+ let attempts=0;
+ addText("I'm thinking of a number from 1 to 100.");
+ const input=document.createElement("input");
+ input.type="number";input.min="1";input.max="100";
+ input.placeholder="Enter your guess";input.style.width="100%";
+ area.append(input);
+ const status=addText("");
+ addButton("Guess",()=>{
+   const n=Number(input.value);
+   if(!input.value||n<1||n>100){status.textContent="Enter a number from 1 to 100.";return;}
+   attempts++;
+   if(n===number){status.textContent="Correct! Guesses: "+attempts+". 🎉";}
+   else status.textContent=n<number?"Too low! Try higher.":"Too high! Try lower.";
+ });
+ addButton("Play Again",()=>openGame("guess"));
+}
+function closeGame(){
+ modal.classList.remove("open");cleanup();cleanup=()=>{};
+}
+document.getElementById("close").addEventListener("click",closeGame);
+modal.addEventListener("click",e=>{if(e.target===modal)closeGame();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGame();});
+</script>
 </body>
 </html>
