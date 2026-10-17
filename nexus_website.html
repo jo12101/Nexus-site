@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090914">
+  <title>NEXUS — Play & Watch</title>
+  <style>
+    :root { color-scheme: dark; --bg:#090914; --panel:#141426; --line:#292947; --purple:#9b6bff; --blue:#5de1ff; --text:#f5f3ff; --muted:#aaa8c5; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,sans-serif; color:var(--text); background:radial-gradient(ellipse at top,#21143f 0%,var(--bg) 48%); min-height:100vh; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px clamp(16px,5vw,64px); border-bottom:1px solid #ffffff12; position:sticky; top:0; background:#090914eF; backdrop-filter:blur(14px); z-index:2; }
+    .logo { font-weight:900; letter-spacing:2px; font-size:1.35rem; } .logo span { color:var(--blue); }
+    nav { display:flex; gap:8px; flex-wrap:wrap; }
+    button, input { font:inherit; }
+    button { cursor:pointer; color:var(--text); background:#211c39; border:1px solid #514077; border-radius:12px; padding:10px 14px; transition:.2s; }
+    button:hover { transform:translateY(-1px); border-color:var(--blue); box-shadow:0 0 20px #5de1ff22; }
+    .active, .primary { background:linear-gradient(110deg,#7447db,#3a70d9); border-color:transparent; }
+    main { width:min(1120px,92%); margin:0 auto; padding:30px 0 60px; }
+    .hero { padding:clamp(26px,6vw,60px); border:1px solid #ffffff18; border-radius:28px; background:linear-gradient(115deg,#241440ed,#101a36ed); box-shadow:0 22px 70px #0005; overflow:hidden; position:relative; }
+    .hero:after { content:""; position:absolute; width:250px; height:250px; right:-65px; top:-70px; border-radius:50%; background:#8b5cf633; filter:blur(4px); }
+    .eyebrow { color:var(--blue); text-transform:uppercase; letter-spacing:3px; font-size:.78rem; font-weight:800; }
+    h1 { font-size:clamp(2.3rem,7vw,4.8rem); line-height:1.02; margin:12px 0; letter-spacing:-2px; }
+    .gradient { background:linear-gradient(90deg,#fff,#9ddcff,#b99aff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    p { color:var(--muted); line-height:1.6; }
+    .hero p { max-width:560px; font-size:1.05rem; }
+    .search-wrap { display:flex; gap:10px; margin:24px 0 30px; }
+    input { width:100%; background:#111120; border:1px solid var(--line); color:var(--text); border-radius:12px; padding:13px 15px; outline:none; }
+    input:focus { border-color:var(--purple); box-shadow:0 0 0 3px #9b6bff22; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:34px 0 14px; }
+    h2 { margin:0; font-size:1.5rem; } .section-head p { margin:4px 0 0; font-size:.9rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:15px; }
+    .card { border:1px solid var(--line); background:linear-gradient(145deg,#17172b,#10101d); border-radius:18px; padding:18px; min-height:190px; display:flex; flex-direction:column; align-items:flex-start; }
+    .art { display:grid; place-items:center; width:100%; height:90px; border-radius:12px; margin-bottom:14px; font-size:2.7rem; background:linear-gradient(135deg,#38215d,#172d4b); }
+    .art.movie { background:linear-gradient(135deg,#54274b,#202d58); }
+    h3 { margin:0 0 5px; } .card p { margin:0 0 15px; font-size:.92rem; }
+    .card button { margin-top:auto; }
+    .status { margin-top:24px; border:1px solid #ffffff18; background:#111120; padding:15px 17px; border-radius:14px; color:#d7d2f0; }
+    .hidden { display:none !important; }
+    footer { text-align:center; padding:22px; border-top:1px solid #ffffff12; color:#77758f; font-size:.85rem; }
+    @media(max-width:600px) { header { align-items:flex-start; flex-direction:column; } nav { width:100%; } nav button { flex:1; } .search-wrap { flex-direction:column; } .hero { border-radius:20px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ NEXUS<span>.</span></div>
+    <nav aria-label="Main navigation">
+      <button class="active" data-filter="all">Home</button>
+      <button data-filter="game">🎮 Games</button>
+      <button data-filter="movie">🎬 Movies</button>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Your entertainment hub</div>
+      <h1>WATCH. <span class="gradient">PLAY.</span><br>REPEAT.</h1>
+      <p>One place for browser games, movie trailers, and videos. Welcome to your NEXUS.</p>
+      <button class="primary" id="explore">Explore the library ↓</button>
+    </section>
+
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Search games and movies..." aria-label="Search games and movies">
+      <button id="clear">Clear search</button>
+    </div>
+
+    <section id="library">
+      <div class="section-head">
+        <div><h2>🎮 Games</h2><p>Play a little game right here.</p></div>
+      </div>
+      <div class="grid">
+        <article class="card searchable" data-type="game" data-name="neon tap reflex">
+          <div class="art">⚡</div><h3>Neon Tap</h3>
+          <p>Tap the button as many times as you can in 10 seconds.</p>
+          <button class="primary" id="play-neon">Play game</button>
+        </article>
+        <article class="card searchable" data-type="game" data-name="number guess puzzle">
+          <div class="art">🔢</div><h3>Number Guess</h3>
+          <p>Try to guess a number between 1 and 10.</p>
+          <button id="play-guess">Play game</button>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <div><h2>🎬 Movies & videos</h2><p>Explore trailers and videos you’re allowed to watch.</p></div>
+      </div>
+      <div class="grid">
+        <article class="card searchable" data-type="movie" data-name="movie trailers">
+          <div class="art movie">🍿</div><h3>Movie trailers</h3>
+          <p>Find official trailers from studios and creators.</p>
+          <button class="primary" data-message="Add links to official movie trailers here as you build your library.">Explore trailers</button>
+        </article>
+        <article class="card searchable" data-type="movie" data-name="video library">
+          <div class="art movie">▶️</div><h3>Video library</h3>
+          <p>A spot for videos you own or have permission to share.</p>
+          <button data-message="Your video library section is ready for permitted video links.">Open library</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="game-panel" class="status hidden" aria-live="polite">
+      <h3 id="game-title">Game</h3>
+      <p id="game-description"></p>
+      <div id="game-controls"></div>
+      <button id="close-game">Close game</button>
+    </section>
+    <div id="status" class="status" role="status">Welcome to NEXUS. Choose a section or search the library.</div>
+  </main>
+  <footer>© NEXUS • A personal project made while learning to code</footer>
+
+  <script>
+    const statusBox = document.getElementById('status');
+    const cards = [...document.querySelectorAll('.searchable')];
+    const search = document.getElementById('search');
+    const gamePanel = document.getElementById('game-panel');
+    const gameTitle = document.getElementById('game-title');
+    const gameDescription = document.getElementById('game-description');
+    const gameControls = document.getElementById('game-controls');
+    let timer = null;
+
+    function showStatus(message) { statusBox.textContent = message; }
+    function showGame(title, description) {
+      clearInterval(timer);
+      gamePanel.classList.remove('hidden');
+      gameTitle.textContent = title;
+      gameDescription.textContent = description;
+      gameControls.replaceChildren();
+      gamePanel.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+    document.querySelectorAll('[data-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.dataset.filter;
+        cards.forEach(card => card.classList.toggle('hidden', filter !== 'all' && card.dataset.type !== filter));
+        showStatus(filter === 'all' ? 'Showing the full NEXUS library.' : `Showing ${filter === 'game' ? 'games' : 'movies and videos'}.`);
+      });
+    });
+    function runSearch() {
+      const term = search.value.toLowerCase().trim();
+      cards.forEach(card => card.classList.toggle('hidden', !`${card.dataset.name} ${card.textContent}`.toLowerCase().includes(term)));
+      showStatus(term ? `Search results for “${term}”.` : 'Showing the full NEXUS library.');
+    }
+    search.addEventListener('input', runSearch);
+    document.getElementById('clear').addEventListener('click', () => { search.value = ''; runSearch(); });
+    document.getElementById('explore').addEventListener('click', () => document.getElementById('library').scrollIntoView({behavior:'smooth'}));
+    document.querySelectorAll('[data-message]').forEach(button => button.addEventListener('click', () => showStatus(button.dataset.message)));
+
+    document.getElementById('play-neon').addEventListener('click', () => {
+      showGame('⚡ Neon Tap', 'Tap as fast as you can before the 10-second timer ends.');
+      let count = 0, seconds = 10;
+      const score = document.createElement('h2');
+      score.textContent = 'Taps: 0';
+      const clock = document.createElement('p');
+      clock.textContent = 'Time left: 10s';
+      const tap = document.createElement('button');
+      tap.className = 'primary'; tap.textContent = 'TAP!';
+      tap.addEventListener('click', () => { if (seconds > 0) { count++; score.textContent = `Taps: ${count}`; } });
+      gameControls.append(score, clock, tap);
+      timer = setInterval(() => {
+        seconds--; clock.textContent = `Time left: ${seconds}s`;
+        if (seconds <= 0) { clearInterval(timer); tap.disabled = true; tap.textContent = 'Time’s up!'; gameDescription.textContent = `Final score: ${count} taps. Try again to beat your score!`; }
+      }, 1000);
+    });
+
+    document.getElementById('play-guess').addEventListener('click', () => {
+      showGame('🔢 Number Guess', 'I picked a number from 1 to 10. Can you find it?');
+      const target = Math.floor(Math.random() * 10) + 1;
+      const input = document.createElement('input');
+      input.type = 'number'; input.min = '1'; input.max = '10'; input.placeholder = 'Enter 1–10';
+      input.setAttribute('aria-label','Guess a number from 1 to 10');
+      const guessButton = document.createElement('button'); guessButton.className = 'primary'; guessButton.textContent = 'Guess';
+      const result = document.createElement('p');
+      guessButton.addEventListener('click', () => {
+        const n = Number(input.value);
+        if (!Number.isInteger(n) || n < 1 || n > 10) result.textContent = 'Enter a whole number from 1 to 10.';
+        else if (n === target) { result.textContent = 'Correct! You got it! Press Play game again for a new number.'; guessButton.disabled = true; }
+        else result.textContent = n < target ? 'Too low — try again!' : 'Too high — try again!';
+      });
+      gameControls.append(input, guessButton, result);
+    });
+    document.getElementById('close-game').addEventListener('click', () => { clearInterval(timer); gamePanel.classList.add('hidden'); });
+  </script>
+</body>
+</html>
