@@ -4,117 +4,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEXUS Movie Hub</title>
+<title>NEXUS Movies & Games</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090910;color:white;font-family:Arial,sans-serif}
-header{padding:22px 5%;background:#151520;border-bottom:2px solid #ff3150}
-.logo{font-size:32px;font-weight:900;letter-spacing:3px;color:#ff3150}
-main{max-width:1200px;margin:auto;padding:24px 5%}
-.hero{padding:25px;background:linear-gradient(120deg,#40142c,#19192e);border-radius:15px}
-h1{font-size:38px}
-input,select{width:100%;padding:13px;margin:8px 0;background:#191923;color:white;border:1px solid #444459;border-radius:9px;font-size:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px}
-.card{background:#171722;border:1px solid #303044;border-radius:12px;padding:14px}
-.icon{font-size:32px}
-.card h3{font-size:15px;min-height:38px}
-.category{font-size:12px;color:#aaaabd;margin-bottom:12px}
-button{background:#ff3150;color:white;border:0;border-radius:8px;padding:12px 8px;width:100%;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
-#player{display:none;margin:20px 0;background:#171722;padding:14px;border-radius:12px}
-iframe{width:100%;aspect-ratio:16/9;border:0;background:black}
-.note{color:#aaaabd;font-size:13px;line-height:1.6}
+body{margin:0;background:#09090d;color:#fff;font-family:Arial,sans-serif}
+header{padding:25px 5%;background:linear-gradient(110deg,#41050b,#101016);border-bottom:2px solid #e50914}
+.logo{font-size:36px;font-weight:900;letter-spacing:5px;color:#ff2435}
+header p{color:#ccc}
+main{padding:22px 5%}
+input,select{background:#191920;color:#fff;border:1px solid #444;border-radius:8px;padding:13px;font-size:15px}
+input{width:100%;margin-bottom:12px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+button{cursor:pointer;border:0;border-radius:7px;padding:12px;background:#303039;color:white;font-weight:bold}
+button.active,.play{background:#e50914}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px}
+.card{background:#181820;border:1px solid #303039;border-radius:10px;overflow:hidden}
+.poster{height:145px;background:linear-gradient(140deg,#501923,#171721);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:21px;font-weight:bold}
+.info{padding:12px}
+.info h3{font-size:16px;margin:0 0 8px}
+.info p{font-size:12px;color:#bbb;min-height:28px}
+.play{width:100%;font-size:11px;line-height:1.5}
+.note{color:#aaa;font-size:13px;line-height:1.5}
+footer{padding:25px;color:#888}
 </style>
 </head>
 <body>
-<header><div class="logo">NEXUS.</div><div>YOUR MOVIE UNIVERSE</div></header>
+<header>
+ <div class="logo">NEXUS</div>
+ <p>MOVIES • GAMES • ENTERTAINMENT</p>
+</header>
 <main>
-<section class="hero">
-<h1>PRESS PLAY.</h1>
-<p>Marvel · Spider-Man · Sonic · Transformers · Comedy · Action · Gaming · Animation</p>
-</section>
+ <input id="search" placeholder="Search all movies..." aria-label="Search movies">
+ <select id="category" aria-label="Choose a category">
+  <option value="all">All categories</option>
+  <option value="superhero">Superhero</option>
+  <option value="action">Action</option>
+  <option value="comedy">Comedy</option>
+  <option value="sci-fi">Sci-Fi</option>
+  <option value="animation">Animation</option>
+ </select>
+ <div class="filters">
+  <button class="active" data-cat="all">ALL</button>
+  <button data-cat="superhero">SUPERHERO</button>
+  <button data-cat="action">ACTION</button>
+  <button data-cat="comedy">COMEDY</button>
+  <button data-cat="sci-fi">SCI-FI</button>
+  <button data-cat="animation">ANIMATION</button>
+ </div>
 
-<h2>Movie Collection</h2>
-<input id="search" placeholder="Search movies..." oninput="render()">
-<select id="filter" onchange="render()">
-<option>All</option><option>Marvel</option><option>Action</option>
-<option>Comedy</option><option>Sci-Fi</option><option>Animation</option>
-<option>Gaming</option><option>Adventure</option>
-</select>
+ <h2>🎬 MOVIES</h2>
+ <p class="note">Tap PRESS PLAY — WATCH NOW to open the movie's official studio or streaming destination. Availability and subscriptions vary.</p>
+ <div id="movies" class="grid"></div>
 
-<div id="player">
-<h2 id="playing"></h2>
-<iframe id="video" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
-</div>
-<div id="movies" class="grid"></div>
-<p class="note">Only movies with verified, authorized full-film video sources can play here. A title alone does not provide a video stream.</p>
+ <h2>🎮 BROWSER GAMES</h2>
+ <div class="grid">
+  <article class="card">
+   <div class="poster">🕹️ ARCADE</div>
+   <div class="info"><h3>CrazyGames</h3><p>Browser games</p>
+   <button class="play" onclick="openLink('https://www.crazygames.com/')">PRESS PLAY — PLAY NOW</button></div>
+  </article>
+  <article class="card">
+   <div class="poster">🎮 INDIE</div>
+   <div class="info"><h3>itch.io</h3><p>Browser-playable indie games</p>
+   <button class="play" onclick="openLink('https://itch.io/games/html5')">PRESS PLAY — PLAY NOW</button></div>
+  </article>
+ </div>
 </main>
-
+<footer>NEXUS • Your entertainment hub</footer>
 <script>
-const titles = [
-["The Avengers","Marvel","🦸"],["Avengers: Age of Ultron","Marvel","🦸"],
-["Avengers: Infinity War","Marvel","🦸"],["Avengers: Endgame","Marvel","🦸"],
-["Iron Man","Marvel","🤖"],["Iron Man 2","Marvel","🤖"],["Iron Man 3","Marvel","🤖"],
-["Black Panther","Marvel","🐾"],["Thor: Ragnarok","Marvel","⚡"],
-["Guardians of the Galaxy","Marvel","🚀"],["Doctor Strange","Marvel","✨"],
-["Spider-Man","Action","🕷️"],["Spider-Man 2","Action","🕷️"],
-["Spider-Man 3","Action","🕷️"],["The Amazing Spider-Man","Action","🕸️"],
-["Spider-Man: Homecoming","Marvel","🕷️"],["Spider-Man: No Way Home","Marvel","🕷️"],
-["Into the Spider-Verse","Animation","🕸️"],["Across the Spider-Verse","Animation","🕸️"],
-["Transformers","Action","🤖"],["Bumblebee","Action","🚗"],
-["Transformers: Rise of the Beasts","Action","🤖"],
-["Sonic the Hedgehog","Gaming","💙"],["Sonic the Hedgehog 2","Gaming","💙"],
-["Sonic the Hedgehog 3","Gaming","💙"],["The Super Mario Bros. Movie","Gaming","🍄"],
-["A Minecraft Movie","Gaming","⛏️"],["Detective Pikachu","Gaming","⚡"],
-["Free Guy","Comedy","🎮"],["Jumanji","Adventure","🌴"],
-["Uncharted","Adventure","🗺️"],["The LEGO Movie","Animation","🧱"],
-["Shrek","Animation","🟢"],["Kung Fu Panda","Animation","🐼"],
-["Puss in Boots: The Last Wish","Animation","🐱"],
-["The Incredibles","Animation","🦸"],["Toy Story","Animation","🤠"],
-["Finding Nemo","Animation","🐠"],["Cars","Animation","🏎️"],
-["Despicable Me","Animation","🍌"],["Wreck-It Ralph","Animation","🎮"],
-["The Batman","Action","🦇"],["The Dark Knight","Action","🦇"],
-["Fast Five","Action","🏎️"],["Top Gun: Maverick","Action","✈️"],
-["John Wick","Action","🎯"],["Jurassic Park","Adventure","🦖"],
-["Jurassic World","Adventure","🦖"],["Godzilla vs. Kong","Sci-Fi","🦖"],
-["Pacific Rim","Sci-Fi","🤖"],["Avatar","Sci-Fi","🌌"],
-["Interstellar","Sci-Fi","🚀"],["Ready Player One","Sci-Fi","🎮"],
-["The Matrix","Sci-Fi","💊"],["Back to the Future","Sci-Fi","⏰"],
-["Men in Black","Sci-Fi","👽"],["Ghostbusters","Comedy","👻"],
-["Rush Hour","Comedy","😂"],["Home Alone","Comedy","🏠"],
-["Night at the Museum","Comedy","🦕"],["The Mask","Comedy","🎭"]
+const movies=[
+{t:"Spider-Man",c:"superhero",e:"🕷️",u:"https://www.sonypictures.com/movies"},
+{t:"Spider-Man 2",c:"superhero",e:"🕸️",u:"https://www.sonypictures.com/movies"},
+{t:"Spider-Man: No Way Home",c:"superhero",e:"🕷️",u:"https://www.disneyplus.com/"},
+{t:"Spider-Man: Into the Spider-Verse",c:"animation",e:"🕸️",u:"https://www.sonypictures.com/movies"},
+{t:"Spider-Man: Across the Spider-Verse",c:"animation",e:"🕸️",u:"https://www.sonypictures.com/movies"},
+{t:"The Avengers",c:"superhero",e:"🦸",u:"https://www.marvel.com/movies"},
+{t:"Avengers: Endgame",c:"superhero",e:"💥",u:"https://www.marvel.com/movies"},
+{t:"Avengers: Infinity War",c:"superhero",e:"🌌",u:"https://www.marvel.com/movies"},
+{t:"Iron Man",c:"superhero",e:"🤖",u:"https://www.marvel.com/movies"},
+{t:"Black Panther",c:"superhero",e:"🐈‍⬛",u:"https://www.marvel.com/movies"},
+{t:"Doctor Strange",c:"superhero",e:"✨",u:"https://www.marvel.com/movies"},
+{t:"Guardians of the Galaxy",c:"sci-fi",e:"🚀",u:"https://www.marvel.com/movies"},
+{t:"Captain America",c:"superhero",e:"🛡️",u:"https://www.marvel.com/movies"},
+{t:"Thor",c:"superhero",e:"⚡",u:"https://www.marvel.com/movies"},
+{t:"Deadpool",c:"action",e:"🟥",u:"https://www.marvel.com/movies"},
+{t:"Sonic the Hedgehog",c:"animation",e:"💙",u:"https://www.paramountplus.com/"},
+{t:"Sonic the Hedgehog 2",c:"action",e:"⚡",u:"https://www.paramountplus.com/"},
+{t:"Sonic the Hedgehog 3",c:"action",e:"💙",u:"https://www.paramountplus.com/"},
+{t:"Transformers",c:"action",e:"🤖",u:"https://www.paramountmovies.com/movies/transformers"},
+{t:"Transformers: Revenge of the Fallen",c:"action",e:"🚗",u:"https://www.paramountmovies.com/"},
+{t:"Transformers: Dark of the Moon",c:"action",e:"🌙",u:"https://www.paramountmovies.com/"},
+{t:"Bumblebee",c:"action",e:"🚘",u:"https://www.paramountmovies.com/"},
+{t:"Transformers One",c:"animation",e:"🤖",u:"https://www.paramountmovies.com/movies/transformers-one"},
+{t:"The Super Mario Bros. Movie",c:"animation",e:"🍄",u:"https://www.nbcuniversal.com/"},
+{t:"Shrek",c:"comedy",e:"🟢",u:"https://www.dreamworks.com/"},
+{t:"Kung Fu Panda",c:"animation",e:"🐼",u:"https://www.dreamworks.com/"},
+{t:"Despicable Me",c:"comedy",e:"🍌",u:"https://www.universalpictures.com/"},
+{t:"The Mask",c:"comedy",e:"🎭",u:"https://www.warnerbros.com/"},
+{t:"Rush Hour",c:"comedy",e:"🚕",u:"https://www.warnerbros.com/"},
+{t:"Home Alone",c:"comedy",e:"🏠",u:"https://www.disneyplus.com/"},
+{t:"Jumanji",c:"action",e:"🎲",u:"https://www.sonypictures.com/movies"},
+{t:"Jurassic Park",c:"sci-fi",e:"🦖",u:"https://www.universalpictures.com/"},
+{t:"Back to the Future",c:"sci-fi",e:"⏰",u:"https://www.universalpictures.com/"},
+{t:"The Dark Knight",c:"action",e:"🦇",u:"https://www.warnerbros.com/"},
+{t:"Godzilla",c:"action",e:"🦖",u:"https://www.legendary.com/"},
+{t:"Pacific Rim",c:"sci-fi",e:"🤖",u:"https://www.legendary.com/"},
+{t:"The Lego Movie",c:"animation",e:"🧱",u:"https://www.warnerbros.com/"},
+{t:"Puss in Boots: The Last Wish",c:"animation",e:"🐱",u:"https://www.dreamworks.com/"},
+{t:"Scream",c:"action",e:"🎭",u:"https://www.paramountmovies.com/"},
+{t:"Mission: Impossible",c:"action",e:"🕶️",u:"https://www.paramountmovies.com/"},
+{t:"Top Gun: Maverick",c:"action",e:"✈️",u:"https://www.paramountmovies.com/"},
+{t:"Titanic",c:"action",e:"🚢",u:"https://www.paramountmovies.com/"},
+{t:"Interstellar",c:"sci-fi",e:"🌌",u:"https://www.warnerbros.com/"},
+{t:"The Matrix",c:"sci-fi",e:"🟢",u:"https://www.warnerbros.com/"},
+{t:"Ready Player One",c:"sci-fi",e:"🎮",u:"https://www.warnerbros.com/"},
+{t:"Willy Wonka",c:"comedy",e:"🍫",u:"https://www.warnerbros.com/"},
+{t:"The Lego Batman Movie",c:"animation",e:"🦇",u:"https://www.warnerbros.com/"}
 ];
 
-// Add a movie's authorized, embeddable full-film URL here
-// only after verifying the source permits full-film playback.
-const playableSources = {};
-
+const grid=document.getElementById("movies");
+const search=document.getElementById("search");
+const category=document.getElementById("category");
+let selected="all";
+function openLink(url){window.open(url,"_blank","noopener,noreferrer");}
 function render(){
- const q=document.getElementById("search").value.toLowerCase();
- const f=document.getElementById("filter").value;
- const list=titles.filter(m=>
-   m[0].toLowerCase().includes(q)&&(f==="All"||m[1]===f)
+ const q=search.value.toLowerCase().trim();
+ const list=movies.filter(m=>
+  (m.t.toLowerCase().includes(q)||m.c.includes(q))&&
+  (selected==="all"||m.c===selected)&&
+  (category.value==="all"||m.c===category.value)
  );
- document.getElementById("movies").innerHTML=list.map(m=>{
-   const url=playableSources[m[0]];
-   return `<article class="card">
-    <div class="icon">${m[2]}</div>
-    <h3>${m[0]}</h3>
-    <div class="category">${m[1]}</div>
-    <button ${url?'':'disabled'} onclick="playMovie('${encodeURIComponent(m[0])}')">PRESS PLAY — WATCH NOW</button>
-   </article>`;
- }).join("");
+ grid.innerHTML="";
+ if(!list.length){grid.textContent="No movies found.";return;}
+ list.forEach(m=>{
+  const card=document.createElement("article");card.className="card";
+  const poster=document.createElement("div");poster.className="poster";poster.textContent=m.e+" "+m.t;
+  const info=document.createElement("div");info.className="info";
+  const title=document.createElement("h3");title.textContent=m.t;
+  const desc=document.createElement("p");desc.textContent=m.c.toUpperCase()+" · Official movie destination";
+  const btn=document.createElement("button");btn.className="play";btn.textContent="PRESS PLAY — WATCH NOW";
+  btn.addEventListener("click",()=>openLink(m.u));
+  info.append(title,desc,btn);card.append(poster,info);grid.append(card);
+ });
 }
-
-function playMovie(encodedTitle){
- const title=decodeURIComponent(encodedTitle);
- const url=playableSources[title];
- if(!url)return;
- document.getElementById("playing").textContent=title;
- document.getElementById("video").src=url;
- document.getElementById("player").style.display="block";
- document.getElementById("player").scrollIntoView({behavior:"smooth"});
-}
+search.addEventListener("input",render);
+category.addEventListener("change",render);
+document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{
+ selected=btn.dataset.cat;category.value="all";
+ document.querySelectorAll("[data-cat]").forEach(b=>b.classList.toggle("active",b===btn));
+ render();
+}));
 render();
 </script>
 </body>
