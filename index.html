@@ -4,464 +4,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS | Movie Zone</title>
+<title>NEXUS — Movie Hub</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#090910;color:#fff;font-family:Arial,sans-serif}
-header{padding:18px 5%;background:#11111b;position:sticky;top:0;border-bottom:1px solid #333;z-index:5}
-.logo{font-size:28px;font-weight:900;letter-spacing:4px;color:#e50925}
-nav{display:flex;gap:18px;margin-top:12px}
-nav a{color:white;text-decoration:none}
-.hero{padding:55px 6%;background:radial-gradient(ellipse at 80% 30%,#50152a,transparent 60%),#11111c}
-.hero small,.tag{color:#ff7385;letter-spacing:2px}
-h1{font-size:clamp(42px,9vw,70px);margin:15px 0}
-.hero p{color:#ccc;line-height:1.7;max-width:500px}
-.controls{padding:22px 5%;display:flex;gap:10px;flex-wrap:wrap}
-input,select{background:#191925;color:white;border:1px solid #39394b;padding:13px;border-radius:8px;font-size:15px}
-input{flex:1;min-width:170px}
-main{padding:0 5% 45px}
-.heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.count,.status{color:#aaaabc;font-size:13px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
-.card{background:#171722;border:1px solid #30303e;border-radius:10px;overflow:hidden}
-.poster{height:140px;background:linear-gradient(135deg,#34243e,#171722);display:flex;align-items:center;justify-content:center;font-size:45px;overflow:hidden}
-.poster img{width:100%;height:100%;object-fit:cover}
-.info{padding:12px}
-.tag{font-size:10px;text-transform:uppercase}
-h3{font-size:15px;line-height:1.4}
-.desc{font-size:12px;color:#aaaabc;line-height:1.5;min-height:28px}
-.btn{display:block;background:#e50925;color:white;text-decoration:none;text-align:center;border:0;border-radius:6px;padding:11px 7px;font-size:12px;font-weight:bold}
-.notice{font-size:12px;color:#aaaabc;line-height:1.7;margin:22px 0}
-footer{padding:25px 5%;border-top:1px solid #30303e;color:#aaaabc;font-size:12px;line-height:1.8}
-@media(max-width:450px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.poster{height:110px}.info{padding:9px}}
+body{margin:0;background:#090a11;color:#fff;font-family:Arial,sans-serif}
+header{padding:25px 6%;background:#12131d;border-bottom:1px solid #292a3a}
+h1{margin:0;color:#a78bfa;font-size:35px;letter-spacing:4px}
+header p,.muted{color:#aaa}
+main{padding:25px 6%}
+input,select{width:100%;padding:14px;margin:0 0 12px;background:#171824;color:white;border:1px solid #35364a;border-radius:9px;font-size:16px}
+#status{color:#c4b5fd;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px}
+.card{background:#151621;border:1px solid #292a3a;border-radius:12px;overflow:hidden}
+.poster{height:145px;display:grid;place-items:center;background:linear-gradient(135deg,#43245f,#151725);font-size:43px}
+.info{padding:13px}
+h3{font-size:15px;line-height:1.4;min-height:40px;margin:0 0 8px}
+.small{font-size:12px;color:#aaa;line-height:1.5}
+button{width:100%;padding:11px;border:0;border-radius:7px;background:#7c3aed;color:#fff;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+#player{display:none;position:fixed;inset:0;z-index:5;overflow:auto;background:#000e;padding:16px}
+.panel{max-width:900px;margin:25px auto;background:#12131d;padding:16px;border-radius:12px}
+video{display:block;width:100%;max-height:65vh;background:#000}
+.close{width:auto;float:right;background:#343548}
+.note{font-size:12px;color:#aaa;line-height:1.6}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">NEXUS</div>
-<nav><a href="#home">Home</a><a href="#movies">Movies</a></nav>
+<h1>NEXUS</h1>
+<p>Your movie night starts here 🍿</p>
 </header>
 
-<section class="hero" id="home">
-<small>YOUR MOVIE DESTINATION</small>
-<h1>MOVIE<br>NIGHT.</h1>
-<p>Superheroes, action, comedy, animation, sci-fi, horror and adventure. Discover your next favorite movie.</p>
-<a class="btn" href="#movies" style="display:inline-block">EXPLORE MOVIES</a>
-</section>
-
-<div class="controls">
-<input id="search" placeholder="Search movies..." type="search">
+<main>
+<h2>Discover Movies</h2>
+<input id="search" placeholder="Search movies..." autocomplete="off">
 <select id="genre">
-<option value="All">All genres</option>
-<option>Action</option><option>Superhero</option><option>Comedy</option>
-<option>Animation</option><option>Sci-Fi</option><option>Adventure</option>
-<option>Fantasy</option><option>Horror</option><option>Drama</option><option>Family</option>
+<option value="">All categories</option>
+<option value="animation">Animation</option>
+<option value="comedy">Comedy</option>
+<option value="family">Family</option>
+<option value="adventure">Adventure</option>
+<option value="science fiction">Sci-Fi</option>
+<option value="fantasy">Fantasy</option>
+<option value="western">Western</option>
 </select>
-</div>
-
-<main id="movies">
-<div class="heading"><h2>🎬 Movies for You</h2><span class="count" id="count">Loading...</span></div>
-<p class="status" id="status">Preparing your movie catalog...</p>
+<p id="status">Finding movies with playable video files...</p>
 <div class="grid" id="grid"></div>
-<p class="notice">Viewing links help you find legitimate streaming, rental, or purchase options. Availability varies. Check movie ratings and content before watching.</p>
+<button id="more" style="display:none;margin-top:20px">Load more movies</button>
+<p class="note">NEXUS searches Internet Archive for movies with public-domain or Creative Commons license metadata, then checks for MP4 files. Availability, licensing accuracy, age suitability and playback can vary. Ask a parent or guardian if you're unsure whether a film is appropriate.</p>
 </main>
 
-<footer><b style="color:white">NEXUS MOVIE ZONE</b><br>Movie discovery for teens. NEXUS does not host copyrighted films.</footer>
+<div id="player">
+<div class="panel">
+<button class="close" onclick="closePlayer()">Close ✕</button>
+<h2 id="movieTitle">NEXUS Player</h2>
+<p id="playerStatus" class="muted">Loading video...</p>
+<video id="video" controls playsinline></video>
+<p class="note">If playback fails, the file may be unavailable or incompatible with your browser.</p>
+</div>
+</div>
 
 <script>
-const seed = [
-["Spider-Man: Into the Spider-Verse","Animation"],["Spider-Man: Across the Spider-Verse","Animation"],
-["Spider-Man: Homecoming","Superhero"],["Spider-Man: Far From Home","Superhero"],
-["Spider-Man: No Way Home","Superhero"],["The Amazing Spider-Man","Superhero"],
-["Iron Man","Superhero"],["The Avengers","Superhero"],["Avengers: Infinity War","Superhero"],
-["Avengers: Endgame","Superhero"],["Black Panther","Superhero"],["Black Panther: Wakanda Forever","Superhero"],
-["Thor: Ragnarok","Superhero"],["Doctor Strange","Superhero"],["Guardians of the Galaxy","Sci-Fi"],
-["Ant-Man","Superhero"],["Shang-Chi and the Legend of the Ten Rings","Action"],
-["The Batman","Superhero"],["The Dark Knight","Superhero"],["Batman Begins","Superhero"],
-["Man of Steel","Superhero"],["Wonder Woman","Superhero"],["Aquaman","Superhero"],
-["Blue Beetle","Superhero"],["Shazam!","Superhero"],["The Lego Batman Movie","Animation"],
-["Sonic the Hedgehog","Adventure"],["Sonic the Hedgehog 2","Adventure"],
-["The Super Mario Bros. Movie","Animation"],["Detective Pikachu","Adventure"],
-["Transformers","Action"],["Bumblebee","Action"],["Real Steel","Action"],
-["Free Guy","Comedy"],["Ready Player One","Sci-Fi"],["The Adam Project","Sci-Fi"],
-["Back to the Future","Sci-Fi"],["Interstellar","Sci-Fi"],["The Martian","Sci-Fi"],
-["Dune","Sci-Fi"],["Dune: Part Two","Sci-Fi"],["Star Wars: A New Hope","Sci-Fi"],
-["The Empire Strikes Back","Sci-Fi"],["Return of the Jedi","Sci-Fi"],
-["Rogue One: A Star Wars Story","Sci-Fi"],["Harry Potter and the Sorcerer's Stone","Fantasy"],
-["Harry Potter and the Prisoner of Azkaban","Fantasy"],["Harry Potter and the Goblet of Fire","Fantasy"],
-["Harry Potter and the Deathly Hallows: Part 2","Fantasy"],
-["The Lord of the Rings: The Fellowship of the Ring","Fantasy"],
-["The Lord of the Rings: The Return of the King","Fantasy"],
-["The Hobbit: An Unexpected Journey","Fantasy"],["Jumanji: Welcome to the Jungle","Adventure"],
-["Jumanji: The Next Level","Adventure"],["National Treasure","Adventure"],
-["Pirates of the Caribbean: The Curse of the Black Pearl","Adventure"],
-["Jurassic Park","Adventure"],["Jurassic World","Adventure"],
-["The Hunger Games","Adventure"],["Catching Fire","Adventure"],["Divergent","Sci-Fi"],
-["The Maze Runner","Sci-Fi"],["The Karate Kid","Action"],["Creed","Drama"],
-["Creed II","Drama"],["Creed III","Drama"],["Top Gun: Maverick","Action"],
-["Mission: Impossible – Fallout","Action"],["Fast Five","Action"],["Furious 7","Action"],
-["Rush Hour","Comedy"],["Rush Hour 2","Comedy"],["Men in Black","Sci-Fi"],
-["Ghostbusters","Comedy"],["Ghostbusters: Afterlife","Comedy"],
-["The Incredibles","Animation"],["Incredibles 2","Animation"],
-["Toy Story","Animation"],["Toy Story 2","Animation"],["Toy Story 3","Animation"],
-["Toy Story 4","Animation"],["Finding Nemo","Animation"],["Finding Dory","Animation"],
-["Cars","Animation"],["Cars 2","Animation"],["Cars 3","Animation"],
-["Inside Out","Animation"],["Inside Out 2","Animation"],["Coco","Animation"],
-["Ratatouille","Animation"],["WALL-E","Animation"],["Up","Animation"],
-["Moana","Animation"],["Moana 2","Animation"],["Frozen","Animation"],
-["Frozen II","Animation"],["Tangled","Animation"],["Encanto","Animation"],
-["Zootopia","Animation"],["Big Hero 6","Animation"],["Wreck-It Ralph","Animation"],
-["Ralph Breaks the Internet","Animation"],["Kung Fu Panda","Animation"],
-["Kung Fu Panda 2","Animation"],["Kung Fu Panda 3","Animation"],
-["Shrek","Animation"],["Shrek 2","Animation"],["Puss in Boots: The Last Wish","Animation"],
-["How to Train Your Dragon","Animation"],["The Bad Guys","Animation"],
-["Despicable Me","Animation"],["Despicable Me 2","Animation"],["Minions","Animation"],
-["The Secret Life of Pets","Animation"],["Sing","Animation"],["The Lego Movie","Animation"],
-["The SpongeBob SquarePants Movie","Animation"],["The Angry Birds Movie","Animation"],
-["The Wild Robot","Animation"],["Migration","Animation"],["Elemental","Animation"],
-["Wonka","Fantasy"],["Charlie and the Chocolate Factory","Fantasy"],
-["Matilda","Fantasy"],["Paddington","Family"],["Paddington 2","Family"],
-["Night at the Museum","Comedy"],["Home Alone","Comedy"],
-["Home Alone 2: Lost in New York","Comedy"],["The Parent Trap","Comedy"],
-["Freaky Friday","Comedy"],["School of Rock","Comedy"],["The Pacifier","Comedy"],
-["Diary of a Wimpy Kid","Comedy"],["The Sandlot","Family"],["Space Jam","Comedy"],
-["The Goonies","Adventure"],["The Princess Bride","Fantasy"],
-["The Chronicles of Narnia: The Lion, the Witch and the Wardrobe","Fantasy"],
-["The Mask","Comedy"],["Dumb and Dumber","Comedy"],["Liar Liar","Comedy"],
-["Central Intelligence","Comedy"],["The Other Guys","Comedy"],
-["The Truman Show","Comedy"],["Bruce Almighty","Comedy"],
-["The Day After Tomorrow","Sci-Fi"],["Independence Day","Sci-Fi"],
-["Edge of Tomorrow","Sci-Fi"],["Oblivion","Sci-Fi"],["Godzilla vs. Kong","Action"],
-["King Kong","Adventure"],["The Mummy","Adventure"],["The Scorpion King","Adventure"],
-["The Adventures of Tintin","Adventure"],["Uncharted","Adventure"],
-["The Spiderwick Chronicles","Fantasy"],["Bridge to Terabithia","Fantasy"],
-["The BFG","Fantasy"],["The Polar Express","Animation"],["Coraline","Animation"],
-["ParaNorman","Animation"],["Kubo and the Two Strings","Animation"],
-["The Nightmare Before Christmas","Animation"],["Hotel Transylvania","Animation"],
-["Hotel Transylvania 2","Animation"],["Hotel Transylvania 3: Summer Vacation","Animation"],
-["The Croods","Animation"],["The Croods: A New Age","Animation"],
-["Megamind","Animation"],["The Emperor's New Groove","Animation"],
-["The Road to El Dorado","Animation"],["The Prince of Egypt","Animation"],
-["The Lego Ninjago Movie","Animation"],["Teenage Mutant Ninja Turtles: Mutant Mayhem","Animation"],
-["The Garfield Movie","Animation"],["The Peanuts Movie","Animation"],
-["Cloudy with a Chance of Meatballs","Animation"],["Cloudy with a Chance of Meatballs 2","Animation"],
-["The Lion King","Animation"],["Aladdin","Adventure"],["Mulan","Adventure"],
-["Beauty and the Beast","Fantasy"],["Cinderella","Fantasy"],["The Little Mermaid","Fantasy"],
-["Lilo & Stitch","Animation"],["Bolt","Animation"],["A Bug's Life","Animation"],
-["Monsters, Inc.","Animation"],["Monsters University","Animation"],
-["The Good Dinosaur","Animation"],["Luca","Animation"],["Soul","Animation"],
-["Turning Red","Animation"],["Onward","Animation"],["Lightyear","Animation"],
-["The Angry Birds Movie 2","Animation"],["Puss in Boots","Animation"],
-["Shrek the Third","Animation"],["Shrek Forever After","Animation"],
-["The Karate Kid (2010)","Action"],["Rocky","Drama"],["Rocky IV","Drama"],
-["Remember the Titans","Drama"],["Ford v Ferrari","Drama"],
-["The Greatest Showman","Drama"],["The Game Plan","Comedy"],
-["Cheaper by the Dozen","Comedy"],["Daddy Day Care","Comedy"],
-["Paul Blart: Mall Cop","Comedy"],["Mr. Bean's Holiday","Comedy"],
-["Johnny English","Comedy"],["The Pink Panther","Comedy"],
-["Shanghai Noon","Comedy"],["Shanghai Knights","Comedy"],
-["Agent Cody Banks","Action"],["Spy Kids","Adventure"],["Spy Kids 2: The Island of Lost Dreams","Adventure"],
-["Dolphin Tale","Family"],["Babe","Family"],["Stuart Little","Family"],
-["Peter Rabbit","Family"],["The Jungle Book","Family"],
-["The Secret Garden","Family"],["The Wizard of Oz","Fantasy"],
-["Jumanji","Adventure"],["Journey to the Center of the Earth","Adventure"],
-["Journey 2: The Mysterious Island","Adventure"],["The Lost World: Jurassic Park","Adventure"],
-["Jurassic Park III","Adventure"],["Jurassic World: Fallen Kingdom","Adventure"],
-["The Fifth Element","Sci-Fi"],["Tron","Sci-Fi"],["Tron: Legacy","Sci-Fi"],
-["Avatar","Sci-Fi"],["Avatar: The Way of Water","Sci-Fi"],
-["The Chronicles of Narnia: Prince Caspian","Fantasy"],
-["The Voyage of the Dawn Treader","Fantasy"],["Fantastic Beasts and Where to Find Them","Fantasy"],
-["Fantastic Beasts: The Secrets of Dumbledore","Fantasy"],
-["The Hobbit: The Desolation of Smaug","Fantasy"],
-["The Hobbit: The Battle of the Five Armies","Fantasy"],
-["The Hunger Games: Mockingjay Part 1","Adventure"],
-["The Hunger Games: Mockingjay Part 2","Adventure"],
-["The Ballad of Songbirds & Snakes","Adventure"],["Insurgent","Sci-Fi"],
-["Allegiant","Sci-Fi"],["Maze Runner: The Scorch Trials","Sci-Fi"],
-["Maze Runner: The Death Cure","Sci-Fi"],["The Twilight Saga: New Moon","Fantasy"],
-["The Twilight Saga: Eclipse","Fantasy"],["The Twilight Saga: Breaking Dawn - Part 1","Fantasy"],
-["The Twilight Saga: Breaking Dawn - Part 2","Fantasy"],
-["The Amazing Spider-Man 2","Superhero"],["Spider-Man 2","Superhero"],
-["Spider-Man 3","Superhero"],["Captain America: The First Avenger","Superhero"],
-["Captain America: The Winter Soldier","Superhero"],["Avengers: Age of Ultron","Superhero"],
-["Thor: Love and Thunder","Superhero"],["Ant-Man and the Wasp","Superhero"],
-["Guardians of the Galaxy Vol. 2","Sci-Fi"],["Guardians of the Galaxy Vol. 3","Sci-Fi"],
-["X-Men: Apocalypse","Superhero"],["Dark Phoenix","Superhero"],
-["Wonder Woman 1984","Superhero"],["Aquaman and the Lost Kingdom","Superhero"],
-["The Flash","Superhero"],["Shazam! Fury of the Gods","Superhero"],
-["Transformers: Rise of the Beasts","Action"],["Transformers: The Last Knight","Action"],
-["Godzilla: King of the Monsters","Action"],["Godzilla x Kong: The New Empire","Action"],
-["Pacific Rim: Uprising","Sci-Fi"],["The Meg","Action"],["Meg 2: The Trench","Action"],
-["National Treasure: Book of Secrets","Adventure"],["The Mask of Zorro","Adventure"],
-["The Legend of Zorro","Adventure"],["The Mummy Returns","Adventure"],
-["The Mummy: Tomb of the Dragon Emperor","Adventure"],["Rush Hour 3","Comedy"],
-["Men in Black II","Sci-Fi"],["Men in Black 3","Sci-Fi"],
-["Ghostbusters II","Comedy"],["Ghostbusters: Frozen Empire","Comedy"],
-["Back to the Future Part II","Sci-Fi"],["Back to the Future Part III","Sci-Fi"],
-["The Lego Movie 2: The Second Part","Animation"],["The Secret Life of Pets 2","Animation"],
-["Sing 2","Animation"],["Despicable Me 3","Animation"],["Despicable Me 4","Animation"],
-["Minions: The Rise of Gru","Animation"],["Kung Fu Panda 4","Animation"],
-["The SpongeBob Movie: Sponge Out of Water","Animation"],
-["The SpongeBob Movie: Sponge on the Run","Animation"],
-["The Polar Express","Animation"],["The Nightmare Before Christmas","Animation"],
-["Ratatouille","Animation"],["The Emperor's New Groove","Animation"],
-["The Princess and the Frog","Animation"],["Tangled","Animation"],
-["Frozen II","Animation"],["Moana 2","Animation"],
-["The Parent Trap (1998)","Comedy"],["Freaky Friday (2003)","Comedy"],
-["Elf","Comedy"],["The Grinch","Comedy"],["How the Grinch Stole Christmas","Comedy"],
-["Click","Comedy"],["Grown Ups","Comedy"],["Grown Ups 2","Comedy"],
-["Zookeeper","Comedy"],["The Game Plan","Comedy"],
-["Paddington 2","Family"],["Paddington in Peru","Family"],
-["Peter Rabbit 2: The Runaway","Family"],["The Adventures of Sharkboy and Lavagirl","Adventure"],
-["Race to Witch Mountain","Adventure"],["The Sorcerer's Apprentice","Fantasy"],
-["A Wrinkle in Time","Fantasy"],["Eragon","Fantasy"],
-["The Golden Compass","Fantasy"],["The Princess Diaries","Comedy"],
-["The Princess Diaries 2: Royal Engagement","Comedy"],["Enchanted","Fantasy"],
-["Disenchanted","Fantasy"],["Bedtime Stories","Fantasy"],
-["The Iron Giant","Animation"],["The Wild Robot","Animation"],
-["Wish","Animation"],["Elemental","Animation"],["The Mitchells vs. the Machines","Animation"],
-["The Bad Guys 2","Animation"],["The Garfield Movie","Animation"],
-["Dolphin Tale 2","Family"],["Yours, Mine & Ours","Comedy"],
-["Are We There Yet?","Comedy"],["Are We Done Yet?","Comedy"],
-["Big Fat Liar","Comedy"],["The Sandlot 2","Family"],
-["D2: The Mighty Ducks","Family"],["D3: The Mighty Ducks","Family"],
-["Creed II","Drama"],["Creed III","Drama"],["Top Gun","Action"],
-["Mission: Impossible","Action"],["Mission: Impossible 2","Action"],
-["Mission: Impossible III","Action"],["Mission: Impossible – Ghost Protocol","Action"],
-["Mission: Impossible – Rogue Nation","Action"],["Mission: Impossible – Fallout","Action"],
-["The Fast and the Furious","Action"],["2 Fast 2 Furious","Action"],
-["Tokyo Drift","Action"],["Fast & Furious","Action"],["Fast Five","Action"],
-["Fast & Furious 6","Action"],["Furious 7","Action"],["The Fate of the Furious","Action"],
-["F9","Action"],["Fast X","Action"],["The Bourne Identity","Action"],
-["The Bourne Supremacy","Action"],["The Bourne Ultimatum","Action"],
-["The Equalizer","Action"],["The Equalizer 2","Action"],["The Equalizer 3","Action"],
-["The A-Team","Action"],["Taken","Action"],["Taken 2","Action"],["Taken 3","Action"],
-["Sherlock Holmes","Adventure"],["Sherlock Holmes: A Game of Shadows","Adventure"],
-["The Adventures of Robin Hood","Adventure"],["The Count of Monte Cristo","Adventure"],
-["The Three Musketeers","Adventure"],["The Forbidden Kingdom","Adventure"],
-["The Last Samurai","Action"],["The Book of Eli","Action"],
-["The Hunger Games","Adventure"],["Divergent","Sci-Fi"],
-["The Martian","Sci-Fi"],["Arrival","Sci-Fi"],["Gravity","Sci-Fi"],
-["Passengers","Sci-Fi"],["Source Code","Sci-Fi"],["Real Steel","Action"],
-["The Tomorrow War","Sci-Fi"],["The Creator","Sci-Fi"],
-["The Adam Project","Sci-Fi"],["Project Almanac","Sci-Fi"],
-["Chronicle","Sci-Fi"],["Super 8","Sci-Fi"],["War of the Worlds","Sci-Fi"],
-["The Day After Tomorrow","Sci-Fi"],["2012","Action"],["Deep Impact","Sci-Fi"],
-["Armageddon","Action"],["Independence Day: Resurgence","Sci-Fi"],
-["The Fifth Wave","Sci-Fi"],["Ender's Game","Sci-Fi"],
-["I Am Number Four","Sci-Fi"],["The Giver","Sci-Fi"],
-["The Host","Sci-Fi"],["The Island","Sci-Fi"],["Minority Report","Sci-Fi"],
-["Real Steel","Action"],["The Rundown","Adventure"],["Jungle Cruise","Adventure"],
-["The Lost City","Adventure"],["Dungeons & Dragons: Honor Among Thieves","Fantasy"],
-["Warcraft","Fantasy"],["Prince of Persia: The Sands of Time","Adventure"],
-["Clash of the Titans","Fantasy"],["Wrath of the Titans","Fantasy"],
-["Percy Jackson: Sea of Monsters","Fantasy"],["The Spiderwick Chronicles","Fantasy"],
-["The House with a Clock in Its Walls","Fantasy"],["Goosebumps","Fantasy"],
-["Goosebumps 2: Haunted Halloween","Fantasy"],["Monster House","Animation"],
-["Corpse Bride","Animation"],["Frankenweenie","Animation"],
-["The Addams Family","Animation"],["The Addams Family 2","Animation"],
-["The Haunted Mansion","Fantasy"],["The Haunted Mansion (2023)","Fantasy"],
-["The School for Good and Evil","Fantasy"],["The House with a Clock in Its Walls","Fantasy"],
-["The Witches","Fantasy"],["The Witches (2020)","Fantasy"],
-["The Craft: Legacy","Fantasy"],["The Boxtrolls","Animation"],
-["The Corpse Bride","Animation"],["ParaNorman","Animation"],
-["The House","Animation"],["The Sea Beast","Animation"],
-["Orion and the Dark","Animation"],["Nimona","Animation"],
-["The Magician's Elephant","Animation"],["The Willoughbys","Animation"],
-["Chicken Run","Animation"],["Chicken Run: Dawn of the Nugget","Animation"],
-["Wallace & Gromit: The Curse of the Were-Rabbit","Animation"],
-["Shaun the Sheep Movie","Animation"],["The Boss Baby","Animation"],
-["The Boss Baby: Family Business","Animation"],["Trolls","Animation"],
-["Trolls World Tour","Animation"],["Trolls Band Together","Animation"],
-["Rio","Animation"],["Rio 2","Animation"],["Ice Age","Animation"],
-["Ice Age: The Meltdown","Animation"],["Ice Age: Dawn of the Dinosaurs","Animation"],
-["Ice Age: Continental Drift","Animation"],["Ice Age: Collision Course","Animation"],
-["Robots","Animation"],["Ferdinand","Animation"],["Epic","Animation"],
-["The Lorax","Animation"],["Horton Hears a Who!","Animation"],
-["The Peanuts Movie","Animation"],["The Ant Bully","Animation"],
-["Open Season","Animation"],["Open Season 2","Animation"],
-["Surf's Up","Animation"],["Surf's Up 2: WaveMania","Animation"],
-["The Nut Job","Animation"],["The Nut Job 2: Nutty by Nature","Animation"],
-["The Emoji Movie","Animation"],["Storks","Animation"],["Smallfoot","Animation"],
-["Abominable","Animation"],["The Star","Animation"],["Klaus","Animation"],
-["Arthur Christmas","Animation"],["The Grinch (2018)","Animation"],
-["The Polar Express","Animation"],["The Muppet Movie","Family"],
-["The Muppets","Family"],["Muppets Most Wanted","Family"],
-["The Adventures of Elmo in Grouchland","Family"],["The Smurfs","Family"],
-["The Smurfs 2","Family"],["The Smurfs: The Lost Village","Animation"],
-["Garfield: The Movie","Comedy"],["Garfield: A Tail of Two Kitties","Comedy"],
-["Alvin and the Chipmunks","Comedy"],["Alvin and the Chipmunks: The Squeakquel","Comedy"],
-["Alvin and the Chipmunks: Chipwrecked","Comedy"],
-["Alvin and the Chipmunks: The Road Chip","Comedy"],
-["Scooby-Doo","Adventure"],["Scooby-Doo 2: Monsters Unleashed","Adventure"],
-["Scoob!","Animation"],["The Flintstones","Comedy"],["The Flintstones in Viva Rock Vegas","Comedy"],
-["Inspector Gadget","Comedy"],["Inspector Gadget 2","Comedy"],
-["The Cat in the Hat","Comedy"],["Yogi Bear","Comedy"],
-["Tom & Jerry","Animation"],["Space Jam: A New Legacy","Animation"],
-["The Adventures of Rocky and Bullwinkle","Comedy"],["Dora and the Lost City of Gold","Adventure"],
-["The Jungle Book (2016)","Adventure"],["The One and Only Ivan","Family"],
-["Christopher Robin","Family"],["A Dog's Purpose","Family"],
-["A Dog's Journey","Family"],["The Call of the Wild","Adventure"],
-["Eight Below","Adventure"],["Togo","Adventure"],
-["The Adventures of Milo and Otis","Family"],["Homeward Bound: The Incredible Journey","Family"],
-["Homeward Bound II: Lost in San Francisco","Family"],
-["Flubber","Comedy"],["Honey, I Shrunk the Kids","Adventure"],
-["Honey, I Blew Up the Kid","Comedy"],["The Absent-Minded Professor","Comedy"],
-["Sky High","Superhero"],["Zoom","Superhero"],["Hancock","Superhero"],
-["Megamind","Animation"],["Mystery Men","Superhero"],["The Rocketeer","Superhero"],
-["Darkman","Superhero"],["Teenage Mutant Ninja Turtles","Action"],
-["Teenage Mutant Ninja Turtles II: The Secret of the Ooze","Action"],
-["TMNT","Animation"],["Teenage Mutant Ninja Turtles: Out of the Shadows","Action"],
-["Power Rangers","Action"],["Mighty Morphin Power Rangers: The Movie","Action"],
-["The Powerpuff Girls Movie","Animation"],["Pokémon: The First Movie","Animation"],
-["Pokémon Detective Pikachu","Adventure"],["Pokémon the Movie 2000","Animation"],
-["The Angry Birds Movie","Animation"],["The Angry Birds Movie 2","Animation"],
-["The Super Mario Bros. Movie","Animation"],["The Lego Movie","Animation"],
-["The Lego Batman Movie","Animation"],["The Lego Ninjago Movie","Animation"],
-["The Lego Movie 2: The Second Part","Animation"],["Playmobil: The Movie","Animation"],
-["Rango","Animation"],["Fantastic Mr. Fox","Animation"],["Isle of Dogs","Animation"],
-["The Iron Giant","Animation"],["The Pagemaster","Fantasy"],["Space Jam","Comedy"],
-["The NeverEnding Story","Fantasy"],["Labyrinth","Fantasy"],["The Dark Crystal","Fantasy"],
-["The Secret of NIMH","Animation"],["The Black Cauldron","Fantasy"],
-["Atlantis: The Lost Empire","Animation"],["Treasure Planet","Animation"],
-["Brother Bear","Animation"],["Brother Bear 2","Animation"],["Hercules","Animation"],
-["Tarzan","Animation"],["Tarzan II","Animation"],["Pocahontas","Animation"],
-["Pocahontas II: Journey to a New World","Animation"],["The Hunchback of Notre Dame","Animation"],
-["The Hunchback of Notre Dame II","Animation"],["Dinosaur","Animation"],
-["Meet the Robinsons","Animation"],["Home on the Range","Animation"],
-["Chicken Little","Animation"],["The Princess and the Frog","Animation"],
-["Strange World","Animation"],["Raya and the Last Dragon","Animation"],
-["The Black Cauldron","Fantasy"],["The Sword in the Stone","Fantasy"],
-["Robin Hood","Animation"],["The Aristocats","Animation"],
-["The Rescuers","Animation"],["The Rescuers Down Under","Animation"],
-["Oliver & Company","Animation"],["The Fox and the Hound","Animation"],
-["The Fox and the Hound 2","Animation"],["Lady and the Tramp","Animation"],
-["Lady and the Tramp II: Scamp's Adventure","Animation"],["101 Dalmatians","Family"],
-["102 Dalmatians","Family"],["The Rescuers","Animation"],["The Great Mouse Detective","Animation"],
-["The Tigger Movie","Animation"],["Winnie the Pooh","Animation"],
-["Christopher Robin","Family"],["The Jungle Book 2","Animation"],
-["Return to Never Land","Animation"],["Peter Pan","Fantasy"],
-["Peter Pan: Return to Never Land","Fantasy"],["Hook","Adventure"],
-["Pan","Fantasy"],["The Kid Who Would Be King","Fantasy"],
-["The Sorcerer's Apprentice","Fantasy"],["The Golden Compass","Fantasy"],
-["A Wrinkle in Time","Fantasy"],["The BFG","Fantasy"],["Eragon","Fantasy"],
-["The Water Horse: Legend of the Deep","Fantasy"],["Bridge to Terabithia","Fantasy"],
-["The Indian in the Cupboard","Fantasy"],["Holes","Adventure"],
-["Because of Winn-Dixie","Family"],["The Shaggy Dog","Comedy"],
-["The Shaggy D.A.","Comedy"],["The Love Bug","Comedy"],
-["Herbie: Fully Loaded","Comedy"],["Race to Witch Mountain","Adventure"],
-["Escape to Witch Mountain","Adventure"],["The Apple Dumpling Gang","Comedy"],
-["The Three Caballeros","Animation"],["Saludos Amigos","Animation"],
-["The Black Stallion","Adventure"],["The Black Stallion Returns","Adventure"],
-["The Adventures of Huck Finn","Adventure"],["Tom and Huck","Adventure"],
-["The Little Rascals","Comedy"],["The Little Rascals Save the Day","Comedy"],
-["Dennis the Menace","Comedy"],["Richie Rich","Comedy"],["Blank Check","Comedy"],
-["First Kid","Comedy"],["Man of the House","Comedy"],["Mr. Popper's Penguins","Comedy"],
-["The Tooth Fairy","Comedy"],["Tooth Fairy 2","Comedy"],["Jingle All the Way","Comedy"],
-["Jingle All the Way 2","Comedy"],["Deck the Halls","Comedy"],["Christmas with the Kranks","Comedy"],
-["The Santa Clause","Family"],["The Santa Clause 2","Family"],["The Santa Clause 3: The Escape Clause","Family"],
-["A Christmas Story","Comedy"],["A Christmas Story Christmas","Comedy"],
-["The Muppet Christmas Carol","Family"],["The Christmas Chronicles","Family"],
-["The Christmas Chronicles 2","Family"],["Arthur Christmas","Animation"],
-["Klaus","Animation"],["The Star","Animation"],["The Grinch","Animation"],
-["The Polar Express","Animation"],["The Nightmare Before Christmas","Animation"],
-["Hocus Pocus","Fantasy"],["Hocus Pocus 2","Fantasy"],["Casper","Fantasy"],
-["Casper: A Spirited Beginning","Fantasy"],["The Haunted Mansion","Fantasy"],
-["The House with a Clock in Its Walls","Fantasy"],["Goosebumps","Fantasy"],
-["Goosebumps 2: Haunted Halloween","Fantasy"],["The Witches","Fantasy"],
-["The Witches (2020)","Fantasy"],["Monster House","Animation"],["Coraline","Animation"],
-["ParaNorman","Animation"],["The Boxtrolls","Animation"],["Frankenweenie","Animation"],
-["Corpse Bride","Animation"],["The Addams Family","Animation"],["The Addams Family 2","Animation"],
-["The Spiderwick Chronicles","Fantasy"],["The School for Good and Evil","Fantasy"],
-["Miss Peregrine's Home for Peculiar Children","Fantasy"],["The House","Animation"],
-["The Sea Beast","Animation"],["Nimona","Animation"],["Orion and the Dark","Animation"],
-["The Magician's Elephant","Animation"],["The Willoughbys","Animation"],
-["The Mitchells vs. the Machines","Animation"],["Over the Moon","Animation"],
-["Wish Dragon","Animation"],["Leo","Animation"],["Thelma the Unicorn","Animation"],
-["The Monkey King","Animation"],["The Tiger's Apprentice","Animation"],
-["Kung Fu Panda 4","Animation"],["Migration","Animation"],["The Wild Robot","Animation"]
-];
-
+const API="https://archive.org";
+const MAX=250;
+let films=[],page=1,busy=false,finished=false;
 const grid=document.getElementById("grid");
+const status=document.getElementById("status");
+const more=document.getElementById("more");
 const search=document.getElementById("search");
 const genre=document.getElementById("genre");
-const status=document.getElementById("status");
-const count=document.getElementById("count");
-const movies=[];
-const seen=new Set();
 
-function add(title,category,archive=false){
- const key=title.toLowerCase();
- if(seen.has(key))return;
- seen.add(key);
- movies.push({title,category,archive});
+function norm(s){
+ return String(s||"").toLowerCase();
 }
-seed.forEach(x=>add(x[0],x[1]));
-
-function makeCard(m){
- const card=document.createElement("article");
- card.className="card";
- const poster=document.createElement("div");
- poster.className="poster";
- poster.textContent="🎬";
- const info=document.createElement("div");
- info.className="info";
- const tag=document.createElement("div");
- tag.className="tag";
- tag.textContent=m.category;
- const h=document.createElement("h3");
- h.textContent=m.title;
- const p=document.createElement("p");
- p.className="desc";
- p.textContent="Find official viewing options for this movie.";
- const a=document.createElement("a");
- a.className="btn";
- a.textContent="FIND WHERE TO WATCH";
- a.target="_blank";
- a.rel="noopener noreferrer";
- a.href="https://www.google.com/search?q="+encodeURIComponent(m.title+" official streaming watch");
- info.append(tag,h,p,a);
- card.append(poster,info);
- return card;
+function esc(s){
+ return String(s||"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
 }
-
+function icon(m){
+ const s=norm((m.title||"")+" "+(m.subject||""));
+ if(/animation|cartoon/.test(s))return "🎨";
+ if(/comedy/.test(s))return "😂";
+ if(/science fiction|sci-fi|space/.test(s))return "🚀";
+ if(/adventure/.test(s))return "🧭";
+ if(/family|children/.test(s))return "👨‍👩‍👧";
+ if(/fantasy/.test(s))return "🪄";
+ if(/western/.test(s))return "🤠";
+ return "🎬";
+}
+function visibleFilms(){
+ const q=norm(search.value);
+ const g=norm(genre.value);
+ return films.filter(m=>
+  norm(m.title).includes(q) &&
+  (!g||norm((m.title||"")+" "+(m.subject||"")).includes(g))
+ );
+}
 function render(){
- const q=search.value.toLowerCase().trim();
- const g=genre.value;
- grid.replaceChildren();
- let shown=0;
- movies.forEach(m=>{
-  if(g!=="All"&&m.category!==g)return;
-  if(!m.title.toLowerCase().includes(q))return;
-  grid.append(makeCard(m));
-  shown++;
- });
- count.textContent=shown+" movies shown";
+ const list=visibleFilms();
+ grid.innerHTML=list.map((m,i)=>`
+ <article class="card">
+  <div class="poster">${icon(m)}</div>
+  <div class="info">
+   <h3>${esc(m.title)}</h3>
+   <p class="small">Video file checked</p>
+   <button onclick="watchMovie(${i})">▶ Watch Now</button>
+  </div>
+ </article>`).join("");
+ if(!list.length)grid.innerHTML="<p>No matching movies. Try another search or category.</p>";
+ status.textContent=`${films.length} playable-file listings checked${films.length<MAX&&!finished?" — searching for more":""}.`;
+ more.style.display=finished||films.length>=MAX?"none":"block";
+}
+async function getJSON(url){
+ const r=await fetch(url);
+ if(!r.ok)throw Error("Request failed");
+ return r.json();
+}
+async function checkVideo(item){
+ try{
+  const meta=await getJSON(API+"/metadata/"+encodeURIComponent(item.identifier));
+  const files=meta.files||[];
+  // Only show files whose metadata identifies them as MP4 video.
+  const candidates=files.filter(f=>
+   /\.mp4$/i.test(f.name||"") &&
+   Number(f.size||0)>100000
+  ).sort((a,b)=>Number(b.size||0)-Number(a.size||0));
+  if(!candidates.length)return null;
+  return {...item,file:candidates[0].name};
+ }catch(e){return null}
+}
+async function loadMore(){
+ if(busy||finished||films.length>=MAX)return;
+ busy=true;
+ more.disabled=true;
+ status.textContent="Checking movie titles and video files...";
+ try{
+  let rounds=0;
+  while(films.length<MAX&&!finished&&rounds<5){
+   rounds++;
+   const query='mediatype:movies AND (licenseurl:http*publicdomain* OR licenseurl:http*by*)';
+   const url=API+"/advancedsearch.php?q="+encodeURIComponent(query)+
+    "&fl[]=identifier&fl[]=title&fl[]=subject&rows=100&page="+page+"&output=json";
+   const data=await getJSON(url);
+   const docs=data.response?.docs||[];
+   page++;
+   if(!docs.length||docs.length<100)finished=true;
+
+   const existing=new Set(films.map(m=>m.identifier));
+   const candidates=docs.filter(m=>
+    m.identifier&&m.title&&!existing.has(m.identifier)
+   );
+   // Check in small batches to avoid flooding the service.
+   for(let i=0;i<candidates.length&&films.length<MAX;i+=8){
+    const batch=candidates.slice(i,i+8);
+    const checked=await Promise.all(batch.map(checkVideo));
+    for(const m of checked){
+     if(m&&!existing.has(m.identifier)&&films.length<MAX){
+      films.push(m);
+      existing.add(m.identifier);
+     }
+    }
+    render();
+   }
+   if(docs.length<100)finished=true;
+  }
+ }catch(e){
+  status.textContent="Couldn't load the catalog. Check your connection and try again.";
+ }finally{
+  busy=false;
+  more.disabled=false;
+  if(films.length>=MAX)finished=true;
+  render();
+  if(!finished&&films.length<MAX)
+   status.textContent+= " Tap Load more movies to continue.";
+ }
+}
+async function watchMovie(index){
+ const item=visibleFilms()[index];
+ if(!item)return;
+ document.getElementById("player").style.display="block";
+ document.getElementById("movieTitle").textContent=item.title;
+ const video=document.getElementById("video");
+ const msg=document.getElementById("playerStatus");
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+ msg.textContent="Opening video...";
+ video.src=API+"/download/"+encodeURIComponent(item.identifier)+"/"+
+  item.file.split("/").map(encodeURIComponent).join("/");
+ video.onerror=()=>{
+  msg.textContent="This file couldn't play. It may be unavailable or incompatible.";
+ };
+ video.onloadedmetadata=()=>{
+  msg.textContent="Video loaded. Press play to watch.";
+ };
+ video.load();
+}
+function closePlayer(){
+ const video=document.getElementById("video");
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+ document.getElementById("player").style.display="none";
 }
 search.addEventListener("input",render);
 genre.addEventListener("change",render);
-
-async function loadArchive(){
- try{
-  for(let page=1;page<=4&&movies.length<500;page++){
-   const url="https://www.loc.gov/film-and-videos/?fo=json&c=100&sp="+page;
-   const response=await fetch(url);
-   if(!response.ok)break;
-   const data=await response.json();
-   if(!data.results||!data.results.length)break;
-   data.results.forEach(m=>{
-    if(m.title)add(m.title,"Archive",true);
-   });
-  }
- }catch(e){}
- render();
- status.textContent=movies.length+" unique movie listings available. Some archive results are historical films, not modern streaming titles.";
-}
-render();
-status.textContent=movies.length+" curated movie titles loaded. Checking the public film archive for more...";
-loadArchive();
+more.addEventListener("click",loadMore);
+loadMore();
 </script>
 </body>
 </html>
 
-      
