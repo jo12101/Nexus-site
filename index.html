@@ -3,190 +3,123 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXUS — Movie Hub</title>
-<meta name="theme-color" content="#09090f">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUS | Movie Hub</title>
 <style>
-:root{--bg:#09090f;--panel:#151520;--red:#ff304f;--muted:#aaaabd}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
-header{padding:22px 5%;background:linear-gradient(100deg,#17101f,#09090f);border-bottom:1px solid #292938;position:sticky;top:0;z-index:5}
-.brand{font-size:30px;font-weight:900;letter-spacing:3px;color:var(--red)}
-.brand span{color:white}
-.tagline{color:var(--muted);font-size:13px;margin-top:5px}
-main{max-width:1300px;margin:auto;padding:24px 5% 50px}
-.hero{padding:30px 24px;border-radius:18px;background:linear-gradient(110deg,#321329,#18182c 65%,#101019);margin-bottom:28px}
-.hero h1{font-size:clamp(30px,6vw,52px);margin:0 0 10px}
-.hero p{color:#ddd;line-height:1.6;max-width:650px}
-.pill{display:inline-block;border:1px solid #554052;border-radius:99px;padding:7px 12px;font-size:12px;margin:4px 4px 0 0}
-h2{font-size:23px;margin:28px 0 14px}
-.tools{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
-input,select{width:100%;padding:14px;border-radius:10px;border:1px solid #363647;background:#151520;color:#fff;font-size:16px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
-.filters button,.action{border:1px solid #383849;background:#191923;color:white;border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14px}
-.filters button.active,.primary{background:var(--red);border-color:var(--red)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px}
-.movie{min-width:0;background:var(--panel);border:1px solid #292938;border-radius:12px;overflow:hidden}
-.poster{height:145px;background:linear-gradient(145deg,#43203b,#202039 55%,#101018);display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
-.poster:after{content:"NEXUS";position:absolute;bottom:8px;left:10px;font-size:10px;font-weight:bold;letter-spacing:3px;color:#ffffffa8}
-.moviebody{padding:12px}
-.movie h3{font-size:15px;line-height:1.35;margin:0 0 7px}
-.genre{font-size:12px;color:var(--muted);min-height:30px}
-.movie .action{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;padding:10px 6px}
-.note{color:var(--muted);font-size:13px;line-height:1.6}
-.playerbox{background:#11111b;border:1px solid #303044;border-radius:14px;padding:14px;margin:16px 0 25px}
-#player{width:100%;aspect-ratio:16/9;background:#000;border:0;border-radius:10px;display:block}
-.playlist{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-.playlist button{background:#252535;color:white;border:1px solid #45455b;border-radius:9px;padding:10px;cursor:pointer}
-footer{padding:28px 5%;border-top:1px solid #292938;color:var(--muted);font-size:12px;line-height:1.7}
-.empty{color:var(--muted);padding:20px 0}
-a{color:#ff8496}
-@media(min-width:650px){.tools{grid-template-columns:2fr 1fr}.poster{height:190px}.grid{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}}
+body{margin:0;background:#090910;color:white;font-family:Arial,sans-serif}
+header{padding:22px 5%;background:#151520;border-bottom:2px solid #ff3150}
+.logo{font-size:32px;font-weight:900;letter-spacing:3px;color:#ff3150}
+.logo span{color:white}
+main{max-width:1200px;margin:auto;padding:22px 5%}
+.hero{padding:25px;border-radius:16px;background:linear-gradient(120deg,#45152c,#19192e)}
+h1{font-size:clamp(30px,6vw,48px);margin:10px 0}
+p{color:#c4c4d2;line-height:1.6}
+input,select{background:#191923;color:white;border:1px solid #444459;padding:13px;border-radius:9px;font-size:16px;width:100%;margin:7px 0}
+.player{background:#151520;padding:14px;border-radius:14px;margin:18px 0}
+iframe{width:100%;aspect-ratio:16/9;border:0;background:#000;border-radius:8px}
+.buttons{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{cursor:pointer;background:#ff3150;color:white;border:0;padding:12px;border-radius:8px;font-weight:bold}
+button.secondary{background:#29293a;color:white;border:1px solid #48485a}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
+.card{background:#171722;border:1px solid #2b2b3b;border-radius:12px;padding:15px;min-height:125px}
+.emoji{font-size:30px}
+.card h3{font-size:15px;line-height:1.4}
+.tag{color:#aaaabd;font-size:12px}
+.small{font-size:12px;color:#aaaabd}
+footer{padding:25px 5%;color:#aaaabd;border-top:1px solid #303040}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">NEXUS<span>.</span></div>
-  <div class="tagline">YOUR MOVIE UNIVERSE · DISCOVER YOUR NEXT WATCH</div>
+ <div class="logo">NEXUS<span>.</span></div>
+ <div class="small">YOUR MOVIE UNIVERSE</div>
 </header>
-
 <main>
-  <section class="hero">
-    <span class="pill">🎬 MOVIE HUB</span>
-    <span class="pill">▶ FREE PLAYER</span>
-    <h1>What are we watching?</h1>
-    <p>Explore free films you can play here, or discover where to watch your favorite blockbusters.</p>
-    <span class="pill">Marvel</span><span class="pill">Spider-Man</span>
-    <span class="pill">Action</span><span class="pill">Comedy</span>
-    <span class="pill">Gaming Movies</span><span class="pill">Animation</span>
-  </section>
+ <section class="hero">
+  <div>🎬 NEXUS MOVIE HUB</div>
+  <h1>Press Play.</h1>
+  <p>Play free films, explore blockbusters, and find your next favorite movie.</p>
+  <div>🦸 Marvel · 🕷️ Spider-Man · 💙 Sonic · 😂 Comedy · 🚀 Sci-Fi</div>
+ </section>
 
-  <h2>▶ Play Free Movies</h2>
-  <p class="note">These openly licensed animated films are available through YouTube's embedded player. Tap a title, then press play. Internet access is required.</p>
-  <div class="playerbox">
-    <iframe id="player" src="https://www.youtube-nocookie.com/embed/YE7VzlLtp-4" title="Free movie player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    <div class="playlist">
-      <button onclick="playFree('YE7VzlLtp-4','Big Buck Bunny')">🐰 Big Buck Bunny</button>
-      <button onclick="playFree('eRsGyueVLvQ','Sintel')">🐉 Sintel</button>
-      <button onclick="playFree('R6MlUcmOul8','Tears of Steel')">🤖 Tears of Steel</button>
-    </div>
-    <p id="playing" class="note">Now selected: Big Buck Bunny</p>
-    <p class="note">Films by the Blender Foundation, made available under open licenses. <a href="https://www.blender.org/about/projects/" target="_blank" rel="noopener">Learn about the films</a>.</p>
+ <h2>▶ Play Free Films</h2>
+ <p>Choose a film below to load its embedded video. Playback depends on the video provider and your internet connection.</p>
+ <section class="player">
+  <iframe id="video"
+   src="https://www.youtube-nocookie.com/embed/YE7VzlLtp-4"
+   title="Free animated film player"
+   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+   allowfullscreen></iframe>
+  <h3 id="now">🐰 Big Buck Bunny</h3>
+  <div class="buttons">
+   <button onclick="play('YE7VzlLtp-4','🐰 Big Buck Bunny')">Play Big Buck Bunny</button>
+   <button class="secondary" onclick="play('eRsGyueVLvQ','🐉 Sintel')">Play Sintel</button>
+   <button class="secondary" onclick="play('R6MlUcmOul8','🤖 Tears of Steel')">Play Tears of Steel</button>
   </div>
+  <p class="small">These are open-film projects from the Blender Foundation. If a video is unavailable or embedding is disabled, that provider will need to be checked for an alternative official player.</p>
+ </section>
 
-  <h2>🎬 Explore Popular Movies</h2>
-  <p class="note">Search titles or choose a category. Select “Find where to watch” to look up legal viewing options. Availability and prices vary by movie.</p>
-  <div class="tools">
-    <input id="search" type="search" placeholder="🔎 Search movies..." aria-label="Search movies">
-    <select id="category" aria-label="Filter by category">
-      <option value="All">All categories</option>
-      <option>Marvel</option>
-      <option>Action</option>
-      <option>Comedy</option>
-      <option>Sci-Fi</option>
-      <option>Animation</option>
-      <option>Gaming</option>
-      <option>Adventure</option>
-    </select>
-  </div>
-  <div class="filters" id="filters">
-    <button class="active" data-filter="All">All</button>
-    <button data-filter="Marvel">Marvel</button>
-    <button data-filter="Action">Action</button>
-    <button data-filter="Comedy">Comedy</button>
-    <button data-filter="Sci-Fi">Sci-Fi</button>
-    <button data-filter="Animation">Animation</button>
-    <button data-filter="Gaming">Gaming</button>
-    <button data-filter="Adventure">Adventure</button>
-  </div>
-  <div id="count" class="note"></div>
-  <div id="movies" class="grid"></div>
-  <p id="empty" class="empty" hidden>No movies found. Try another search or category.</p>
+ <h2>🎬 Popular Movies</h2>
+ <p>Browse the movies you like. These cards are a catalog, not a claim that each blockbuster has a free full-movie stream.</p>
+ <input id="search" placeholder="🔎 Search movies..." oninput="render()">
+ <select id="genre" onchange="render()">
+  <option>All</option><option>Marvel</option><option>Action</option>
+  <option>Comedy</option><option>Sci-Fi</option><option>Animation</option>
+  <option>Gaming</option><option>Adventure</option>
+ </select>
+ <div class="grid" id="catalog"></div>
 </main>
-
 <footer>
-  <strong>NEXUS</strong> is an independent movie discovery website, not a streaming service.<br>
-  Popular-movie buttons search for viewing options; they do not mean a movie is free or included in a subscription. NEXUS does not host copyrighted movie files.<br>
-  Free-film player videos are provided by YouTube. Their availability may vary by region or over time.
+ NEXUS is an independent movie catalog. It does not host copyrighted movie files. Only videos with permission or appropriate licenses can be offered as free full-movie streams.
 </footer>
-
 <script>
-const movieList = [
-["The Avengers","Marvel"],["Avengers: Age of Ultron","Marvel"],["Avengers: Infinity War","Marvel"],["Avengers: Endgame","Marvel"],
-["Iron Man","Marvel"],["Iron Man 2","Marvel"],["Iron Man 3","Marvel"],["Captain America: The First Avenger","Marvel"],
-["Captain America: The Winter Soldier","Marvel"],["Captain America: Civil War","Marvel"],["Black Panther","Marvel"],["Black Panther: Wakanda Forever","Marvel"],
-["Thor","Marvel"],["Thor: Ragnarok","Marvel"],["Doctor Strange","Marvel"],["Guardians of the Galaxy","Marvel"],
-["Guardians of the Galaxy Vol. 2","Marvel"],["Guardians of the Galaxy Vol. 3","Marvel"],["Ant-Man","Marvel"],["Shang-Chi","Marvel"],
-["Spider-Man","Action"],["Spider-Man 2","Action"],["Spider-Man 3","Action"],["The Amazing Spider-Man","Action"],
-["The Amazing Spider-Man 2","Action"],["Spider-Man: Homecoming","Marvel"],["Spider-Man: Far From Home","Marvel"],["Spider-Man: No Way Home","Marvel"],
-["Spider-Man: Into the Spider-Verse","Animation"],["Spider-Man: Across the Spider-Verse","Animation"],
-["Deadpool","Marvel"],["Deadpool 2","Marvel"],["X-Men: Days of Future Past","Marvel"],["Fantastic Four","Marvel"],
-["Transformers","Action"],["Transformers: Revenge of the Fallen","Action"],["Bumblebee","Action"],["Transformers: Rise of the Beasts","Action"],
-["Sonic the Hedgehog","Gaming"],["Sonic the Hedgehog 2","Gaming"],["Sonic the Hedgehog 3","Gaming"],
-["The Super Mario Bros. Movie","Gaming"],["A Minecraft Movie","Gaming"],["Pokémon Detective Pikachu","Gaming"],["The Angry Birds Movie","Gaming"],
-["Jumanji","Adventure"],["Jumanji: Welcome to the Jungle","Adventure"],["Uncharted","Adventure"],["Free Guy","Comedy"],
-["The LEGO Movie","Animation"],["The LEGO Batman Movie","Animation"],["Shrek","Animation"],["Shrek 2","Animation"],
-["Kung Fu Panda","Animation"],["Kung Fu Panda 2","Animation"],["Puss in Boots: The Last Wish","Animation"],["The Incredibles","Animation"],
-["The Incredibles 2","Animation"],["Toy Story","Animation"],["Toy Story 2","Animation"],["Toy Story 3","Animation"],
-["Finding Nemo","Animation"],["Finding Dory","Animation"],["Cars","Animation"],["Cars 2","Animation"],["Ratatouille","Animation"],
-["Despicable Me","Animation"],["Despicable Me 2","Animation"],["Minions","Animation"],["The Super Mario Bros. Movie","Animation"],
-["The Batman","Action"],["The Dark Knight","Action"],["Man of Steel","Action"],["Aquaman","Action"],
-["Fast & Furious","Action"],["Fast Five","Action"],["Furious 7","Action"],["Top Gun: Maverick","Action"],
-["Mission: Impossible — Fallout","Action"],["John Wick","Action"],["The Karate Kid","Action"],["Creed","Action"],
-["Jurassic Park","Adventure"],["Jurassic World","Adventure"],["Godzilla","Sci-Fi"],["Godzilla vs. Kong","Sci-Fi"],
-["Pacific Rim","Sci-Fi"],["Avatar","Sci-Fi"],["Avatar: The Way of Water","Sci-Fi"],["Interstellar","Sci-Fi"],
-["Ready Player One","Sci-Fi"],["The Matrix","Sci-Fi"],["Back to the Future","Sci-Fi"],["Men in Black","Sci-Fi"],
-["Ghostbusters","Comedy"],["Rush Hour","Comedy"],["Rush Hour 2","Comedy"],["The Mask","Comedy"],
-["Home Alone","Comedy"],["Home Alone 2: Lost in New York","Comedy"],["Night at the Museum","Comedy"],
-["The Adam Project","Sci-Fi"],["The Mitchells vs. the Machines","Animation"],["Wreck-It Ralph","Animation"]
+const movies=[
+["The Avengers","Marvel","🦸"],["Avengers: Age of Ultron","Marvel","🦸"],
+["Avengers: Infinity War","Marvel","🦸"],["Avengers: Endgame","Marvel","🦸"],
+["Iron Man","Marvel","🤖"],["Black Panther","Marvel","🐾"],
+["Thor: Ragnarok","Marvel","⚡"],["Guardians of the Galaxy","Marvel","🚀"],
+["Spider-Man","Action","🕷️"],["Spider-Man 2","Action","🕷️"],
+["The Amazing Spider-Man","Action","🕸️"],["Spider-Man: Homecoming","Marvel","🕷️"],
+["Spider-Man: No Way Home","Marvel","🕷️"],
+["Into the Spider-Verse","Animation","🕸️"],
+["Across the Spider-Verse","Animation","🕸️"],
+["Transformers","Action","🤖"],["Bumblebee","Action","🚗"],
+["Transformers: Rise of the Beasts","Action","🤖"],
+["Sonic the Hedgehog","Gaming","💙"],["Sonic the Hedgehog 2","Gaming","💙"],
+["Sonic the Hedgehog 3","Gaming","💙"],["The Super Mario Bros. Movie","Gaming","🍄"],
+["A Minecraft Movie","Gaming","⛏️"],["Detective Pikachu","Gaming","⚡"],
+["Free Guy","Comedy","🎮"],["Jumanji","Adventure","🌴"],
+["Uncharted","Adventure","🗺️"],["The LEGO Movie","Animation","🧱"],
+["Shrek","Animation","🟢"],["Kung Fu Panda","Animation","🐼"],
+["Puss in Boots: The Last Wish","Animation","🐱"],
+["The Incredibles","Animation","🦸"],["Toy Story","Animation","🤠"],
+["Finding Nemo","Animation","🐠"],["Cars","Animation","🏎️"],
+["Despicable Me","Animation","🍌"],["Wreck-It Ralph","Animation","🎮"],
+["The Batman","Action","🦇"],["The Dark Knight","Action","🦇"],
+["Fast Five","Action","🏎️"],["Top Gun: Maverick","Action","✈️"],
+["John Wick","Action","🎯"],["Jurassic Park","Adventure","🦖"],
+["Jurassic World","Adventure","🦖"],["Godzilla vs. Kong","Sci-Fi","🦖"],
+["Pacific Rim","Sci-Fi","🤖"],["Avatar","Sci-Fi","🌌"],
+["Interstellar","Sci-Fi","🚀"],["Ready Player One","Sci-Fi","🎮"],
+["The Matrix","Sci-Fi","💊"],["Back to the Future","Sci-Fi","⏰"],
+["Men in Black","Sci-Fi","👽"],["Ghostbusters","Comedy","👻"],
+["Rush Hour","Comedy","😂"],["Home Alone","Comedy","🏠"],
+["Night at the Museum","Comedy","🦕"],["The Mask","Comedy","🎭"]
 ];
-
-const icons = {
- Marvel:"🦸",Action:"💥",Comedy:"😂","Sci-Fi":"🚀",Animation:"🎨",Gaming:"🎮",Adventure:"🌎"
-};
-const uniqueMovies = [...new Map(movieList.map(m=>[m[0],m])).values()];
-const search = document.getElementById("search");
-const category = document.getElementById("category");
-const grid = document.getElementById("movies");
-const count = document.getElementById("count");
-const empty = document.getElementById("empty");
-
-function renderMovies(){
-  const q = search.value.trim().toLowerCase();
-  const cat = category.value;
-  const found = uniqueMovies.filter(([title,genre]) =>
-    title.toLowerCase().includes(q) && (cat==="All" || genre===cat)
-  );
-  grid.innerHTML = found.map(([title,genre]) => `
-    <article class="movie">
-      <div class="poster" aria-hidden="true">${icons[genre] || "🎬"}</div>
-      <div class="moviebody">
-        <h3>${title}</h3>
-        <div class="genre">${genre}</div>
-        <a class="action primary" href="https://www.justwatch.com/us/search?q=${encodeURIComponent(title)}" target="_blank" rel="noopener">Find where to watch ↗</a>
-      </div>
-    </article>`).join("");
-  count.textContent = `${found.length} movies`;
-  empty.hidden = found.length !== 0;
+function render(){
+ const q=document.getElementById('search').value.toLowerCase();
+ const g=document.getElementById('genre').value;
+ const list=movies.filter(m=>m[0].toLowerCase().includes(q)&&(g==='All'||m[1]===g));
+ document.getElementById('catalog').innerHTML=list.map(m=>
+ `<article class="card"><div class="emoji">${m[2]}</div><h3>${m[0]}</h3><div class="tag">${m[1]}</div><p class="small">Catalog listing · Full movie playback requires an authorized stream.</p></article>`
+ ).join('');
 }
-function playFree(id,title){
-  document.getElementById("player").src =
-    "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(id)+"?autoplay=1";
-  document.getElementById("playing").textContent = "Now selected: "+title;
+function play(id,title){
+ document.getElementById('video').src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';
+ document.getElementById('now').textContent=title;
 }
-search.addEventListener("input",renderMovies);
-category.addEventListener("change",()=>{
-  document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b.dataset.filter===category.value));
-  renderMovies();
-});
-document.querySelectorAll("#filters button").forEach(button=>{
-  button.addEventListener("click",()=>{
-    category.value=button.dataset.filter;
-    document.querySelectorAll("#filters button").forEach(b=>b.classList.toggle("active",b===button));
-    renderMovies();
-  });
-});
-renderMovies();
+render();
 </script>
 </body>
 </html>
