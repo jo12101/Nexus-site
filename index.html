@@ -3,29 +3,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NEXUS Movies & Games</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#09090d;color:#fff;font-family:Arial,sans-serif}
-header{padding:25px 5%;background:linear-gradient(110deg,#41050b,#101016);border-bottom:2px solid #e50914}
-.logo{font-size:36px;font-weight:900;letter-spacing:5px;color:#ff2435}
-header p{color:#ccc}
-main{padding:22px 5%}
-input,select{background:#191920;color:#fff;border:1px solid #444;border-radius:8px;padding:13px;font-size:15px}
-input{width:100%;margin-bottom:12px}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
-button{cursor:pointer;border:0;border-radius:7px;padding:12px;background:#303039;color:white;font-weight:bold}
+body{margin:0;background:#09090e;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 5%;background:linear-gradient(110deg,#42070d,#101015);border-bottom:2px solid #e50914}
+.logo{font-size:36px;font-weight:900;letter-spacing:5px;color:#ff2636}
+header p,.note{color:#bbb;line-height:1.5}
+main{padding:20px 5%}
+input,select{width:100%;padding:13px;margin-bottom:12px;border:1px solid #444;border-radius:8px;background:#1b1b24;color:white;font-size:15px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 24px}
+button{border:0;border-radius:7px;padding:12px;background:#30303a;color:white;font-weight:bold;cursor:pointer}
 button.active,.play{background:#e50914}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px}
-.card{background:#181820;border:1px solid #303039;border-radius:10px;overflow:hidden}
-.poster{height:145px;background:linear-gradient(140deg,#501923,#171721);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:21px;font-weight:bold}
+h2{margin-top:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px}
+.card{background:#191920;border:1px solid #30303a;border-radius:10px;overflow:hidden}
+.poster{height:135px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:20px;font-weight:bold;background:linear-gradient(145deg,#55151e,#171720)}
 .info{padding:12px}
 .info h3{font-size:16px;margin:0 0 8px}
 .info p{font-size:12px;color:#bbb;min-height:28px}
 .play{width:100%;font-size:11px;line-height:1.5}
-.note{color:#aaa;font-size:13px;line-height:1.5}
-footer{padding:25px;color:#888}
+.unavailable{width:100%;font-size:10px;line-height:1.5;background:#383840;color:#ddd}
+#player{display:none;position:fixed;inset:0;z-index:5;overflow:auto;background:#050507;padding:16px}
+.player-inner{max-width:950px;margin:20px auto}
+.player-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+video{display:block;width:100%;max-height:70vh;background:#000;margin-top:12px}
+#status{color:#ddd;line-height:1.5}
+footer{padding:24px;color:#888}
 </style>
 </head>
 <body>
@@ -34,123 +39,162 @@ footer{padding:25px;color:#888}
  <p>MOVIES • GAMES • ENTERTAINMENT</p>
 </header>
 <main>
- <input id="search" placeholder="Search all movies..." aria-label="Search movies">
- <select id="category" aria-label="Choose a category">
+ <input id="search" placeholder="Search movies..." aria-label="Search movies">
+ <select id="category" aria-label="Filter movies">
   <option value="all">All categories</option>
-  <option value="superhero">Superhero</option>
   <option value="action">Action</option>
   <option value="comedy">Comedy</option>
   <option value="sci-fi">Sci-Fi</option>
   <option value="animation">Animation</option>
+  <option value="superhero">Superhero</option>
+  <option value="thriller">Thriller</option>
+  <option value="family">Family</option>
  </select>
  <div class="filters">
   <button class="active" data-cat="all">ALL</button>
-  <button data-cat="superhero">SUPERHERO</button>
   <button data-cat="action">ACTION</button>
   <button data-cat="comedy">COMEDY</button>
   <button data-cat="sci-fi">SCI-FI</button>
   <button data-cat="animation">ANIMATION</button>
+  <button data-cat="superhero">SUPERHERO</button>
  </div>
 
- <h2>🎬 MOVIES</h2>
- <p class="note">Tap PRESS PLAY — WATCH NOW to open the movie's official studio or streaming destination. Availability and subscriptions vary.</p>
- <div id="movies" class="grid"></div>
+ <h2>🎬 NEXUS MOVIES</h2>
+ <p class="note">Playable movies open in the video player below. Popular titles without an authorized embedded video are marked clearly—no fake playback buttons.</p>
+ <div class="grid" id="movies"></div>
 
  <h2>🎮 BROWSER GAMES</h2>
  <div class="grid">
   <article class="card">
    <div class="poster">🕹️ ARCADE</div>
-   <div class="info"><h3>CrazyGames</h3><p>Browser games</p>
-   <button class="play" onclick="openLink('https://www.crazygames.com/')">PRESS PLAY — PLAY NOW</button></div>
+   <div class="info"><h3>CrazyGames</h3><p>Play browser games</p>
+    <button class="play" onclick="openGame('https://www.crazygames.com/')">PLAY NOW</button>
+   </div>
   </article>
   <article class="card">
    <div class="poster">🎮 INDIE</div>
    <div class="info"><h3>itch.io</h3><p>Browser-playable indie games</p>
-   <button class="play" onclick="openLink('https://itch.io/games/html5')">PRESS PLAY — PLAY NOW</button></div>
+    <button class="play" onclick="openGame('https://itch.io/games/html5')">PLAY NOW</button>
+   </div>
   </article>
  </div>
 </main>
-<footer>NEXUS • Your entertainment hub</footer>
+
+<div id="player">
+ <div class="player-inner">
+  <div class="player-head">
+   <h2 id="playerTitle">NOW PLAYING</h2>
+   <button onclick="closePlayer()">✕ CLOSE</button>
+  </div>
+  <video id="video" controls playsinline preload="metadata"></video>
+  <p id="status">Loading video…</p>
+ </div>
+</div>
+<footer>NEXUS • Movies & Games</footer>
+
 <script>
+const archive="https://archive.org/download/";
 const movies=[
-{t:"Spider-Man",c:"superhero",e:"🕷️",u:"https://www.sonypictures.com/movies"},
-{t:"Spider-Man 2",c:"superhero",e:"🕸️",u:"https://www.sonypictures.com/movies"},
-{t:"Spider-Man: No Way Home",c:"superhero",e:"🕷️",u:"https://www.disneyplus.com/"},
-{t:"Spider-Man: Into the Spider-Verse",c:"animation",e:"🕸️",u:"https://www.sonypictures.com/movies"},
-{t:"Spider-Man: Across the Spider-Verse",c:"animation",e:"🕸️",u:"https://www.sonypictures.com/movies"},
-{t:"The Avengers",c:"superhero",e:"🦸",u:"https://www.marvel.com/movies"},
-{t:"Avengers: Endgame",c:"superhero",e:"💥",u:"https://www.marvel.com/movies"},
-{t:"Avengers: Infinity War",c:"superhero",e:"🌌",u:"https://www.marvel.com/movies"},
-{t:"Iron Man",c:"superhero",e:"🤖",u:"https://www.marvel.com/movies"},
-{t:"Black Panther",c:"superhero",e:"🐈‍⬛",u:"https://www.marvel.com/movies"},
-{t:"Doctor Strange",c:"superhero",e:"✨",u:"https://www.marvel.com/movies"},
-{t:"Guardians of the Galaxy",c:"sci-fi",e:"🚀",u:"https://www.marvel.com/movies"},
-{t:"Captain America",c:"superhero",e:"🛡️",u:"https://www.marvel.com/movies"},
-{t:"Thor",c:"superhero",e:"⚡",u:"https://www.marvel.com/movies"},
-{t:"Deadpool",c:"action",e:"🟥",u:"https://www.marvel.com/movies"},
-{t:"Sonic the Hedgehog",c:"animation",e:"💙",u:"https://www.paramountplus.com/"},
-{t:"Sonic the Hedgehog 2",c:"action",e:"⚡",u:"https://www.paramountplus.com/"},
-{t:"Sonic the Hedgehog 3",c:"action",e:"💙",u:"https://www.paramountplus.com/"},
-{t:"Transformers",c:"action",e:"🤖",u:"https://www.paramountmovies.com/movies/transformers"},
-{t:"Transformers: Revenge of the Fallen",c:"action",e:"🚗",u:"https://www.paramountmovies.com/"},
-{t:"Transformers: Dark of the Moon",c:"action",e:"🌙",u:"https://www.paramountmovies.com/"},
-{t:"Bumblebee",c:"action",e:"🚘",u:"https://www.paramountmovies.com/"},
-{t:"Transformers One",c:"animation",e:"🤖",u:"https://www.paramountmovies.com/movies/transformers-one"},
-{t:"The Super Mario Bros. Movie",c:"animation",e:"🍄",u:"https://www.nbcuniversal.com/"},
-{t:"Shrek",c:"comedy",e:"🟢",u:"https://www.dreamworks.com/"},
-{t:"Kung Fu Panda",c:"animation",e:"🐼",u:"https://www.dreamworks.com/"},
-{t:"Despicable Me",c:"comedy",e:"🍌",u:"https://www.universalpictures.com/"},
-{t:"The Mask",c:"comedy",e:"🎭",u:"https://www.warnerbros.com/"},
-{t:"Rush Hour",c:"comedy",e:"🚕",u:"https://www.warnerbros.com/"},
-{t:"Home Alone",c:"comedy",e:"🏠",u:"https://www.disneyplus.com/"},
-{t:"Jumanji",c:"action",e:"🎲",u:"https://www.sonypictures.com/movies"},
-{t:"Jurassic Park",c:"sci-fi",e:"🦖",u:"https://www.universalpictures.com/"},
-{t:"Back to the Future",c:"sci-fi",e:"⏰",u:"https://www.universalpictures.com/"},
-{t:"The Dark Knight",c:"action",e:"🦇",u:"https://www.warnerbros.com/"},
-{t:"Godzilla",c:"action",e:"🦖",u:"https://www.legendary.com/"},
-{t:"Pacific Rim",c:"sci-fi",e:"🤖",u:"https://www.legendary.com/"},
-{t:"The Lego Movie",c:"animation",e:"🧱",u:"https://www.warnerbros.com/"},
-{t:"Puss in Boots: The Last Wish",c:"animation",e:"🐱",u:"https://www.dreamworks.com/"},
-{t:"Scream",c:"action",e:"🎭",u:"https://www.paramountmovies.com/"},
-{t:"Mission: Impossible",c:"action",e:"🕶️",u:"https://www.paramountmovies.com/"},
-{t:"Top Gun: Maverick",c:"action",e:"✈️",u:"https://www.paramountmovies.com/"},
-{t:"Titanic",c:"action",e:"🚢",u:"https://www.paramountmovies.com/"},
-{t:"Interstellar",c:"sci-fi",e:"🌌",u:"https://www.warnerbros.com/"},
-{t:"The Matrix",c:"sci-fi",e:"🟢",u:"https://www.warnerbros.com/"},
-{t:"Ready Player One",c:"sci-fi",e:"🎮",u:"https://www.warnerbros.com/"},
-{t:"Willy Wonka",c:"comedy",e:"🍫",u:"https://www.warnerbros.com/"},
-{t:"The Lego Batman Movie",c:"animation",e:"🦇",u:"https://www.warnerbros.com/"}
+ {t:"Charlie Chaplin Festival",c:"comedy",e:"🎭",id:"charlie_chaplin_film_fest",file:"charlie_chaplin_film_fest.mp4"},
+ {t:"Utopia",c:"comedy",e:"🏝️",id:"utopia",file:"Utopia.mp4"},
+ {t:"The Three Stooges",c:"comedy",e:"😂",id:"3stooges",file:"3stooges_NewApants2.mp4"},
+ {t:"The Stranger",c:"thriller",e:"🕵️",id:"TheStranger_0",file:"The_Stranger.mp4"},
+ {t:"Suddenly",c:"thriller",e:"🎬",id:"suddenly",file:"suddenly.mp4"},
+ {t:"Dressed to Kill",c:"thriller",e:"🔎",id:"dressed_to_kill",file:"dressed_to_kill.mp4"},
+ {t:"Jungle Book (1942)",c:"family",e:"🐅",id:"JungleBook",file:"Jungle_Book.mp4"},
+ {t:"Voyage to the Planet of Prehistoric Women",c:"sci-fi",e:"🪐",id:"VoyagetothePlanetofPrehistoricWomen",file:"VoyagetothePlanetofPrehistoricWomen.mp4"},
+ {t:"Sita Sings the Blues",c:"animation",e:"🎨",id:"Sita_Sings_the_Blues",file:"SITA_SINGS_MOVIE_ONLY.mp4"},
+ {t:"Abraham Lincoln",c:"family",e:"📜",id:"abraham_lincoln",file:"abraham_lincoln.mp4"},
+ {t:"The Pied Piper of Hamelin",c:"family",e:"🎶",id:"The_Pied_Piper_of_Hamelin",file:"pied.mp4"},
+ {t:"Tarzan's Revenge",c:"action",e:"🌴",id:"tarzans_revenge",file:"tarzans_revenge.mp4"},
+ {t:"The Fast and the Furious (1955)",c:"action",e:"🏎️",id:"TheFastandtheFuriousJohnIreland1954goofyrip",file:"TheFastandtheFuriousJohnIreland1954goofyrip.mp4"},
+
+ {t:"Spider-Man: No Way Home",c:"superhero",e:"🕷️"},
+ {t:"Spider-Man: Across the Spider-Verse",c:"animation",e:"🕸️"},
+ {t:"Avengers: Endgame",c:"superhero",e:"🦸"},
+ {t:"Iron Man",c:"superhero",e:"🤖"},
+ {t:"Sonic the Hedgehog",c:"animation",e:"💙"},
+ {t:"Sonic the Hedgehog 2",c:"action",e:"⚡"},
+ {t:"Transformers",c:"action",e:"🚗"},
+ {t:"Transformers One",c:"animation",e:"🤖"}
 ];
 
 const grid=document.getElementById("movies");
 const search=document.getElementById("search");
 const category=document.getElementById("category");
+const player=document.getElementById("player");
+const video=document.getElementById("video");
 let selected="all";
-function openLink(url){window.open(url,"_blank","noopener,noreferrer");}
+
 function render(){
  const q=search.value.toLowerCase().trim();
  const list=movies.filter(m=>
-  (m.t.toLowerCase().includes(q)||m.c.includes(q))&&
-  (selected==="all"||m.c===selected)&&
+  (m.t.toLowerCase().includes(q)||m.c.includes(q)) &&
+  (selected==="all"||m.c===selected) &&
   (category.value==="all"||m.c===category.value)
  );
  grid.innerHTML="";
  if(!list.length){grid.textContent="No movies found.";return;}
+
  list.forEach(m=>{
-  const card=document.createElement("article");card.className="card";
-  const poster=document.createElement("div");poster.className="poster";poster.textContent=m.e+" "+m.t;
-  const info=document.createElement("div");info.className="info";
-  const title=document.createElement("h3");title.textContent=m.t;
-  const desc=document.createElement("p");desc.textContent=m.c.toUpperCase()+" · Official movie destination";
-  const btn=document.createElement("button");btn.className="play";btn.textContent="PRESS PLAY — WATCH NOW";
-  btn.addEventListener("click",()=>openLink(m.u));
-  info.append(title,desc,btn);card.append(poster,info);grid.append(card);
+  const card=document.createElement("article");
+  card.className="card";
+  const poster=document.createElement("div");
+  poster.className="poster";
+  poster.textContent=m.e+" "+m.t;
+
+  const info=document.createElement("div");
+  info.className="info";
+  const title=document.createElement("h3");
+  title.textContent=m.t;
+  const desc=document.createElement("p");
+  desc.textContent=m.id?"Video source available":"No authorized embedded stream configured";
+
+  const btn=document.createElement("button");
+  if(m.id){
+   btn.className="play";
+   btn.textContent="PRESS PLAY — WATCH NOW";
+   btn.addEventListener("click",()=>playMovie(m));
+  }else{
+   btn.className="unavailable";
+   btn.textContent="NO EMBEDDED STREAM AVAILABLE";
+   btn.disabled=true;
+  }
+
+  info.append(title,desc,btn);
+  card.append(poster,info);
+  grid.append(card);
  });
 }
+
+function playMovie(m){
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+ document.getElementById("playerTitle").textContent=m.t;
+ document.getElementById("status").textContent="Loading video. If it fails, the host may have changed or the file may not be playable.";
+ video.src=archive+m.id+"/"+encodeURIComponent(m.file);
+ player.style.display="block";
+ document.body.style.overflow="hidden";
+ video.load();
+ video.play().catch(()=> {
+  document.getElementById("status").textContent="Tap the play icon in the video controls. If it still won't play, this source is unavailable.";
+ });
+}
+function closePlayer(){
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+ player.style.display="none";
+ document.body.style.overflow="";
+}
+function openGame(url){window.open(url,"_blank","noopener,noreferrer");}
+
 search.addEventListener("input",render);
 category.addEventListener("change",render);
 document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{
- selected=btn.dataset.cat;category.value="all";
+ selected=btn.dataset.cat;
+ category.value="all";
  document.querySelectorAll("[data-cat]").forEach(b=>b.classList.toggle("active",b===btn));
  render();
 }));
